@@ -11,10 +11,34 @@ dependencies:
   flutter:
     sdk: flutter
 
+  oktoast: ^2.3.1+1
+  provider: ^4.0.4
+  pull_to_refresh: ^1.5.7
+  json_annotation: ^3.0.1
+
+
+  bw_utils:
+    git:
+      url: http://47.52.134.206/bw-flutter/bw_utils.git
+      ref: feature_v0.1
+  biz_network_main:
+    git:
+      url: http://47.52.134.206/bw-flutter/biz_network_main.git
+      ref: feature_v0.1
+
+  bw_res:
+    git:
+      url: http://47.52.134.206/bw-flutter/bw_resources.git
+      ref: feature_v0.1
+      path: "packages/bw_res"
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  build_runner: ^1.7.4
+  json_serializable: ^3.2.5
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
