@@ -1,8 +1,8 @@
 import 'package:bw_res/res/bw_colors.dart';
 import 'package:bw_res/res/res.dart';
+import 'package:bw_res/res/strings.dart';
+import 'package:bw_sponsor_preferential/src/model/discount_entity.dart';
 import 'package:flutter/material.dart';
-
-import '../pages/model/discount_entity.dart';
 
 class DiscountItem extends StatelessWidget {
   final DiscountItemBean data;
@@ -28,60 +28,58 @@ class DiscountItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       clipBehavior: Clip.antiAlias,
-      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+      margin: EdgeInsets.only(left: 12, top: 10, right: 12, bottom: 6),
+      color: Colors.white,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(8))),
       elevation: 0.0,
-      child: Stack(
-        alignment: Alignment.topLeft, //指定未定位或部分定位widget的对齐方式
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Container(
-            margin: EdgeInsets.only(left: 1),
-            child: AspectRatio(
-              aspectRatio: 5 / 2,
-              child: Image.network(
-                data.appListPicture,
-                fit: BoxFit.cover,
-              ),
+          AspectRatio(
+            aspectRatio: 5 / 2,
+            child: Image.network(
+              data.appListPicture,
+              fit: BoxFit.cover,
             ),
           ),
-          Positioned(
-              top: 8,
-              child: Image.asset(
-                _getTagName(data.activityTag),
-              )),
-          Positioned(
-              bottom: 8,
-              child: Container(
-                height: 20,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(10),
-                      bottomRight: Radius.circular(10)),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.only(left: 7),
-                      child: Image.asset(R.discount_item_clock),
+                      padding: EdgeInsets.only(left: 20, top: 8),
+                      child: Text(
+                        data.title,
+                        maxLines: 1,
+                        style: TextStyle(
+                            fontSize: 12, color: BWColors.disItemTitle),
+                      ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 5, right: 18),
+                      padding: EdgeInsets.only(left: 20, top: 4, bottom: 8),
                       child: Text(
-                        '${data.activityStartTime} 至 ${data.activityEndTime}',
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: BWColors.disItemDesc,
-                        ),
+                        '${data.activityStartTime}-${data.activityEndTime}',
                         maxLines: 1,
+                        style: TextStyle(
+                            fontSize: 10, color: BWColors.disItemDesc),
                       ),
-                    )
+                    ),
                   ],
                 ),
-              ))
+              ),
+              Image.asset(
+                _getTagName(data.activityTag),
+                package: Strings.bwResPackage,
+                width: 35.5,
+                height: 35.5,
+              ),
+            ],
+          ),
         ],
       ),
     );

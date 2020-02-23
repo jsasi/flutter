@@ -1,7 +1,9 @@
+import 'package:biz_app_init/biz_app_init.dart';
+import 'package:bw_sponsor_preferential/src/model/api_service.dart';
+import 'package:bw_sponsor_preferential/src/model/discount_entity.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/page_status.dart';
-import '../model/discount_entity.dart';
 
 
 /// 优惠列表
@@ -19,39 +21,44 @@ class DiscountModel extends ChangeNotifier {
   bool isInit = true;
 
   void loadMore() async {
-    await Future.delayed(Duration(seconds: 1));
-    for (var i = 0; i < 5; i++) {
-      _results.add(DiscountItemBean(appListPicture:"http://img.bwhou2028.com/1581429316884091.jpg",activityStartTime: "2019/12/31",activityEndTime: "2019/01/01 至 2019/12/31",activityTag:"${_results.length%4}" ));
-    }
-    _screenStatus = ScreenStatus.LoadMoreComplete;
-    if (_results.length > 20) {
-      _screenStatus = ScreenStatus.LoadMoreNoData;
+    var disList = await ApiService.getDisList(pageNum: pageNum);
+    if (disList.code == 0) {
+      if (disList.data.list.isNotEmpty) {
+        pageNum++;
+        _results.addAll(disList.data.list);
+        _screenStatus = ScreenStatus.LoadMoreComplete;
+      } else {
+        _screenStatus = ScreenStatus.LoadMoreNoData;
+      }
+    } else {
+      _screenStatus = ScreenStatus.LoadMoreFail;
     }
     notifyListeners();
   }
 
-  int num = 0;
-
+  int pageNum = 1;
   void refresh() async {
-    await Future.delayed(Duration(seconds: 2));
-    _results.clear();
-    if (num == 4) {
-      _screenStatus = ScreenStatus.Empty;
-    } else if (num == 0) {
-      _screenStatus = ScreenStatus.Error;
-    } else {
-      for (var i = 0; i < 5; i++) {
-        _results.add(DiscountItemBean(appListPicture:"http://img.bwhou2028.com/1581429316884091.jpg",activityStartTime: "2019/12/31",activityEndTime: "2019/01/01 至 2019/12/31",activityTag:"${_results.length%4}" ));
+    pageNum = 1;
+    var disList = await ApiService.getDisList();
+    if (disList.code == 0) {
+      _results.clear();
+      if (disList.data.list.isNotEmpty) {
+        pageNum++;
+        _results.addAll(disList.data.list);
+        _screenStatus = ScreenStatus.RefreshComplete;
+      } else {
+        _screenStatus = ScreenStatus.Empty;
       }
-      _screenStatus = ScreenStatus.RefreshComplete;
+    } else {
+      _screenStatus = ScreenStatus.Error;
     }
-    num++;
     notifyListeners();
   }
 
   void init() async {
     _screenStatus = ScreenStatus.Loading;
     notifyListeners();
+    await appInit.initialize();
     refresh();
   }
 }

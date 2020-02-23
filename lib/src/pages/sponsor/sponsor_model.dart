@@ -1,7 +1,9 @@
+import 'package:biz_app_init/biz_app_init.dart';
+import 'package:bw_sponsor_preferential/src/model/api_service.dart';
+import 'package:bw_sponsor_preferential/src/model/sponsor_entity.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/page_status.dart';
-import '../model/sponsor_entity.dart';
 
 /// 优惠列表
 class SponsorModel extends ChangeNotifier {
@@ -9,61 +11,53 @@ class SponsorModel extends ChangeNotifier {
 
   ScreenStatus get screenStatus => _screenStatus;
 
-  List<SponsorEntity> _results = List();
+  List<SponorItemBean> _results = List();
 
-  List<SponsorEntity> get results => _results;
+  List<SponorItemBean> get results => _results;
 
   SponsorModel();
 
-  bool isInit = true;
+  int pageNum = 1;
 
   void loadMore() async {
-    await Future.delayed(Duration(seconds: 1));
-    for (var i = 0; i < 5; i++) {
-      _results.add(SponsorEntity(
-          sponsoredIconUrl: "https://i.loli.net/2020/02/21/X852emob4ayEn1K.png",
-          firstCreative: "拜仁慕尼黑",
-          keyCreative: "查看专题详情",
-          sponsoredUrl:
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQfCHKp7ySDVfaS4RfGW10s6N56bMPhnFdjn52OZXJKVhtP_aCJ",
-          secondCreative: "亚洲区赞助商"));
-    }
-    _screenStatus = ScreenStatus.LoadMoreComplete;
-    if (_results.length > 20) {
-      _screenStatus = ScreenStatus.LoadMoreNoData;
+    var spoList = await ApiService.getSpoList(pageNum: pageNum);
+    if (spoList.code == 0) {
+      if (spoList.data.list.isNotEmpty) {
+        pageNum++;
+        _results.addAll(spoList.data.list);
+        _screenStatus = ScreenStatus.LoadMoreComplete;
+      } else {
+        _screenStatus = ScreenStatus.LoadMoreNoData;
+      }
+    } else {
+      _screenStatus = ScreenStatus.LoadMoreFail;
     }
     notifyListeners();
   }
 
-  int num = 0;
-
   void refresh() async {
-    await Future.delayed(Duration(seconds: 2));
-    _results.clear();
-    if (num == 4) {
-      _screenStatus = ScreenStatus.Empty;
-    } else if (num == 0) {
-      _screenStatus = ScreenStatus.Error;
-    } else {
-      for (var i = 0; i < 5; i++) {
-        _results.add(SponsorEntity(
-            sponsoredIconUrl:
-                "https://i.loli.net/2020/02/21/X852emob4ayEn1K.png",
-            firstCreative: "拜仁慕尼黑",
-            keyCreative: "查看专题详情",
-            sponsoredUrl:
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQfCHKp7ySDVfaS4RfGW10s6N56bMPhnFdjn52OZXJKVhtP_aCJ",
-            secondCreative: "亚洲区赞助商"));
+    pageNum = 1;
+    var spoList = await ApiService.getSpoList();
+    if (spoList.code == 0) {
+      _results.clear();
+      if (spoList.data.list.isNotEmpty) {
+        pageNum++;
+        _results.addAll(spoList.data.list);
+        _screenStatus = ScreenStatus.RefreshComplete;
+      } else {
+        _screenStatus = ScreenStatus.Empty;
       }
-      _screenStatus = ScreenStatus.RefreshComplete;
+    } else {
+      _screenStatus = ScreenStatus.Error;
     }
-    num++;
+
     notifyListeners();
   }
 
   void init() async {
     _screenStatus = ScreenStatus.Loading;
     notifyListeners();
+    await appInit.initialize();
     refresh();
   }
 }

@@ -1,3 +1,5 @@
+import 'package:bw_res/bw_res.dart';
+import 'package:bw_res/res/bw_colors.dart';
 import 'package:flutter/material.dart';
 
 /// 网络错误展示view
@@ -9,7 +11,6 @@ class NetErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Container(
       width: double.infinity,
       child: Column(
@@ -17,18 +18,26 @@ class NetErrorView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Icon(Icons.network_wifi),
-          Text('网络不给力'),
-          Text('别紧张，刷新页面试试'),
-          FlatButton(
-            child: Text(
-              '刷新一下',
-              style: TextStyle(fontSize: 14),
+          Image.asset(R.net_error, package: Strings.bwResPackage),
+          Padding(
+            padding: const EdgeInsets.only(top: 20, bottom: 10),
+            child: Text(Strings.netErrTitle),
+          ),
+          Text(Strings.netErrDesc),
+          Container(
+            margin: EdgeInsets.only(top: 30),
+            width: 140,
+            height: 40,
+            child: FlatButton(
+              child: Text(
+                Strings.netErrBtnText,
+                style: TextStyle(fontSize: 14, color: BWColors.netErrBtnText),
+              ),
+              color: BWColors.netErBtnBg,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5.0)),
+              onPressed: callBack,
             ),
-            color: Colors.blue,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-            onPressed: callBack,
           )
         ],
       ),

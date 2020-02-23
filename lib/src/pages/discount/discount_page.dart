@@ -1,5 +1,7 @@
 import 'package:bw_res/bw_res.dart';
 import 'package:bw_res/res/bw_colors.dart';
+import 'package:bw_sponsor_preferential/src/model/discount_entity.dart';
+import 'package:bw_sponsor_preferential/src/pages/discount_details/discount_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -7,7 +9,6 @@ import '../../common/page_status.dart';
 import '../../routers/routes.dart';
 import '../../widgets/discount_item.dart';
 import '../../widgets/net_error_view.dart';
-import '../model/discount_entity.dart';
 import 'discount_model.dart';
 
 /// 优惠列表页面
@@ -28,13 +29,24 @@ class DiscountPage extends StatelessWidget {
 }
 
 /// 页面主体widget
-class _BodyWidget extends StatelessWidget {
+class _BodyWidget extends StatefulWidget {
+  @override
+  __BodyWidgetState createState() => __BodyWidgetState();
+}
+
+class __BodyWidgetState extends State<_BodyWidget> {
   RefreshController _refreshController = RefreshController();
+
   final viewModel = DiscountModel();
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     viewModel.init();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return ChangeNotifierProvider<DiscountModel>.value(
       value: viewModel,
       child: Consumer<DiscountModel>(builder: (context, vm, child) {
@@ -89,7 +101,7 @@ class _BodyWidget extends StatelessWidget {
     return ListView.builder(
       itemCount: datas.length,
       itemBuilder: (context, index) => InkWell(
-          onTap: () => Navigator.pushNamed(context, Routes.discountDetails),
+          onTap: () => Navigator.pushNamed(context, Routes.discountDetails,arguments: {DiscountDetailsPage.KEY_URL:""}),
           child: DiscountItem(datas[index])),
     );
   }
