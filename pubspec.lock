@@ -50,7 +50,7 @@ packages:
     description:
       path: "."
       ref: "feature_v0.1"
-      resolved-ref: "7f3d469c22a8c437161a5c9d6dabdaee327f2265"
+      resolved-ref: "331ca193acc0ad112e9bf434f103bbf88fbe8463"
       url: "http://47.52.134.206/bw-flutter/biz_login.git"
     source: git
     version: "0.0.1"
@@ -131,7 +131,7 @@ packages:
     description:
       path: "packages/bw_res"
       ref: "feature_v0.1"
-      resolved-ref: cc753db97586e8973abaf30435f653bdb7e608b5
+      resolved-ref: "377196cda61aa7c8a264dd59c0311949ce44d00d"
       url: "http://47.52.134.206/bw-flutter/bw_resources.git"
     source: git
     version: "0.0.1"
@@ -140,7 +140,7 @@ packages:
     description:
       path: "."
       ref: "feature_v0.1"
-      resolved-ref: "5647c89be914aa51709363317d8f8b3b08288096"
+      resolved-ref: "3c2a0c64c071d6c4ef2871e81007258f08a94a4e"
       url: "http://47.52.134.206/bw-flutter/bw_utils.git"
     source: git
     version: "0.0.1"
@@ -220,7 +220,7 @@ packages:
       name: dio
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.8"
+    version: "3.0.9"
   fixnum:
     dependency: transitive
     description:
@@ -299,6 +299,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.4"
+  image_gallery_saver:
+    dependency: transitive
+    description:
+      name: image_gallery_saver
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.2"
   io:
     dependency: transitive
     description:

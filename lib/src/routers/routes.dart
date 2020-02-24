@@ -16,14 +16,14 @@ class Routes {
 }
 
 final _routes = {
-  Routes.root: (context) => DiscountPage(),
+  Routes.root: (context) => SevicePage(),
   Routes.discount: (context) => DiscountPage(),
   Routes.discountDetails: (context, {arguments}) =>
       DiscountDetailsPage(arguments: arguments),
   Routes.sponsorDetails: (context, {arguments}) =>
       SponsorDetailsPage(arguments: arguments),
   Routes.sponsor: (context) => SponsorPage(),
-  Routes.service: (context) => SponsorPage(),
+  Routes.service: (context) => SevicePage(),
 };
 
 final Function onGenerateRoute = (RouteSettings settings) {

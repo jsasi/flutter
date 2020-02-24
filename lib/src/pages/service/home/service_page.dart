@@ -1,7 +1,9 @@
 import 'package:bw_res/bw_res.dart';
 import 'package:bw_res/res/bw_colors.dart';
 import 'package:bw_res/res/strings.dart';
-import 'package:bw_sponsor_preferential/src/model/sponsor_entity.dart';
+import 'package:bw_sponsor_preferential/src/model/service_entity.dart';
+import 'package:bw_sponsor_preferential/src/pages/service/home/service_model.dart';
+import 'package:bw_sponsor_preferential/src/widgets/service_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -9,8 +11,7 @@ import '../../../common/page_status.dart';
 import '../../../routers/routes.dart';
 import '../../../widgets/empty_view_.dart';
 import '../../../widgets/net_error_view.dart';
-import '../../../widgets/sponsor_item.dart';
-import '../../sponsor/sponsor_model.dart';
+
 
 /// 客服页面
 class SevicePage extends StatelessWidget {
@@ -24,9 +25,14 @@ class SevicePage extends StatelessWidget {
             style: TextStyle(fontSize: 16, color: BWColors.serviceTitle),
           ),
           actions: <Widget>[
-            Text(
-              Strings.feeTitle,
-              style: TextStyle(fontSize: 14, color: BWColors.serviceTitle),
+            Center(
+              child: Padding(
+                padding: EdgeInsets.only(right: 20),
+                child: Text(
+                  Strings.feeTitle,
+                  style: TextStyle(fontSize: 14, color: BWColors.serviceTitle),
+                ),
+              ),
             )
           ],
           backgroundColor: Colors.white,
@@ -44,7 +50,7 @@ class _BodyWidget extends StatefulWidget {
 class __BodyWidgetState extends State<_BodyWidget> {
   RefreshController _refreshController = RefreshController();
 
-  final viewModel = SponsorModel();
+  final viewModel = ServiceModel();
 
   @override
   void initState() {
@@ -54,9 +60,9 @@ class __BodyWidgetState extends State<_BodyWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<SponsorModel>.value(
+    return ChangeNotifierProvider<ServiceModel>.value(
       value: viewModel,
-      child: Consumer<SponsorModel>(builder: (context, vm, child) {
+      child: Consumer<ServiceModel>(builder: (context, vm, child) {
         switch (vm.screenStatus) {
           case ScreenStatus.Error:
             return NetErrorView(callBack: () => viewModel.init());
@@ -70,15 +76,6 @@ class __BodyWidgetState extends State<_BodyWidget> {
           case ScreenStatus.RefreshFail:
             _refreshController.refreshFailed();
             return _buildContentWidget();
-          case ScreenStatus.LoadMoreNoData:
-            _refreshController.loadNoData();
-            return _buildContentWidget();
-          case ScreenStatus.LoadMoreComplete:
-            _refreshController.loadComplete();
-            return _buildContentWidget();
-          case ScreenStatus.LoadMoreFail:
-            _refreshController.loadFailed();
-            return _buildContentWidget();
           case ScreenStatus.Empty:
             return EmptyView(Strings.spoEmptyTitle, R.sponsor_empty_holder);
           default:
@@ -90,29 +87,93 @@ class __BodyWidgetState extends State<_BodyWidget> {
 
   /// 数据页面
   Widget _buildContentWidget() {
-    if (viewModel.results.length == 1) {
-      return Center(
-        child: Text('只有一条数据'),
-      );
-    } else {
-      return SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: true,
-          onRefresh: () => viewModel.refresh(),
-          onLoading: () => viewModel.loadMore(),
-          controller: _refreshController,
-          child: _buideList(viewModel.results));
-    }
+    return Column(
+      children: <Widget>[
+        Container(
+          width: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.only(left: 14, top: 8, bottom: 8),
+          color: BWColors.serviceBg,
+          child: Text(
+            Strings.serGuess,
+            style: TextStyle(fontSize: 16, color: BWColors.serviceTitle),
+          ),
+        ),
+        Expanded(
+          child: SmartRefresher(
+              enablePullDown: true,
+              enablePullUp: false,
+              onRefresh: () => viewModel.refresh(),
+              controller: _refreshController,
+              child: _buideList(viewModel.results)),
+        ),
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 28),
+          height: 76,
+          color: BWColors.serviceBg,
+          width: MediaQuery.of(context).size.width,
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                  child: Container(
+                margin: EdgeInsets.only(right: 10),
+                height: 46,
+                child: FlatButton(
+                  color: BWColors.serviceBtnBg,
+                  child: Text(
+                    Strings.serMain,
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(4.0)),
+                  onPressed: () {},
+                ),
+              )),
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.only(left: 10),
+                  height: 46,
+                  child: FlatButton(
+                    child: Text(
+                      Strings.serSecond,
+                      style:
+                          TextStyle(color: BWColors.serviceBtnBg, fontSize: 16),
+                    ),
+                    shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          color: BWColors.serviceBtnBg,
+                        ),
+                        borderRadius: BorderRadius.circular(4.0)),
+                    onPressed: () {},
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 
   /// 数据页面
   /// [datas] 展示数据列表
-  ListView _buideList(List<SponorItemBean> datas) {
-    return ListView.builder(
+  ListView _buideList(List<ServiceItemBean> datas) {
+    return ListView.separated(
       itemCount: datas.length,
       itemBuilder: (context, index) => InkWell(
           onTap: () => Navigator.pushNamed(context, Routes.discountDetails),
-          child: SponsorItem(datas[index])),
+          child: ServiceItem(datas[index])),
+      //分割器构造器
+      separatorBuilder: (BuildContext context, int index) {
+        return Container(
+          padding: EdgeInsets.only(left: 56),
+          height: 1,
+          color: Colors.white,
+          child: Divider(
+            height: 1,
+            color: BWColors.serviceBg,
+          ),
+        );
+      },
     );
   }
 }

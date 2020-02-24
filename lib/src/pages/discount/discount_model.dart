@@ -21,11 +21,11 @@ class DiscountModel extends ChangeNotifier {
   bool isInit = true;
 
   void loadMore() async {
-    var disList = await ApiService.getDisList(pageNum: pageNum);
-    if (disList.code == 0) {
-      if (disList.data.list.isNotEmpty) {
+    var entity = await ApiService.getDisList(pageNum: pageNum);
+    if (entity.code == 0) {
+      if (entity.data.list.isNotEmpty) {
         pageNum++;
-        _results.addAll(disList.data.list);
+        _results.addAll(entity.data.list);
         _screenStatus = ScreenStatus.LoadMoreComplete;
       } else {
         _screenStatus = ScreenStatus.LoadMoreNoData;
@@ -39,12 +39,12 @@ class DiscountModel extends ChangeNotifier {
   int pageNum = 1;
   void refresh() async {
     pageNum = 1;
-    var disList = await ApiService.getDisList();
-    if (disList.code == 0) {
+    var entity = await ApiService.getDisList();
+    if (entity.code == 0) {
       _results.clear();
-      if (disList.data.list.isNotEmpty) {
+      if (entity.data.list.isNotEmpty) {
         pageNum++;
-        _results.addAll(disList.data.list);
+        _results.addAll(entity.data.list);
         _screenStatus = ScreenStatus.RefreshComplete;
       } else {
         _screenStatus = ScreenStatus.Empty;

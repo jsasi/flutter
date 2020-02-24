@@ -1,18 +1,48 @@
+import 'package:biz_network_main/biz_network_main.dart';
+import 'package:json_annotation/json_annotation.dart';
 
-class ServiceentityEntity  {
-	int code;
-	List<ServiceentityData> data;
-	String msg;
+part 'service_entity.g.dart';
+
+
+@JsonSerializable()
+class ServiceEntity extends BaseEntity {
+
+	List<ServiceItemBean> data;
+
+	ServiceEntity({msg, code, errorSn, this.data}): super(msg: msg, code: code, errorSn: errorSn);
+
+	factory ServiceEntity.fromJson(Map<String, dynamic> srcJson) => _$ServiceEntityFromJson(srcJson);
+
+	Map<String, dynamic> toJson() => _$ServiceEntityToJson(this);
+
 }
 
-class ServiceentityData  {
+
+@JsonSerializable()
+class ServiceItemBean {
+
 	String createdAt;
-	String iconUrl;
-	int id;
-	int isDelete;
-	String name;
-	String shortTitle;
-	String updatedAt;
-	String updatedBy;
+
 	String createdBy;
+
+	String iconUrl;
+
+	int id;
+
+	int isDelete;
+
+	String name;
+
+	String shortTitle;
+
+	String updatedAt;
+
+	ServiceItemBean(this.createdAt,this.createdBy,this.iconUrl,this.id,this.isDelete,this.name,this.shortTitle,this.updatedAt,);
+
+	factory ServiceItemBean.fromJson(Map<String, dynamic> srcJson) => _$ServiceItemBeanFromJson(srcJson);
+
+	Map<String, dynamic> toJson() => _$ServiceItemBeanToJson(this);
+
 }
+
+

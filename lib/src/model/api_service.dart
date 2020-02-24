@@ -1,5 +1,6 @@
 import 'package:biz_network_main/biz_network_main.dart';
 import 'package:bw_sponsor_preferential/src/model/discount_entity.dart';
+import 'package:bw_sponsor_preferential/src/model/service_entity.dart';
 import 'package:bw_sponsor_preferential/src/model/sponsor_entity.dart';
 
 class ApiService {
@@ -51,11 +52,11 @@ class ApiService {
   }
 
   /// 获取客服帮助列表Help
-  static Future<String> getSerHelpList() async {
+  static Future<ServiceEntity> getSerHelpList() async {
     var response = await mainClient.dio.post(
       _SSERVICE_HELP_LIST_URL,
     );
 
-    return "ss";
+    return ServiceEntity.fromJson(response.data);
   }
 }
