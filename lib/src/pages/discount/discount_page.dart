@@ -1,5 +1,6 @@
 import 'package:bw_res/bw_res.dart';
 import 'package:bw_res/res/bw_colors.dart';
+import 'package:bw_sponsor_preferential/src/common/h5_url_format.dart';
 import 'package:bw_sponsor_preferential/src/model/discount_entity.dart';
 import 'package:bw_sponsor_preferential/src/pages/discount_details/discount_details_page.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +39,19 @@ class __BodyWidgetState extends State<_BodyWidget> {
   RefreshController _refreshController = RefreshController();
 
   final viewModel = DiscountModel();
+
+  String _getDetailsUrl(DiscountItemBean bean) {
+    String appLink = bean.appTopicLink;
+    if (appLink.isNotEmpty) {
+      if (!appLink.contains("http") && !appLink.contains("https")) {
+        appLink = H5UrlFormat.getH5Url(appLink);
+      }
+    } else {
+      appLink =
+          H5UrlFormat.getH5Url("/app/promo/list/${bean?.id}"); //;+ data?.id
+    }
+    return appLink;
+  }
 
   @override
   void initState() {
@@ -101,7 +115,11 @@ class __BodyWidgetState extends State<_BodyWidget> {
     return ListView.builder(
       itemCount: datas.length,
       itemBuilder: (context, index) => InkWell(
-          onTap: () => Navigator.pushNamed(context, Routes.discountDetails,arguments: {DiscountDetailsPage.KEY_URL:""}),
+          onTap: () =>
+              Navigator.pushNamed(context, Routes.discountDetails, arguments: {
+                DiscountDetailsPage.KEY_URL: _getDetailsUrl(datas[index]),
+                DiscountDetailsPage.KEY_TITLE: datas[index].title
+              }),
           child: DiscountItem(datas[index])),
     );
   }

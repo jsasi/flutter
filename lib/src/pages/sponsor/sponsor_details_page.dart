@@ -13,7 +13,6 @@ class SponsorDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("${H5UrlFormat.getH5Url(arguments[KEY_URL])}");
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -31,7 +30,6 @@ class SponsorDetailsPage extends StatelessWidget {
         body: CommonWebview(
           H5UrlFormat.getH5Url(arguments[KEY_URL]),
           showTitleBar: false,
-          canGoBack: false,
         ));
   }
 }

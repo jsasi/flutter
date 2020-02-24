@@ -56,7 +56,6 @@ class ApiService {
       _SSERVICE_HELP_LIST_URL,
     );
 
-    print(response);
     return "ss";
   }
 }

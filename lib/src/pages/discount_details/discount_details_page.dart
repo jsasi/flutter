@@ -6,9 +6,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DiscountDetailsPage extends StatelessWidget {
-  const DiscountDetailsPage({Key key, this.arguments}) : super(key: key);
+  DiscountDetailsPage({Key key, this.arguments}) : super(key: key);
   final arguments;
   static final String KEY_URL = "key_url";
+  static final String KEY_TITLE = "key_title";
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class DiscountDetailsPage extends StatelessWidget {
               ),
               onPressed: () => Navigator.of(context).pop()),
           title: Text(
-            Strings.disDetailsTitle,
+            arguments != null ? arguments[KEY_TITLE] : Strings.disDetailsTitle,
             style: TextStyle(fontSize: 18, color: BWColors.disTitle),
           ),
           actions: <Widget>[
@@ -32,11 +33,9 @@ class DiscountDetailsPage extends StatelessWidget {
             ),
           ],
         ),
-        body: Text("sss"));
-//        body: CommonWebview(
-//          H5UrlFormat.getH5Url(""),
-//          showTitleBar: false,
-//          canGoBack: false,
-//        ));
+        body: CommonWebview(
+          H5UrlFormat.getH5Url(""),
+          showTitleBar: false,
+        ));
   }
 }

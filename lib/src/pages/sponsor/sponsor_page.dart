@@ -1,8 +1,10 @@
 import 'package:bw_res/res/bw_colors.dart';
 import 'package:bw_res/res/res.dart';
 import 'package:bw_res/res/strings.dart';
+import 'package:bw_sponsor_preferential/src/common/h5_url_format.dart';
 import 'package:bw_sponsor_preferential/src/model/sponsor_entity.dart';
 import 'package:bw_sponsor_preferential/src/pages/sponsor/sponsor_details_page.dart';
+import 'package:bw_utils/bw_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -86,8 +88,10 @@ class __BodyWidgetState extends State<_BodyWidget> {
   /// 数据页面
   Widget _buildContentWidget() {
     if (viewModel.results.length == 1) {
-      return Center(
-        child: Text('只有一条数据'),
+      return CommonWebview(
+        H5UrlFormat.getH5Url(viewModel.results[0].infoUrl),
+        showTitleBar: false,
+        canGoBack: false,
       );
     } else {
       return SmartRefresher(

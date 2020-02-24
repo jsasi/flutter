@@ -17,12 +17,13 @@ class SponsorItem extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
         children: <Widget>[
-          SimpleImage.display(
-            data.sponsoredUrl,
+          SizedBox(
             width: 209,
             height: 148,
+            child: SimpleImage.display(
+              data.sponsoredUrl,
+            ),
           ),
           Expanded(
             child: Column(
@@ -30,10 +31,12 @@ class SponsorItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 ClipOval(
-                  child:  SimpleImage.display(
-                    data.sponsoredIconUrl,
+                  child: SizedBox(
                     width: 32,
                     height: 32,
+                    child: SimpleImage.display(
+                      data.sponsoredIconUrl,
+                    ),
                   ),
                 ),
                 Padding(
@@ -50,7 +53,6 @@ class SponsorItem extends StatelessWidget {
                   maxLines: 1,
                 ),
                 Container(
-                  width: 90,
                   height: 26,
                   margin: EdgeInsets.only(top: 12),
                   child: FlatButton(
