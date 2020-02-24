@@ -118,7 +118,7 @@ class __BodyWidgetState extends State<_BodyWidget> {
           onTap: () =>
               Navigator.pushNamed(context, Routes.discountDetails, arguments: {
                 DiscountDetailsPage.KEY_URL: _getDetailsUrl(datas[index]),
-                DiscountDetailsPage.KEY_TITLE: datas[index].title
+                DiscountDetailsPage.KEY_DATA: datas[index]
               }),
           child: DiscountItem(datas[index])),
     );

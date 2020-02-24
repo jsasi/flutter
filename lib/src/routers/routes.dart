@@ -16,7 +16,7 @@ class Routes {
 }
 
 final _routes = {
-  Routes.root: (context) => SponsorPage(),
+  Routes.root: (context) => DiscountPage(),
   Routes.discount: (context) => DiscountPage(),
   Routes.discountDetails: (context, {arguments}) =>
       DiscountDetailsPage(arguments: arguments),

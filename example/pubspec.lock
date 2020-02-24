@@ -27,7 +27,7 @@ packages:
     description:
       path: "."
       ref: "feature_v0.1"
-      resolved-ref: "15a27e516c16c81bcb1a13b69640d24a3fc352be"
+      resolved-ref: "51db1f32f49026dcb91d7ebbb7ecd555653072e3"
       url: "http://47.52.134.206/bw-flutter/biz_app_init.git"
     source: git
     version: "0.0.1"
@@ -36,7 +36,7 @@ packages:
     description:
       path: "."
       ref: "feature_v0.1"
-      resolved-ref: "8fca28fd9e80662fc288502a27fdfd902c42d4c4"
+      resolved-ref: "7f3d469c22a8c437161a5c9d6dabdaee327f2265"
       url: "http://47.52.134.206/bw-flutter/biz_login.git"
     source: git
     version: "0.0.1"
@@ -45,7 +45,7 @@ packages:
     description:
       path: "."
       ref: "feature_v0.1"
-      resolved-ref: "820524202e2cd54e29008e8910dbee1abe8663d3"
+      resolved-ref: "69aae09be3dc0e1d647ee434bc0760c47726e66f"
       url: "http://47.52.134.206/bw-flutter/biz_network_main.git"
     source: git
     version: "0.0.1"
@@ -61,7 +61,7 @@ packages:
     description:
       path: "packages/bw_res"
       ref: "feature_v0.1"
-      resolved-ref: c4f14113117326ac41fb2b81fc984e8f1e4805ca
+      resolved-ref: cc753db97586e8973abaf30435f653bdb7e608b5
       url: "http://47.52.134.206/bw-flutter/bw_resources.git"
     source: git
     version: "0.0.1"
@@ -77,7 +77,7 @@ packages:
     description:
       path: "."
       ref: "feature_v0.1"
-      resolved-ref: a64da68ebe07f8d07b8e22b520126682263d8c50
+      resolved-ref: "5647c89be914aa51709363317d8f8b3b08288096"
       url: "http://47.52.134.206/bw-flutter/bw_utils.git"
     source: git
     version: "0.0.1"

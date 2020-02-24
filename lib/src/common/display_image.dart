@@ -11,8 +11,11 @@ class SimpleImage {
       height: height,
       imageUrl: imgUrl,
       fit: BoxFit.cover,
-      placeholder: (context, url) =>
-          Image.asset(R.default_holder, package: Strings.bwResPackage),
+      placeholder: (context, url) => Image.asset(
+        R.default_holder,
+        package: Strings.bwResPackage,
+        fit: BoxFit.cover,
+      ),
       errorWidget: (context, url, error) => Icon(Icons.error),
     );
   }

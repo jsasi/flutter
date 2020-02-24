@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
+            bottomSheetTheme: BottomSheetThemeData(backgroundColor: Color(0x66000000),)
         ),
         onGenerateRoute: onGenerateRoute,
         //路由注册
