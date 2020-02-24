@@ -36,10 +36,13 @@ class ServiceItem extends StatelessWidget {
                   )
                 : Container(),
           ),
-          Icon(
-            Icons.arrow_forward_ios,
-            size: 13,
-            color: BWColors.feeItemArrow,
+          Padding(
+            padding: const EdgeInsets.only(left:15,right: 20),
+            child: Icon(
+              Icons.arrow_forward_ios,
+              size: 13,
+              color: BWColors.feeItemArrow,
+            ),
           )
         ],
       ),
