@@ -5,6 +5,7 @@ import 'package:bw_utils/bw_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+/// 赞助详情页
 class SponsorDetailsPage extends StatelessWidget {
   const SponsorDetailsPage({Key key, this.arguments}) : super(key: key);
   final arguments;
@@ -19,7 +20,8 @@ class SponsorDetailsPage extends StatelessWidget {
           leading: IconButton(
               icon: Icon(
                 Icons.arrow_back_ios,
-                color: BWColors.disTitle,
+                color: BWColors.dssTitleLeftArrow,
+                size: 14,
               ),
               onPressed: () => Navigator.of(context).pop()),
           title: Text(

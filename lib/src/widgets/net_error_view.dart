@@ -31,9 +31,9 @@ class NetErrorView extends StatelessWidget {
             child: FlatButton(
               child: Text(
                 Strings.netErrBtnText,
-                style: TextStyle(fontSize: 14, color: BWColors.netErrBtnText),
+                style: TextStyle(fontSize: 14, color: BWColors.dssBtnText),
               ),
-              color: BWColors.netErBtnBg,
+              color: BWColors.dssBtnBg,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5.0)),
               onPressed: callBack,

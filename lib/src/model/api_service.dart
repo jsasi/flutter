@@ -2,6 +2,7 @@ import 'package:biz_network_main/biz_network_main.dart';
 import 'package:bw_sponsor_preferential/src/model/discount_entity.dart';
 import 'package:bw_sponsor_preferential/src/model/service_entity.dart';
 import 'package:bw_sponsor_preferential/src/model/sponsor_entity.dart';
+import 'package:bw_sponsor_preferential/src/model/support_type_entity.dart';
 
 class ApiService {
   /// 帮助中心列表
@@ -58,5 +59,13 @@ class ApiService {
     );
 
     return ServiceEntity.fromJson(response.data);
+  }
+
+  /// 获取客服分类列表Help
+  /// [helpCateId]分类id
+  static Future<SupportTypeEntity> getSupTypeList(int helpCateId) async {
+    var response = await mainClient.dio
+        .post(_QUERYSITEHELPINFOLIST, data: {"helpCateId": helpCateId});
+    return SupportTypeEntity.fromJson(response.data);
   }
 }

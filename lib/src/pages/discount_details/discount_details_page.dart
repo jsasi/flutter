@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 ///优惠详情页
+// ignore: must_be_immutable
 class DiscountDetailsPage extends StatelessWidget {
   DiscountDetailsPage({Key key, this.arguments}) : super(key: key);
   final arguments;
@@ -29,6 +30,8 @@ class DiscountDetailsPage extends StatelessWidget {
   // 解析路由数据
   void _initArguments() {
     if (arguments != null) {
+      print(arguments.runtimeType);
+      print(arguments);
       _data = arguments[KEY_DATA];
       _url = arguments[KEY_URL];
     }
@@ -44,7 +47,8 @@ class DiscountDetailsPage extends StatelessWidget {
           leading: IconButton(
               icon: Icon(
                 Icons.arrow_back_ios,
-                color: BWColors.disTitle,
+                color: BWColors.dssTitleLeftArrow,
+                size: 14,
               ),
               onPressed: () => Navigator.of(context).pop()),
           centerTitle: true,
@@ -60,7 +64,7 @@ class DiscountDetailsPage extends StatelessWidget {
           ],
         ),
         body: CommonWebview(
-          arguments[KEY_URL] ?? "",
+          _url ?? "",
           showTitleBar: false,
         ));
   }

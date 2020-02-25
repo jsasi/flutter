@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../common/page_status.dart';
 
-/// 优惠列表
+/// 赞助列表
 class SponsorModel extends ChangeNotifier {
   ScreenStatus _screenStatus = ScreenStatus.Loading;
 
@@ -57,7 +57,6 @@ class SponsorModel extends ChangeNotifier {
   void init() async {
     _screenStatus = ScreenStatus.Loading;
     notifyListeners();
-    await appInit.initialize();
     refresh();
   }
 }

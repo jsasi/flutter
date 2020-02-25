@@ -1,7 +1,7 @@
 import 'package:bw_res/res/bw_colors.dart';
 import 'package:bw_res/res/res.dart';
 import 'package:bw_res/res/strings.dart';
-import 'package:bw_sponsor_preferential/src/common/display_image.dart';
+import 'package:bw_sponsor_preferential/src/widgets/simple_imageview.dart';
 import 'package:bw_sponsor_preferential/src/model/discount_entity.dart';
 import 'package:bw_sponsor_preferential/src/model/service_entity.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +20,7 @@ class ServiceItem extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(left: 14, right: 10),
-            child: SimpleImage.displayIcon(data.iconUrl, width: 32, height: 32),
+            child: SimpleImageView.displayIcon(data.iconUrl, width: 32, height: 32),
           ),
           Text(
             data.name,
@@ -41,7 +41,7 @@ class ServiceItem extends StatelessWidget {
             child: Icon(
               Icons.arrow_forward_ios,
               size: 13,
-              color: BWColors.feeItemArrow,
+              color: BWColors.dssItemArrow,
             ),
           )
         ],

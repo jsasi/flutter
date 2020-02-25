@@ -13,31 +13,13 @@ import '../../widgets/net_error_view.dart';
 import 'discount_model.dart';
 
 /// 优惠列表页面
-class DiscountPage extends StatelessWidget {
+class DiscountPage extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text(
-            Strings.disTitle,
-            style: TextStyle(fontSize: 16, color: BWColors.disTitle),
-          ),
-          backgroundColor: Colors.white,
-        ),
-        body: _BodyWidget());
-  }
+  _DiscountPageState createState() => _DiscountPageState();
 }
 
-/// 页面主体widget
-class _BodyWidget extends StatefulWidget {
-  @override
-  __BodyWidgetState createState() => __BodyWidgetState();
-}
-
-class __BodyWidgetState extends State<_BodyWidget> {
+class _DiscountPageState extends State<DiscountPage> {
   RefreshController _refreshController = RefreshController();
-
   final viewModel = DiscountModel();
 
   String _getDetailsUrl(DiscountItemBean bean) {
@@ -60,40 +42,56 @@ class __BodyWidgetState extends State<_BodyWidget> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _refreshController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<DiscountModel>.value(
-      value: viewModel,
-      child: Consumer<DiscountModel>(builder: (context, vm, child) {
-        switch (vm.screenStatus) {
-          case ScreenStatus.Error:
-            return NetErrorView(callBack: () => viewModel.init());
-          case ScreenStatus.Loading:
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          case ScreenStatus.RefreshComplete:
-            _refreshController.refreshCompleted(resetFooterState: true);
-            return _buildRefreshWidget();
-          case ScreenStatus.RefreshFail:
-            _refreshController.refreshFailed();
-            return _buildRefreshWidget();
-          case ScreenStatus.LoadMoreNoData:
-            _refreshController.loadNoData();
-            return _buildRefreshWidget();
-          case ScreenStatus.LoadMoreComplete:
-            _refreshController.loadComplete();
-            return _buildRefreshWidget();
-          case ScreenStatus.LoadMoreFail:
-            _refreshController.loadFailed();
-            return _buildRefreshWidget();
-          case ScreenStatus.Empty:
-            return Center(
-              child: Text('数据为空'),
-            );
-          default:
-            return _buildRefreshWidget();
-        }
-      }),
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          Strings.disTitle,
+          style: TextStyle(fontSize: 16, color: BWColors.disTitle),
+        ),
+        backgroundColor: Colors.white,
+      ),
+      body: ChangeNotifierProvider<DiscountModel>.value(
+        value: viewModel,
+        child: Consumer<DiscountModel>(builder: (context, vm, child) {
+          switch (vm.screenStatus) {
+            case ScreenStatus.Error:
+              return NetErrorView(callBack: () => viewModel.init());
+            case ScreenStatus.Loading:
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            case ScreenStatus.RefreshComplete:
+              _refreshController.refreshCompleted(resetFooterState: true);
+              return _buildRefreshWidget();
+            case ScreenStatus.RefreshFail:
+              _refreshController.refreshFailed();
+              return _buildRefreshWidget();
+            case ScreenStatus.LoadMoreNoData:
+              _refreshController.loadNoData();
+              return _buildRefreshWidget();
+            case ScreenStatus.LoadMoreComplete:
+              _refreshController.loadComplete();
+              return _buildRefreshWidget();
+            case ScreenStatus.LoadMoreFail:
+              _refreshController.loadFailed();
+              return _buildRefreshWidget();
+            case ScreenStatus.Empty:
+              return Center(
+                child: Text('数据为空'),
+              );
+            default:
+              return _buildRefreshWidget();
+          }
+        }),
+      ),
     );
   }
 

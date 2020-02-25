@@ -2,7 +2,7 @@ import 'package:biz_app_init/biz_app_init.dart';
 import 'package:bw_res/res/bw_colors.dart';
 import 'package:bw_res/res/res.dart';
 import 'package:bw_res/res/strings.dart';
-import 'package:bw_sponsor_preferential/src/common/display_image.dart';
+import 'package:bw_sponsor_preferential/src/widgets/simple_imageview.dart';
 import 'package:bw_utils/bw_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -44,7 +44,7 @@ class DialogSavePic extends StatelessWidget {
                     child: Container(
                       color: BWColors.disDialogImgBg,
                       child: !StringUtil.isNullOrEmpty(sharePicture)
-                          ? SimpleImage.display(sharePicture)
+                          ? SimpleImageView.display(sharePicture)
                           : Container(),
                     ),
                   ),

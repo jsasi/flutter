@@ -58,7 +58,6 @@ class DiscountModel extends ChangeNotifier {
   void init() async {
     _screenStatus = ScreenStatus.Loading;
     notifyListeners();
-    await appInit.initialize();
     refresh();
   }
 }

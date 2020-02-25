@@ -1,5 +1,5 @@
 import 'package:bw_res/res/bw_colors.dart';
-import 'package:bw_sponsor_preferential/src/common/display_image.dart';
+import 'package:bw_sponsor_preferential/src/widgets/simple_imageview.dart';
 import 'package:bw_sponsor_preferential/src/model/sponsor_entity.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +21,7 @@ class SponsorItem extends StatelessWidget {
           SizedBox(
             width: 209,
             height: 148,
-            child: SimpleImage.display(
+            child: SimpleImageView.display(
               data.sponsoredUrl,
             ),
           ),
@@ -34,7 +34,7 @@ class SponsorItem extends StatelessWidget {
                   child: SizedBox(
                     width: 32,
                     height: 32,
-                    child: SimpleImage.display(
+                    child: SimpleImageView.display(
                       data.sponsoredIconUrl,
                     ),
                   ),
@@ -57,8 +57,8 @@ class SponsorItem extends StatelessWidget {
                   margin: EdgeInsets.only(top: 12),
                   child: FlatButton(
                     padding: EdgeInsets.all(0),
-                    textColor: Colors.white,
-                    color: BWColors.spoBtnBg,
+                    textColor: BWColors.dssBtnText,
+                    color: BWColors.dssBtnBg,
                     child: Text(
                       data.keyCreative,
                       style: TextStyle(fontSize: 10),

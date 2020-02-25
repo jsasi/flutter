@@ -16,29 +16,12 @@ import '../../widgets/sponsor_item.dart';
 import 'sponsor_model.dart';
 
 /// 赞助页面
-class SponsorPage extends StatelessWidget {
+class SponsorPage extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text(
-            Strings.spoTitle,
-            style: TextStyle(fontSize: 16, color: BWColors.spoTitle),
-          ),
-          backgroundColor: Colors.white,
-        ),
-        body: _BodyWidget());
-  }
+  _SponsorPageState createState() => _SponsorPageState();
 }
 
-/// 页面主体widget
-class _BodyWidget extends StatefulWidget {
-  @override
-  __BodyWidgetState createState() => __BodyWidgetState();
-}
-
-class __BodyWidgetState extends State<_BodyWidget> {
+class _SponsorPageState extends State<SponsorPage> {
   RefreshController _refreshController = RefreshController();
 
   final viewModel = SponsorModel();
@@ -50,38 +33,54 @@ class __BodyWidgetState extends State<_BodyWidget> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _refreshController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<SponsorModel>.value(
-      value: viewModel,
-      child: Consumer<SponsorModel>(builder: (context, vm, child) {
-        switch (vm.screenStatus) {
-          case ScreenStatus.Error:
-            return NetErrorView(callBack: () => viewModel.init());
-          case ScreenStatus.Loading:
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          case ScreenStatus.RefreshComplete:
-            _refreshController.refreshCompleted(resetFooterState: true);
-            return _buildContentWidget();
-          case ScreenStatus.RefreshFail:
-            _refreshController.refreshFailed();
-            return _buildContentWidget();
-          case ScreenStatus.LoadMoreNoData:
-            _refreshController.loadNoData();
-            return _buildContentWidget();
-          case ScreenStatus.LoadMoreComplete:
-            _refreshController.loadComplete();
-            return _buildContentWidget();
-          case ScreenStatus.LoadMoreFail:
-            _refreshController.loadFailed();
-            return _buildContentWidget();
-          case ScreenStatus.Empty:
-            return EmptyView(Strings.spoEmptyTitle, R.sponsor_empty_holder);
-          default:
-            return _buildContentWidget();
-        }
-      }),
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          Strings.spoTitle,
+          style: TextStyle(fontSize: 16, color: BWColors.spoTitle),
+        ),
+        backgroundColor: Colors.white,
+      ),
+      body: ChangeNotifierProvider<SponsorModel>.value(
+        value: viewModel,
+        child: Consumer<SponsorModel>(builder: (context, vm, child) {
+          switch (vm.screenStatus) {
+            case ScreenStatus.Error:
+              return NetErrorView(callBack: () => viewModel.init());
+            case ScreenStatus.Loading:
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            case ScreenStatus.RefreshComplete:
+              _refreshController.refreshCompleted(resetFooterState: true);
+              return _buildContentWidget();
+            case ScreenStatus.RefreshFail:
+              _refreshController.refreshFailed();
+              return _buildContentWidget();
+            case ScreenStatus.LoadMoreNoData:
+              _refreshController.loadNoData();
+              return _buildContentWidget();
+            case ScreenStatus.LoadMoreComplete:
+              _refreshController.loadComplete();
+              return _buildContentWidget();
+            case ScreenStatus.LoadMoreFail:
+              _refreshController.loadFailed();
+              return _buildContentWidget();
+            case ScreenStatus.Empty:
+              return EmptyView(Strings.spoEmptyTitle, R.sponsor_empty_holder);
+            default:
+              return _buildContentWidget();
+          }
+        }),
+      ),
     );
   }
 

@@ -3,6 +3,7 @@ import 'package:bw_res/res/bw_colors.dart';
 import 'package:bw_res/res/strings.dart';
 import 'package:bw_sponsor_preferential/src/model/service_entity.dart';
 import 'package:bw_sponsor_preferential/src/pages/service/home/service_model.dart';
+import 'package:bw_sponsor_preferential/src/pages/service/support/support_center_page.dart';
 import 'package:bw_sponsor_preferential/src/widgets/service_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +12,6 @@ import '../../../common/page_status.dart';
 import '../../../routers/routes.dart';
 import '../../../widgets/empty_view_.dart';
 import '../../../widgets/net_error_view.dart';
-
 
 /// 客服页面
 class SevicePage extends StatelessWidget {
@@ -56,6 +56,11 @@ class __BodyWidgetState extends State<_BodyWidget> {
   void initState() {
     super.initState();
     viewModel.init();
+  }
+  @override
+  void dispose() {
+    super.dispose();
+    _refreshController.dispose();
   }
 
   @override
@@ -118,7 +123,7 @@ class __BodyWidgetState extends State<_BodyWidget> {
                 margin: EdgeInsets.only(right: 10),
                 height: 46,
                 child: FlatButton(
-                  color: BWColors.serviceBtnBg,
+                  color: BWColors.dssBtnBg,
                   child: Text(
                     Strings.serMain,
                     style: TextStyle(color: Colors.white, fontSize: 16),
@@ -136,11 +141,11 @@ class __BodyWidgetState extends State<_BodyWidget> {
                     child: Text(
                       Strings.serSecond,
                       style:
-                          TextStyle(color: BWColors.serviceBtnBg, fontSize: 16),
+                          TextStyle(color: BWColors.dssBtnBg, fontSize: 16),
                     ),
                     shape: RoundedRectangleBorder(
                         side: BorderSide(
-                          color: BWColors.serviceBtnBg,
+                          color: BWColors.dssBtnBg,
                         ),
                         borderRadius: BorderRadius.circular(4.0)),
                     onPressed: () {},
@@ -160,7 +165,8 @@ class __BodyWidgetState extends State<_BodyWidget> {
     return ListView.separated(
       itemCount: datas.length,
       itemBuilder: (context, index) => InkWell(
-          onTap: () => Navigator.pushNamed(context, Routes.discountDetails),
+          onTap: () => Navigator.pushNamed(context, Routes.supportCenter,
+              arguments: {SupportCenterListPage.KEY_DATA: datas[index]}),
           child: ServiceItem(datas[index])),
       //分割器构造器
       separatorBuilder: (BuildContext context, int index) {

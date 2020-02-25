@@ -3,6 +3,7 @@ import 'package:biz_login/biz_login.dart';
 
 class H5UrlFormat {
 
+  /// 根据path拼接host和token
   static String getH5Url(String url) {
     String token = LoginUtil.token;
     String h5Domain = AppInit().h5Host;
