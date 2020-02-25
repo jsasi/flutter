@@ -16,55 +16,19 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../../../bw_sponsor_preferential.dart';
 
 /// 帮助中心列表页面
-class SupportCenterListPage extends StatelessWidget {
-  ServiceItemBean _bean;
+class SupportCenterListPage extends StatefulWidget {
   final arguments;
 
   static final String KEY_DATA = "key_data";
 
   SupportCenterListPage({Key key, this.arguments}) : super(key: key);
 
-  // 解析路由数据
-  void _initArguments() {
-    if (arguments != null) {
-      _bean = arguments[KEY_DATA];
-    }
-  }
-
   @override
-  Widget build(BuildContext context) {
-    _initArguments();
-    return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios,
-              color: BWColors.dssTitleLeftArrow,
-              size: 14,
-            ),
-          ),
-          centerTitle: true,
-          title: Text(
-            _bean.name ?? "",
-            style: TextStyle(fontSize: 16, color: BWColors.serviceTitle),
-          ),
-          backgroundColor: Colors.white,
-        ),
-        body: _BodyWidget(_bean.id));
-  }
+  _SupportCenterListPageState createState() => _SupportCenterListPageState();
 }
 
-/// 页面主体widget
-class _BodyWidget extends StatefulWidget {
-  _BodyWidget(this.id);
-
-  final int id;
-
-  @override
-  __BodyWidgetState createState() => __BodyWidgetState();
-}
-
-class __BodyWidgetState extends State<_BodyWidget> {
+class _SupportCenterListPageState extends State<SupportCenterListPage> {
+  ServiceItemBean _bean;
   RefreshController _refreshController = RefreshController();
   SupportCenterModel _viewModel;
   final TapGestureRecognizer _recognizer = new TapGestureRecognizer();
@@ -79,40 +43,65 @@ class __BodyWidgetState extends State<_BodyWidget> {
   @override
   void initState() {
     super.initState();
-    _viewModel = SupportCenterModel(widget.id);
+    _initArguments();
+    _viewModel = SupportCenterModel(_bean.id);
     _viewModel.init();
-    //客服点击
+    //客服点击 todo
 //    _recognizer.onTap = () => Navigator.pushNamed(context, Routes.service);
+  }
+
+  void _initArguments() {
+    if (widget.arguments != null) {
+      _bean = widget.arguments[SupportCenterListPage.KEY_DATA];
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(top: 20),
-      color: Colors.white,
-      child: ChangeNotifierProvider<SupportCenterModel>.value(
-        value: _viewModel,
-        child: Consumer<SupportCenterModel>(builder: (context, vm, child) {
-          switch (vm.screenStatus) {
-            case ScreenStatus.Error:
-              return NetErrorView(callBack: () => _viewModel.init());
-            case ScreenStatus.Loading:
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            case ScreenStatus.RefreshComplete:
-              _refreshController.refreshCompleted(resetFooterState: true);
-              return _buildContentWidget();
-            case ScreenStatus.RefreshFail:
-              _refreshController.refreshFailed();
-              return _buildContentWidget();
-            case ScreenStatus.Empty:
-              return EmptyView(
-                  Strings.supportEmptyTitle, R.support_empty_history);
-            default:
-              return _buildContentWidget();
-          }
-        }),
+    _initArguments();
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: BWColors.dssTitleLeftArrow,
+            size: 14,
+          ),
+        ),
+        centerTitle: true,
+        title: Text(
+          _bean.name ?? "",
+          style: TextStyle(fontSize: 16, color: BWColors.serviceTitle),
+        ),
+        backgroundColor: Colors.white,
+      ),
+      body: Container(
+        margin: EdgeInsets.only(top: 20),
+        color: Colors.white,
+        child: ChangeNotifierProvider<SupportCenterModel>.value(
+          value: _viewModel,
+          child: Consumer<SupportCenterModel>(builder: (context, vm, child) {
+            switch (vm.screenStatus) {
+              case ScreenStatus.Error:
+                return NetErrorView(callBack: () => _viewModel.init());
+              case ScreenStatus.Loading:
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              case ScreenStatus.RefreshComplete:
+                _refreshController.refreshCompleted(resetFooterState: true);
+                return _buildContentWidget();
+              case ScreenStatus.RefreshFail:
+                _refreshController.refreshFailed();
+                return _buildContentWidget();
+              case ScreenStatus.Empty:
+                return EmptyView(
+                    Strings.supportEmptyTitle, R.support_empty_history);
+              default:
+                return _buildContentWidget();
+            }
+          }),
+        ),
       ),
     );
   }
@@ -179,7 +168,7 @@ class __BodyWidgetState extends State<_BodyWidget> {
   }
 
   _itemClick(SupportItemBean data) {
-//    if (data.contextType == 1) {
+//    if (data.contextType == 1) { todo
 //      Navigator.pushNamed(context, Routes.supportDetails,
 //          arguments: {SupportDetailsPage.KEY_ID, data.id});
 //    } else if (data.contextType == 2) {
