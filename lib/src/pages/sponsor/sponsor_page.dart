@@ -88,7 +88,7 @@ class _SponsorPageState extends State<SponsorPage> {
   Widget _buildContentWidget() {
     if (viewModel.results.length == 1) {
       return CommonWebview(
-        H5UrlFormat.getH5Url(viewModel.results[0].infoUrl),
+        H5UrlFormat.appendUrl(viewModel.results[0].infoUrl),
         showTitleBar: false,
         canGoBack: false,
       );

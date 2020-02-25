@@ -2,6 +2,7 @@ import 'package:biz_network_main/biz_network_main.dart';
 import 'package:bw_sponsor_preferential/src/model/discount_entity.dart';
 import 'package:bw_sponsor_preferential/src/model/service_entity.dart';
 import 'package:bw_sponsor_preferential/src/model/sponsor_entity.dart';
+import 'package:bw_sponsor_preferential/src/model/support_details_entity.dart';
 import 'package:bw_sponsor_preferential/src/model/support_type_entity.dart';
 
 class ApiService {
@@ -14,7 +15,7 @@ class ApiService {
       "/api/site/group/site/siteBaseHelp/v1/querySiteHelpInfoList";
 
   /// 问题详情
-  static const String _HELPCENTERQUESTIONDETAILS =
+  static const String _SUPPORTDETAILS =
       "/api/site/group/site/siteBaseHelp/v1/getSiteHelpInfoById";
 
   /// 优惠列表
@@ -67,5 +68,14 @@ class ApiService {
     var response = await mainClient.dio
         .post(_QUERYSITEHELPINFOLIST, data: {"helpCateId": helpCateId});
     return SupportTypeEntity.fromJson(response.data);
+  }
+
+
+  /// 获取客服问题详情
+  /// [id]问题id
+  static Future<SupportDetailsEntity> getSupDetailsInfo(int id) async {
+    var response = await mainClient.dio
+        .post(_SUPPORTDETAILS, data: {"id": id});
+    return SupportDetailsEntity.fromJson(response.data);
   }
 }

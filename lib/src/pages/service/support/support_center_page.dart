@@ -6,14 +6,13 @@ import 'package:bw_sponsor_preferential/src/model/service_entity.dart';
 import 'package:bw_sponsor_preferential/src/model/support_type_entity.dart';
 import 'package:bw_sponsor_preferential/src/pages/service/details/support_details_page.dart';
 import 'package:bw_sponsor_preferential/src/pages/service/support/support_center_model.dart';
+import 'package:bw_sponsor_preferential/src/routers/routes.dart';
 import 'package:bw_sponsor_preferential/src/widgets/empty_view_.dart';
 import 'package:bw_sponsor_preferential/src/widgets/net_error_view.dart';
-import 'package:flutter/gestures.dart';
+import 'package:bw_sponsor_preferential/src/widgets/support_footer_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-
-import '../../../../bw_sponsor_preferential.dart';
 
 /// 帮助中心列表页面
 class SupportCenterListPage extends StatefulWidget {
@@ -31,13 +30,11 @@ class _SupportCenterListPageState extends State<SupportCenterListPage> {
   ServiceItemBean _bean;
   RefreshController _refreshController = RefreshController();
   SupportCenterModel _viewModel;
-  final TapGestureRecognizer _recognizer = new TapGestureRecognizer();
 
   @override
   void dispose() {
     super.dispose();
     _refreshController.dispose();
-    _recognizer.dispose();
   }
 
   @override
@@ -121,8 +118,9 @@ class _SupportCenterListPageState extends State<SupportCenterListPage> {
   ListView _buideList(List<SupportItemBean> datas) {
     return ListView.separated(
       itemCount: datas.length + 1,
-      itemBuilder: (context, index) =>
-          index == datas.length ? _buildFootView() : _buildItem(datas[index]),
+      itemBuilder: (context, index) => index == datas.length
+          ? SupportFooterView()
+          : _buildItem(datas[index]),
       //分割器构造器
       separatorBuilder: (BuildContext context, int index) {
         return Container(
@@ -137,43 +135,13 @@ class _SupportCenterListPageState extends State<SupportCenterListPage> {
     );
   }
 
-  /// 人工客服
-  _buildFootView() {
-    return Container(
-      alignment: Alignment.center,
-      margin: EdgeInsets.only(top: 24, bottom: 10),
-      child: RichText(
-        text: TextSpan(
-          children: [
-            TextSpan(
-              text: "没有找到解决办法？联系",
-              style: TextStyle(
-                  fontSize: 12, color: Color.fromARGB(255, 102, 102, 102)),
-            ),
-            TextSpan(
-              text: "人工客服",
-              recognizer: _recognizer,
-              style: TextStyle(
-                  fontSize: 12, color: Color.fromARGB(255, 21, 139, 244)),
-            ),
-            TextSpan(
-              text: "解决",
-              style: TextStyle(
-                  fontSize: 12, color: Color.fromARGB(255, 102, 102, 102)),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   _itemClick(SupportItemBean data) {
-//    if (data.contextType == 1) { todo
-//      Navigator.pushNamed(context, Routes.supportDetails,
-//          arguments: {SupportDetailsPage.KEY_ID, data.id});
-//    } else if (data.contextType == 2) {
-//      Navigator.pushNamed(context, Routes.webPage);
-//    }
+    if (data.contextType == 1) {
+      Navigator.pushNamed(context, Routes.supportDetails,
+          arguments: {SupportDetailsPage.KEY_ID: data.id});
+    } else if (data.contextType == 2) {
+//   todo   Navigator.pushNamed(context, Routes.webPage);
+    }
 
 //    XWebUtils.startNormalH5ForResult(activity, XCategory.CategoryVenturePlan.setTitle(title).setUrl(helpCenterQuestionListBean.linkUrl),
 //    0, " kk_hybrid", "online_service", R.mipmap.ic_custom_service, null)
@@ -181,7 +149,7 @@ class _SupportCenterListPageState extends State<SupportCenterListPage> {
 
   Widget _buildItem(SupportItemBean data) {
     return InkWell(
-      onTap: _itemClick(data),
+      onTap: () => _itemClick(data),
       child: Container(
         height: 70,
         padding: EdgeInsets.only(left: 14, right: 14),

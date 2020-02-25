@@ -26,11 +26,11 @@ class _DiscountPageState extends State<DiscountPage> {
     String appLink = bean.appTopicLink;
     if (appLink.isNotEmpty) {
       if (!appLink.contains("http") && !appLink.contains("https")) {
-        appLink = H5UrlFormat.getH5Url(appLink);
+        appLink = H5UrlFormat.appendUrl(appLink);
       }
     } else {
       appLink =
-          H5UrlFormat.getH5Url("/app/promo/list/${bean?.id}"); //;+ data?.id
+          H5UrlFormat.appendUrl("/app/promo/list/${bean?.id}"); //;+ data?.id
     }
     return appLink;
   }

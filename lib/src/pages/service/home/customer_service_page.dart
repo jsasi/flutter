@@ -3,8 +3,8 @@ import 'package:bw_res/res/strings.dart';
 import 'package:bw_utils/bw_utils.dart';
 import 'package:flutter/material.dart';
 
-class WebPage extends StatelessWidget {
-  WebPage(this.arguments, {Key key}) : super(key: key);
+class CustomerServicePage extends StatelessWidget {
+  CustomerServicePage({Key key, this.arguments}) : super(key: key);
 
   static final String KEY_URL = "key_url";
 
@@ -39,6 +39,7 @@ class WebPage extends StatelessWidget {
 //        ),
         body: CommonWebview(
           _url,
+          canGoBack: false,
           showTitleBar: false,
         ));
   }

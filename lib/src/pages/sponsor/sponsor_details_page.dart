@@ -30,7 +30,7 @@ class SponsorDetailsPage extends StatelessWidget {
           ),
         ),
         body: CommonWebview(
-          H5UrlFormat.getH5Url(arguments[KEY_URL]),
+          H5UrlFormat.appendUrl(arguments[KEY_URL]),
           showTitleBar: false,
         ));
   }

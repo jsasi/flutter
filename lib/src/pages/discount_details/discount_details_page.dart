@@ -24,14 +24,12 @@ class DiscountDetailsPage extends StatelessWidget {
     return showModalBottomSheet<bool>(
         isScrollControlled: true,
         context: context,
-        builder: (context) => DialogSavePic(_data.sharePicture,_data.title,_data.activityStartTime,_data.activityEndTime));
+        builder: (context) => DialogSavePic(_data?.sharePicture??"",_data?.title??"",_data?.activityStartTime??"",_data?.activityEndTime??""));
   }
 
   // 解析路由数据
   void _initArguments() {
     if (arguments != null) {
-      print(arguments.runtimeType);
-      print(arguments);
       _data = arguments[KEY_DATA];
       _url = arguments[KEY_URL];
     }
