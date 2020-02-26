@@ -36,7 +36,7 @@ packages:
     description:
       path: "."
       ref: "feature_v0.1"
-      resolved-ref: "4c285e11e5a78dcf9fc985d0f88dc7cb150372b2"
+      resolved-ref: "802349fab75188be2b2b9694a3685235b2251d16"
       url: "http://47.52.134.206/bw-flutter/biz_login.git"
     source: git
     version: "0.0.1"
@@ -45,7 +45,7 @@ packages:
     description:
       path: "."
       ref: "feature_v0.1"
-      resolved-ref: "69aae09be3dc0e1d647ee434bc0760c47726e66f"
+      resolved-ref: "3e57a826844656dc8a37b14a865d76e46a84268f"
       url: "http://47.52.134.206/bw-flutter/biz_network_main.git"
     source: git
     version: "0.0.1"
@@ -56,12 +56,21 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.5"
+  bw_base:
+    dependency: transitive
+    description:
+      path: "."
+      ref: "feature_v0.1"
+      resolved-ref: "918c174bab6d792b195f5b81b6457ff7e67a8065"
+      url: "http://47.52.134.206/bw-flutter/bw_base.git"
+    source: git
+    version: "0.0.1"
   bw_res:
     dependency: transitive
     description:
       path: "packages/bw_res"
       ref: "feature_v0.1"
-      resolved-ref: d0c2cbe9d2365fb351aab33f446d308ef1f3bca6
+      resolved-ref: bddcb3923945518e8e688e2f080adcbbb3212a4c
       url: "http://47.52.134.206/bw-flutter/bw_resources.git"
     source: git
     version: "0.0.1"
@@ -77,7 +86,7 @@ packages:
     description:
       path: "."
       ref: "feature_v0.1"
-      resolved-ref: "87c93cdafd50bb95aac6ba483867d8fa2b584b6f"
+      resolved-ref: "5ebeb77c1916dbf77abf19b61dc6018baa01ec37"
       url: "http://47.52.134.206/bw-flutter/bw_utils.git"
     source: git
     version: "0.0.1"
@@ -208,6 +217,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
+  logging:
+    dependency: transitive
+    description:
+      name: logging
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.11.4"
+  lottie:
+    dependency: transitive
+    description:
+      name: lottie
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.2"
   matcher:
     dependency: transitive
     description:
@@ -278,6 +301,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.0"
+  photo_view:
+    dependency: transitive
+    description:
+      name: photo_view
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.9.2"
   platform:
     dependency: transitive
     description:

@@ -1,3 +1,4 @@
+import 'package:bw_base/bw_base.dart';
 import 'package:bw_res/res/bw_colors.dart';
 import 'package:bw_res/res/res.dart';
 import 'package:bw_res/res/strings.dart';
@@ -81,7 +82,7 @@ class _SponsorPageState extends State<SponsorPage> {
   /// 数据页面
   Widget _buildContentWidget() {
     if (viewModel.results.length == 1) {
-      return CommonWebview(
+      return BwWebview(
         H5UrlFormat.appendUrl(viewModel.results[0].infoUrl),
         showTitleBar: false,
         canGoBack: false,

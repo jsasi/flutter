@@ -1,9 +1,11 @@
 import 'package:bw_sponsor_preferential/src/pages/debug_page.dart';
+import 'package:bw_sponsor_preferential/src/pages/feedback/feedback_page.dart';
 import 'package:bw_sponsor_preferential/src/pages/service/details/support_details_page.dart';
 import 'package:bw_sponsor_preferential/src/pages/service/home/customer_service_page.dart';
 import 'package:bw_sponsor_preferential/src/pages/service/home/service_page.dart';
 import 'package:bw_sponsor_preferential/src/pages/service/support/support_center_page.dart';
 import 'package:bw_sponsor_preferential/src/pages/sponsor/sponsor_details_page.dart';
+import 'package:bw_sponsor_preferential/src/pages/web/web_page.dart';
 import 'package:flutter/material.dart';
 import '../pages/discount/discount_page.dart';
 import '../pages/discount_details/discount_details_page.dart';
@@ -16,8 +18,6 @@ class Routes {
   static String sponsorDetails = "/sponsor-details";
   static String supportCenter = "/support-center";
   static String supportDetails = "/support-details";
-
-//  static String serviceDetails = "/service-details";
   static String sponsor = "/sponsor";
   static String service = "/service";
   static String feedback = "/feedback";
@@ -59,11 +59,10 @@ final _routes = {
 
   /// web
   Routes.webPage: (context, {arguments}) =>
-      SupportDetailsPage(arguments: arguments),
+      CustomerServicePage(arguments: arguments),
 
   /// 意见反馈
-  Routes.feedback: (context, {arguments}) =>
-      SupportDetailsPage(arguments: arguments),
+  Routes.feedback: (context, {arguments}) => FeedbackPage(),
 };
 
 final Function onGenerateRoute = (RouteSettings settings) {

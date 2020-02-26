@@ -1,3 +1,4 @@
+import 'package:bw_base/bw_base.dart';
 import 'package:bw_res/res/bw_colors.dart';
 import 'package:bw_res/res/strings.dart';
 import 'package:bw_sponsor_preferential/src/common/h5_url_format.dart';
@@ -20,7 +21,7 @@ class SponsorDetailsPage extends StatelessWidget {
           arguments != null ? arguments[KEY_TITLE] : Strings.spoTitle,
           hideLeftArrow: false,
         ),
-        body: CommonWebview(
+        body: BwWebview(
           H5UrlFormat.appendUrl(arguments[KEY_URL]),
           showTitleBar: false,
         ));

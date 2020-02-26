@@ -20,6 +20,7 @@ dependencies:
   image_gallery_saver: ^1.2.2
   qr_flutter: ^3.2.0
   url_launcher: ^5.4.2
+  photo_view: ^0.9.2
 
   biz_app_init:
     git:
@@ -43,6 +44,10 @@ dependencies:
   biz_login:
     git:
       url: http://47.52.134.206/bw-flutter/biz_login.git
+      ref: feature_v0.1
+  bw_base:
+    git:
+      url: http://47.52.134.206/bw-flutter/bw_base.git
       ref: feature_v0.1
 
 dev_dependencies:

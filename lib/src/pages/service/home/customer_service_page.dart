@@ -1,3 +1,4 @@
+import 'package:bw_base/bw_base.dart';
 import 'package:bw_sponsor_preferential/src/widgets/dss_app_bar.dart';
 import 'package:bw_utils/bw_utils.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class CustomerServicePage extends StatelessWidget {
     _initArguments();
     return Scaffold(
         appBar: DssAppBar("客服"),
-        body: CommonWebview(
+        body: BwWebview(
           _url,
           showTitleBar: false,
         ));

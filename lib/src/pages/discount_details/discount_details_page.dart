@@ -1,10 +1,9 @@
-import 'package:bw_res/res/bw_colors.dart';
+import 'package:bw_base/bw_base.dart';
 import 'package:bw_res/res/res.dart';
 import 'package:bw_res/res/strings.dart';
 import 'package:bw_sponsor_preferential/src/model/discount_entity.dart';
 import 'package:bw_sponsor_preferential/src/pages/discount_details/discount_details_dialog.dart';
 import 'package:bw_sponsor_preferential/src/widgets/dss_app_bar.dart';
-import 'package:bw_utils/bw_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -49,7 +48,7 @@ class DiscountDetailsPage extends StatelessWidget {
           rightImg: R.discount_title_share,
           callBack: () => _showModalBottomSheet(context),
         ),
-        body: CommonWebview(
+        body: BwWebview(
           _url ?? "",
           showTitleBar: false,
         ));
