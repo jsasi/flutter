@@ -6,6 +6,9 @@ import 'package:bw_sponsor_preferential/src/widgets/simple_imageview.dart';
 import 'package:bw_utils/bw_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:oktoast/oktoast.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../common/string_ext.dart';
 
 class DialogSavePic extends StatelessWidget {
@@ -16,16 +19,32 @@ class DialogSavePic extends StatelessWidget {
 
   String activityStartTime;
 
+  /// 分享链接 生成二维码
+  String shareLink;
+
   DialogSavePic(this.sharePicture, this.title, this.activityStartTime,
       this.activityEndTime);
 
-  /// 生成二维码
-  _createQRCodeView() {
-    String str = "${appInit.h5Host}/entry/register?r_code=";
+  /// 生成分享字符串
+  _createShareLink() {
+    shareLink = "${appInit.h5Host}/entry/register?r_code=";
   }
+
+  /// 复制链接
+  _launchURL() async {
+    if (await canLaunch(shareLink)) {
+      await launch(shareLink);
+    } else {
+      showToast('Could not launch $shareLink');
+    }
+  }
+
+  /// 保存图片
+  _saveImg() async {}
 
   @override
   Widget build(BuildContext context) {
+    _createShareLink();
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.end,
@@ -65,7 +84,7 @@ class DialogSavePic extends StatelessWidget {
                           padding: const EdgeInsets.only(
                               left: 15, top: 10, right: 5, bottom: 5),
                           child: Text(
-                            title??"",
+                            title ?? "",
                             style: TextStyle(
                                 fontSize: 14, color: BWColors.disDialogTitle),
                             maxLines: 2,
@@ -86,12 +105,11 @@ class DialogSavePic extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Container(
-                    margin: EdgeInsets.only(right: 10),
-                    width: 60,
-                    height: 60,
-                    color: Colors.black,
-                  )
+                  QrImage(
+                    data: shareLink,
+                    version: QrVersions.auto,
+                    size: 60,
+                  ),
                 ],
               ),
             ],
@@ -104,65 +122,78 @@ class DialogSavePic extends StatelessWidget {
           child: Row(
             children: <Widget>[
               InkWell(
-                onTap: () {},
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(top: 20,left: 15),
-                      color: Colors.white,
-                      width: 60,
-                      height: 60,
-                      child: Image.asset(
-                        R.discount_dialog_copy,
-                        package: Strings.bwResPackage,
+                onTap: () {
+                  _launchURL();
+                  Navigator.of(context).pop();
+                },
+                child: Container(
+                  margin: EdgeInsets.only(top: 20, left: 15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        color: Colors.white,
+                        width: 60,
+                        height: 60,
+                        margin: EdgeInsets.only(bottom: 5),
+                        child: Image.asset(
+                          R.discount_dialog_copy,
+                          package: Strings.bwResPackage,
+                        ),
                       ),
-                    ),
-                    Text(
-                      Strings.disSavePic,
-                      style: TextStyle(
-                          fontSize: 10, color: BWColors.disDialogDesc),
-                    )
-                  ],
+                      Text(
+                        Strings.disCopyLink,
+                        style: TextStyle(
+                            fontSize: 10, color: BWColors.disDialogDesc),
+                      )
+                    ],
+                  ),
                 ),
               ),
               InkWell(
-                onTap: () {},
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(top: 20,left: 12),
-                      color: Colors.white,
-                      width: 60,
-                      height: 60,
-                      child: Image.asset(
-                        R.discount_dialog_down,
-                        package: Strings.bwResPackage,
+                onTap: () {
+                  _saveImg();
+                  Navigator.of(context).pop();
+                },
+                child: Container(
+                  margin: EdgeInsets.only(top: 20, left: 12),
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        color: Colors.white,
+                        width: 60,
+                        height: 60,
+                        margin: EdgeInsets.only(bottom: 5),
+                        child: Image.asset(
+                          R.discount_dialog_down,
+                          package: Strings.bwResPackage,
+                        ),
                       ),
-                    ),
-                    Text(
-                      Strings.disSavePic,
-                      style: TextStyle(
-                          fontSize: 10, color: BWColors.disDialogDesc),
-                    )
-                  ],
+                      Text(
+                        Strings.disSavePic,
+                        style: TextStyle(
+                            fontSize: 10, color: BWColors.disDialogDesc),
+                      )
+                    ],
+                  ),
                 ),
               )
             ],
           ),
         ),
         Divider(
-          height: 2,
-          color: Colors.grey[500],
+          height: 1,
+          color: BWColors.disDialogDivider,
         ),
         Container(
           color: Colors.white,
           width: double.infinity,
-          padding: EdgeInsets.only(bottom: 34),
-          height: 84,
+          height: 50,
           child: FlatButton(
+            onPressed: () => Navigator.of(context).pop(),
             child: Text(
               Strings.cancel,
-              style: TextStyle(fontSize: 18, color: BWColors.disDialogTitle),
+              style: TextStyle(fontSize: 18, color: BWColors.disDialogBtnText),
             ),
           ),
         )

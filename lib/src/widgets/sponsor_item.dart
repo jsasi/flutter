@@ -54,19 +54,19 @@ class SponsorItem extends StatelessWidget {
                 ),
                 Container(
                   height: 26,
-                  margin: EdgeInsets.only(top: 12),
-                  child: FlatButton(
-                    padding: EdgeInsets.all(0),
-                    textColor: BWColors.dssBtnText,
-                    color: BWColors.dssBtnBg,
-                    child: Text(
-                      data.keyCreative,
-                      style: TextStyle(fontSize: 10),
-                      maxLines: 1,
+                  width: 90,
+                  margin: EdgeInsets.only(top: 12, left: 20, right: 20),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      color: BWColors.dssBtnBg,
+                      borderRadius: BorderRadius.circular(2)),
+                  child: Text(
+                    data.keyCreative,
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: BWColors.dssBtnText,
                     ),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(2)),
-                    onPressed: () {},
+                    maxLines: 1,
                   ),
                 )
               ],

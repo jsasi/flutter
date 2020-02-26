@@ -4,6 +4,7 @@ import 'package:bw_res/res/strings.dart';
 import 'package:bw_sponsor_preferential/src/common/h5_url_format.dart';
 import 'package:bw_sponsor_preferential/src/model/sponsor_entity.dart';
 import 'package:bw_sponsor_preferential/src/pages/sponsor/sponsor_details_page.dart';
+import 'package:bw_sponsor_preferential/src/widgets/dss_app_bar.dart';
 import 'package:bw_utils/bw_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -41,14 +42,7 @@ class _SponsorPageState extends State<SponsorPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          Strings.spoTitle,
-          style: TextStyle(fontSize: 16, color: BWColors.spoTitle),
-        ),
-        backgroundColor: Colors.white,
-      ),
+      appBar: DssAppBar(Strings.spoTitle),
       body: ChangeNotifierProvider<SponsorModel>.value(
         value: viewModel,
         child: Consumer<SponsorModel>(builder: (context, vm, child) {

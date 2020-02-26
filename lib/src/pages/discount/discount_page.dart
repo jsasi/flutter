@@ -3,6 +3,7 @@ import 'package:bw_res/res/bw_colors.dart';
 import 'package:bw_sponsor_preferential/src/common/h5_url_format.dart';
 import 'package:bw_sponsor_preferential/src/model/discount_entity.dart';
 import 'package:bw_sponsor_preferential/src/pages/discount_details/discount_details_page.dart';
+import 'package:bw_sponsor_preferential/src/widgets/dss_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -50,14 +51,7 @@ class _DiscountPageState extends State<DiscountPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          Strings.disTitle,
-          style: TextStyle(fontSize: 16, color: BWColors.disTitle),
-        ),
-        backgroundColor: Colors.white,
-      ),
+      appBar: DssAppBar(Strings.disTitle),
       body: ChangeNotifierProvider<DiscountModel>.value(
         value: viewModel,
         child: Consumer<DiscountModel>(builder: (context, vm, child) {

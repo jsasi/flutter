@@ -29,6 +29,7 @@ dependencies:
     git:
       url: http://47.52.134.206/bw-flutter/biz_app_init.git
       ref: feature_v0.1
+  oktoast: ^2.3.1+1
 
 dev_dependencies:
   flutter_test:

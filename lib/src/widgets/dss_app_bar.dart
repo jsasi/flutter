@@ -59,8 +59,9 @@ class DssAppBar extends StatelessWidget implements PreferredSizeWidget {
         if (rightImg != null)
           InkWell(
             onTap: callBack,
-            child: Center(
-              child: SimpleImageView.assetImage(rightText, height: 22),
+            child: Padding(
+              padding: EdgeInsets.only(right: 0),
+              child: SimpleImageView.assetImage(rightImg, height: 20),
             ),
           )
       ],

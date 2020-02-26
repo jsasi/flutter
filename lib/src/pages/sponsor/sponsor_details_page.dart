@@ -1,6 +1,7 @@
 import 'package:bw_res/res/bw_colors.dart';
 import 'package:bw_res/res/strings.dart';
 import 'package:bw_sponsor_preferential/src/common/h5_url_format.dart';
+import 'package:bw_sponsor_preferential/src/widgets/dss_app_bar.dart';
 import 'package:bw_utils/bw_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,19 +16,9 @@ class SponsorDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back_ios,
-                color: BWColors.dssTitleLeftArrow,
-                size: 14,
-              ),
-              onPressed: () => Navigator.of(context).pop()),
-          title: Text(
-            arguments != null ? arguments[KEY_TITLE] : Strings.spoTitle,
-            style: TextStyle(fontSize: 18, color: BWColors.disTitle),
-          ),
+        appBar: DssAppBar(
+          arguments != null ? arguments[KEY_TITLE] : Strings.spoTitle,
+          hideLeftArrow: false,
         ),
         body: CommonWebview(
           H5UrlFormat.appendUrl(arguments[KEY_URL]),

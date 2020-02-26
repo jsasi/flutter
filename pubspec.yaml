@@ -16,6 +16,10 @@ dependencies:
   pull_to_refresh: ^1.5.7
   json_annotation: ^3.0.1
   cached_network_image: ^2.0.0
+  image_picker: ^0.6.3+4
+  image_gallery_saver: ^1.2.2
+  qr_flutter: ^3.2.0
+  url_launcher: ^5.4.2
 
   biz_app_init:
     git:
