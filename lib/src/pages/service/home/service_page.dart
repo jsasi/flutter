@@ -4,6 +4,7 @@ import 'package:bw_res/res/strings.dart';
 import 'package:bw_sponsor_preferential/src/model/service_entity.dart';
 import 'package:bw_sponsor_preferential/src/pages/service/home/service_model.dart';
 import 'package:bw_sponsor_preferential/src/pages/service/support/support_center_page.dart';
+import 'package:bw_sponsor_preferential/src/widgets/dss_app_bar.dart';
 import 'package:bw_sponsor_preferential/src/widgets/service_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,24 +19,10 @@ class SevicePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text(
-            Strings.serTitle,
-            style: TextStyle(fontSize: 16, color: BWColors.serviceTitle),
-          ),
-          actions: <Widget>[
-            Center(
-              child: Padding(
-                padding: EdgeInsets.only(right: 20),
-                child: Text(
-                  Strings.feeTitle,
-                  style: TextStyle(fontSize: 14, color: BWColors.serviceTitle),
-                ),
-              ),
-            )
-          ],
-          backgroundColor: Colors.white,
+        appBar: DssAppBar(
+          Strings.serTitle,
+          rightText: Strings.feeTitle,
+          callBack: () => Navigator.of(context).pushNamed(Routes.feedback),
         ),
         body: _BodyWidget());
   }
@@ -57,6 +44,7 @@ class __BodyWidgetState extends State<_BodyWidget> {
     super.initState();
     viewModel.init();
   }
+
   @override
   void dispose() {
     super.dispose();
@@ -140,8 +128,7 @@ class __BodyWidgetState extends State<_BodyWidget> {
                   child: FlatButton(
                     child: Text(
                       Strings.serSecond,
-                      style:
-                          TextStyle(color: BWColors.dssBtnBg, fontSize: 16),
+                      style: TextStyle(color: BWColors.dssBtnBg, fontSize: 16),
                     ),
                     shape: RoundedRectangleBorder(
                         side: BorderSide(

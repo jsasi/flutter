@@ -7,6 +7,7 @@ import 'package:bw_sponsor_preferential/src/model/support_type_entity.dart';
 import 'package:bw_sponsor_preferential/src/pages/service/details/support_details_page.dart';
 import 'package:bw_sponsor_preferential/src/pages/service/support/support_center_model.dart';
 import 'package:bw_sponsor_preferential/src/routers/routes.dart';
+import 'package:bw_sponsor_preferential/src/widgets/dss_app_bar.dart';
 import 'package:bw_sponsor_preferential/src/widgets/empty_view_.dart';
 import 'package:bw_sponsor_preferential/src/widgets/net_error_view.dart';
 import 'package:bw_sponsor_preferential/src/widgets/support_footer_view.dart';
@@ -57,20 +58,9 @@ class _SupportCenterListPageState extends State<SupportCenterListPage> {
   Widget build(BuildContext context) {
     _initArguments();
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
-            color: BWColors.dssTitleLeftArrow,
-            size: 14,
-          ),
-        ),
-        centerTitle: true,
-        title: Text(
-          _bean.name ?? "",
-          style: TextStyle(fontSize: 16, color: BWColors.serviceTitle),
-        ),
-        backgroundColor: Colors.white,
+      appBar: DssAppBar(
+        _bean.name ?? "",
+        hideLeftArrow: false,
       ),
       body: Container(
         margin: EdgeInsets.only(top: 20),

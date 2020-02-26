@@ -1,6 +1,7 @@
 import 'package:bw_sponsor_preferential/src/common/h5_url_format.dart';
 import 'package:bw_sponsor_preferential/src/model/api_service.dart';
 import 'package:bw_sponsor_preferential/src/model/support_details_entity.dart';
+import 'package:bw_sponsor_preferential/src/widgets/dss_app_bar.dart';
 import 'package:bw_sponsor_preferential/src/widgets/support_footer_view.dart';
 import 'package:bw_utils/bw_utils.dart';
 import 'package:flutter/gestures.dart';
@@ -69,8 +70,9 @@ class _SupportDetailsPageState extends State<SupportDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(bean?.title ?? "详情"),
+        appBar: DssAppBar(
+          bean?.title ?? "详情",
+          hideLeftArrow: false,
         ),
         body: _buildBody());
   }

@@ -50,9 +50,12 @@ class DssAppBar extends StatelessWidget implements PreferredSizeWidget {
           InkWell(
             onTap: callBack,
             child: Center(
-              child: Text(
-                rightText,
-                style: TextStyle(fontSize: 14, color: BWColors.disTitle),
+              child: Padding(
+                padding: const EdgeInsets.only(right: 14),
+                child: Text(
+                  rightText,
+                  style: TextStyle(fontSize: 14, color: BWColors.disTitle),
+                ),
               ),
             ),
           ),
