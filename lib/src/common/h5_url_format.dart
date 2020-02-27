@@ -1,11 +1,12 @@
-import 'package:biz_app_init/biz_app_init.dart';
 import 'package:biz_login/biz_login.dart';
+import 'package:bw_base/bw_base.dart';
 
 class H5UrlFormat {
   /// 根据path拼接host和token
   static String appendUrl(String url) {
     String token = LoginUtil.token;
-    String h5Domain = AppInit().h5Host;
+    String h5Domain =
+        PreInfoUtil.getPreInfoEntity()?.siteBaseConfig?.h5DomainUrl;
     return "$h5Domain$url?token=${token ?? ''}";
   }
 
@@ -15,7 +16,8 @@ class H5UrlFormat {
       return url;
     } else {
       String token = LoginUtil.token;
-      String h5Domain = AppInit().h5Host;
+      String h5Domain =
+          PreInfoUtil.getPreInfoEntity()?.siteBaseConfig?.h5DomainUrl;
       return "$h5Domain$url?token=${token ?? ''}";
     }
   }

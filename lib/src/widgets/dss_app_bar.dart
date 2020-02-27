@@ -1,5 +1,6 @@
 import 'package:bw_res/res/bw_colors.dart';
 import 'package:bw_sponsor_preferential/src/widgets/simple_imageview.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 ///
@@ -36,7 +37,7 @@ class DssAppBar extends StatelessWidget implements PreferredSizeWidget {
           ? null
           : IconButton(
               icon: Icon(
-                Icons.arrow_back_ios,
+                CupertinoIcons.back,
                 color: BWColors.dssTitleLeftArrow,
                 size: 14,
               ),

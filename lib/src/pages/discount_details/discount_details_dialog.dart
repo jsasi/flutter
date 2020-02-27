@@ -1,4 +1,4 @@
-import 'package:biz_app_init/biz_app_init.dart';
+import 'package:bw_base/bw_base.dart';
 import 'package:bw_res/res/bw_colors.dart';
 import 'package:bw_res/res/res.dart';
 import 'package:bw_res/res/strings.dart';
@@ -27,7 +27,8 @@ class DialogSavePic extends StatelessWidget {
 
   /// 生成分享字符串
   _createShareLink() {
-    shareLink = "${appInit.h5Host}/entry/register?r_code=";
+    shareLink =
+        "${PreInfoUtil.getPreInfoEntity()?.siteBaseConfig?.h5DomainUrl}/entry/register?r_code=";
   }
 
   /// 复制链接

@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'discount_entity.g.dart';
 
-
+/// 优惠
 @JsonSerializable()
 class DiscountEntity extends BaseEntity {
   Data data;

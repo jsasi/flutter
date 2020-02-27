@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'service_entity.g.dart';
 
-
+/// 客服问题
 @JsonSerializable()
 class ServiceEntity extends BaseEntity {
 

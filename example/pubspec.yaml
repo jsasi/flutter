@@ -25,12 +25,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
-  biz_app_init:
-    git:
-      url: http://47.52.134.206/bw-flutter/biz_app_init.git
-      ref: feature_v0.1
   oktoast: ^2.3.1+1
-
 dev_dependencies:
   flutter_test:
     sdk: flutter

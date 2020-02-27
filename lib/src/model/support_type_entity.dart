@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'support_type_entity.g.dart';
 
-
+/// 帮助中心
 @JsonSerializable()
 class SupportTypeEntity extends BaseEntity {
 

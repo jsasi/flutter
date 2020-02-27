@@ -1,4 +1,5 @@
 import 'package:bw_sponsor_preferential/src/pages/debug_page.dart';
+import 'package:bw_sponsor_preferential/src/pages/feedback/feeback_list_page.dart';
 import 'package:bw_sponsor_preferential/src/pages/feedback/feedback_page.dart';
 import 'package:bw_sponsor_preferential/src/pages/service/details/support_details_page.dart';
 import 'package:bw_sponsor_preferential/src/pages/service/home/customer_service_page.dart';
@@ -6,6 +7,7 @@ import 'package:bw_sponsor_preferential/src/pages/service/home/service_page.dart
 import 'package:bw_sponsor_preferential/src/pages/service/support/support_center_page.dart';
 import 'package:bw_sponsor_preferential/src/pages/sponsor/sponsor_details_page.dart';
 import 'package:bw_sponsor_preferential/src/pages/web/web_page.dart';
+import 'package:bw_sponsor_preferential/src/widgets/photo_gallery_page.dart';
 import 'package:flutter/material.dart';
 import '../pages/discount/discount_page.dart';
 import '../pages/discount_details/discount_details_page.dart';
@@ -21,8 +23,11 @@ class Routes {
   static String sponsor = "/sponsor";
   static String service = "/service";
   static String feedback = "/feedback";
+  static String feedbackDetails = "/feedback-details";
+  static String feedbackList = "/feedback-list";
   static String webPage = "/webpage";
   static String customerService = "/customer-service";
+  static String photoGallery = "/photo_allery";
 }
 
 final _routes = {
@@ -63,6 +68,16 @@ final _routes = {
 
   /// 意见反馈
   Routes.feedback: (context, {arguments}) => FeedbackPage(),
+
+  /// 意见反馈详情
+  Routes.feedbackDetails: (context, {arguments}) => FeedbackListPage(),
+
+  /// 意见反馈列表
+  Routes.feedbackList: (context, {arguments}) => FeedbackListPage(),
+
+  /// 画廊
+  Routes.photoGallery: (context, {arguments}) =>
+      PhotoViewGalleryScreen(arguments: arguments),
 };
 
 final Function onGenerateRoute = (RouteSettings settings) {

@@ -1,25 +1,27 @@
 import 'package:bw_sponsor_preferential/src/model/api_service.dart';
-import 'package:bw_sponsor_preferential/src/model/sponsor_entity.dart';
+import 'package:bw_sponsor_preferential/src/model/discount_entity.dart';
+import 'package:bw_sponsor_preferential/src/model/feedback_entity.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/page_status.dart';
 
-/// 赞助列表
-class SponsorModel extends ChangeNotifier {
+
+/// 优惠列表
+class FeedbackListModel extends ChangeNotifier {
   ScreenStatus _screenStatus = ScreenStatus.Loading;
 
   ScreenStatus get screenStatus => _screenStatus;
 
-  List<SponorItemBean> _results = List();
+  List<FeedbackItemBean> _results = List();
 
-  List<SponorItemBean> get results => _results;
+  List<FeedbackItemBean> get results => _results;
 
-  SponsorModel();
+  FeedbackListModel();
 
-  int pageNum = 1;
+  bool isInit = true;
 
   void loadMore() async {
-    var entity = await ApiService.getSpoList(pageNum: pageNum);
+    var entity = await ApiService.getFeedbackList(pageNum: pageNum);
     if (entity.code == 0) {
       if (entity.data.list.isNotEmpty) {
         pageNum++;
@@ -34,9 +36,10 @@ class SponsorModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  int pageNum = 1;
   void refresh() async {
     pageNum = 1;
-    var entity = await ApiService.getSpoList();
+    var entity = await ApiService.getFeedbackList();
     if (entity.code == 0) {
       _results.clear();
       if (entity.data.list.isNotEmpty) {
@@ -49,7 +52,6 @@ class SponsorModel extends ChangeNotifier {
     } else {
       _screenStatus = ScreenStatus.Error;
     }
-
     notifyListeners();
   }
 

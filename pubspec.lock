@@ -41,7 +41,7 @@ packages:
     description:
       path: "."
       ref: "feature_v0.1"
-      resolved-ref: "51db1f32f49026dcb91d7ebbb7ecd555653072e3"
+      resolved-ref: "5e2a3877a376eef080be72ce35808dd6b15d51be"
       url: "http://47.52.134.206/bw-flutter/biz_app_init.git"
     source: git
     version: "0.0.1"
@@ -50,7 +50,7 @@ packages:
     description:
       path: "."
       ref: "feature_v0.1"
-      resolved-ref: "802349fab75188be2b2b9694a3685235b2251d16"
+      resolved-ref: "2de3f16fd83b51e48fa24faeb9bf6ef89c7bc3bb"
       url: "http://47.52.134.206/bw-flutter/biz_login.git"
     source: git
     version: "0.0.1"
@@ -59,7 +59,7 @@ packages:
     description:
       path: "."
       ref: "feature_v0.1"
-      resolved-ref: "3e57a826844656dc8a37b14a865d76e46a84268f"
+      resolved-ref: e4a7bab597070bf0700300750ac4a4c941d143dd
       url: "http://47.52.134.206/bw-flutter/biz_network_main.git"
     source: git
     version: "0.0.1"
@@ -131,7 +131,7 @@ packages:
     description:
       path: "."
       ref: "feature_v0.1"
-      resolved-ref: "918c174bab6d792b195f5b81b6457ff7e67a8065"
+      resolved-ref: db03df7d4c0f777c47342e37d2aa038c66da13de
       url: "http://47.52.134.206/bw-flutter/bw_base.git"
     source: git
     version: "0.0.1"
@@ -140,7 +140,7 @@ packages:
     description:
       path: "packages/bw_res"
       ref: "feature_v0.1"
-      resolved-ref: bddcb3923945518e8e688e2f080adcbbb3212a4c
+      resolved-ref: "5a229ef895b023e3c0545f6eb79431d5c5f2c3a0"
       url: "http://47.52.134.206/bw-flutter/bw_resources.git"
     source: git
     version: "0.0.1"
@@ -149,7 +149,7 @@ packages:
     description:
       path: "."
       ref: "feature_v0.1"
-      resolved-ref: "5ebeb77c1916dbf77abf19b61dc6018baa01ec37"
+      resolved-ref: ac9c0d0ab0cf6b01ae3c51f855c59f8845e8f98c
       url: "http://47.52.134.206/bw-flutter/bw_utils.git"
     source: git
     version: "0.0.1"
@@ -224,7 +224,7 @@ packages:
     source: hosted
     version: "0.4.1+5"
   dio:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: dio
       url: "https://pub.dartlang.org"
@@ -414,7 +414,7 @@ packages:
     source: hosted
     version: "1.0.1+2"
   oktoast:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: oktoast
       url: "https://pub.dartlang.org"
@@ -426,7 +426,7 @@ packages:
       name: package_config
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.0"
+    version: "1.9.1"
   package_info:
     dependency: transitive
     description:
@@ -641,7 +641,7 @@ packages:
       name: stream_transform
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.0"
+    version: "1.2.0"
   string_scanner:
     dependency: transitive
     description:

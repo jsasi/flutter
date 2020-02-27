@@ -11,7 +11,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-  oktoast: ^2.3.1+1
   provider: ^4.0.4
   pull_to_refresh: ^1.5.7
   json_annotation: ^3.0.1
@@ -21,11 +20,9 @@ dependencies:
   qr_flutter: ^3.2.0
   url_launcher: ^5.4.2
   photo_view: ^0.9.2
+  dio: ^3.0.9
 
-  biz_app_init:
-    git:
-      url: http://47.52.134.206/bw-flutter/biz_app_init.git
-      ref: feature_v0.1
+
   bw_utils:
     git:
       url: http://47.52.134.206/bw-flutter/bw_utils.git
@@ -49,6 +46,11 @@ dependencies:
     git:
       url: http://47.52.134.206/bw-flutter/bw_base.git
       ref: feature_v0.1
+  biz_app_init:
+    git:
+      url: http://47.52.134.206/bw-flutter/biz_app_init.git
+      ref: feature_v0.1
+
 
 dev_dependencies:
   flutter_test:
@@ -56,6 +58,7 @@ dev_dependencies:
 
   build_runner: ^1.7.4
   json_serializable: ^3.2.5
+  oktoast: ^2.3.1+1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

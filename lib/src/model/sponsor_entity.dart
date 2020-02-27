@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'sponsor_entity.g.dart';
 
-
+/// 赞助
 @JsonSerializable()
 class SponsorEntity extends BaseEntity {
   Data data;
