@@ -44,7 +44,6 @@ class _CustomerServicePageState extends State<CustomerServicePage> {
 
   @override
   Widget build(BuildContext context) {
-    print("===ss===${customerList[_index].url}");
     return Scaffold(
         appBar: DssAppBar(
           "客服",

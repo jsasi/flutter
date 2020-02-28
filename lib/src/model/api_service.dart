@@ -168,7 +168,6 @@ class ApiService {
   /// 获取反馈详情
   /// [id] 详情id
   static Future<FeedbackDetailsEntity> getFeedbackDetails(int id) async {
-    mainClient.setProxy('172.18.11.116', 8888);
     var response = await mainClient.dio.post(
       _FEED_DETAILS,
       data: {

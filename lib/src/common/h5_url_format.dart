@@ -1,10 +1,9 @@
-import 'package:biz_login/biz_login.dart';
 import 'package:bw_base/bw_base.dart';
 
 class H5UrlFormat {
   /// 根据path拼接host和token
   static String appendUrl(String url) {
-    String token = LoginUtil.token;
+    String token = bwManager.mainToken;
     String h5Domain = bwManager.h5DomainUrl;
     return "$h5Domain$url?token=${token ?? ''}";
   }

@@ -1,4 +1,3 @@
-import 'package:bw_sponsor_preferential/src/pages/debug_page.dart';
 import 'package:bw_sponsor_preferential/src/pages/feedback/feeback_list_page.dart';
 import 'package:bw_sponsor_preferential/src/pages/feedback/feedback_details_page.dart';
 import 'package:bw_sponsor_preferential/src/pages/feedback/feedback_page.dart';
@@ -7,7 +6,6 @@ import 'package:bw_sponsor_preferential/src/pages/service/home/customer_service_
 import 'package:bw_sponsor_preferential/src/pages/service/home/service_page.dart';
 import 'package:bw_sponsor_preferential/src/pages/service/support/support_center_page.dart';
 import 'package:bw_sponsor_preferential/src/pages/sponsor/sponsor_details_page.dart';
-import 'package:bw_sponsor_preferential/src/pages/web/web_page.dart';
 import 'package:bw_sponsor_preferential/src/widgets/photo_gallery_page.dart';
 import 'package:flutter/material.dart';
 import '../pages/discount/discount_page.dart';
@@ -32,8 +30,6 @@ class Routes {
 }
 
 final _routes = {
-  Routes.root: (context) => DebugPage(),
-
   /// 优惠列表
   Routes.discount: (context) => DiscountPage(),
 

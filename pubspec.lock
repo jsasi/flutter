@@ -36,15 +36,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.0"
-  biz_app_init:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: "feature_v0.1"
-      resolved-ref: "5e2a3877a376eef080be72ce35808dd6b15d51be"
-      url: "http://47.52.134.206/bw-flutter/biz_app_init.git"
-    source: git
-    version: "0.0.1"
   biz_login:
     dependency: "direct main"
     description:
@@ -131,7 +122,7 @@ packages:
     description:
       path: "."
       ref: "feature_v0.1"
-      resolved-ref: b4ac8b6e39e9b6424804cb490f7e06e41cc3a7e6
+      resolved-ref: "949ecb7a953d30eec743a9241b5c8f24d138be76"
       url: "http://47.52.134.206/bw-flutter/bw_base.git"
     source: git
     version: "0.0.1"
@@ -140,7 +131,7 @@ packages:
     description:
       path: "packages/bw_res"
       ref: "feature_v0.1"
-      resolved-ref: f518cef21105150899894b2c936d75c36f38538e
+      resolved-ref: "7e9f68b5c8d20a3432af2edfb948482f979dd3d4"
       url: "http://47.52.134.206/bw-flutter/bw_resources.git"
     source: git
     version: "0.0.1"
@@ -149,7 +140,7 @@ packages:
     description:
       path: "."
       ref: "feature_v0.1"
-      resolved-ref: ac9c0d0ab0cf6b01ae3c51f855c59f8845e8f98c
+      resolved-ref: "7be29e0f13150656cc0db600cbf1448904c35e17"
       url: "http://47.52.134.206/bw-flutter/bw_utils.git"
     source: git
     version: "0.0.1"
@@ -435,7 +426,7 @@ packages:
     source: hosted
     version: "1.0.1+2"
   oktoast:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: oktoast
       url: "https://pub.dartlang.org"
