@@ -5,8 +5,7 @@ class H5UrlFormat {
   /// 根据path拼接host和token
   static String appendUrl(String url) {
     String token = LoginUtil.token;
-    String h5Domain =
-        PreInfoUtil.getPreInfoEntity()?.siteBaseConfig?.h5DomainUrl;
+    String h5Domain = bwManager.h5DomainUrl;
     return "$h5Domain$url?token=${token ?? ''}";
   }
 
@@ -15,9 +14,8 @@ class H5UrlFormat {
     if (url.startsWith("http")) {
       return url;
     } else {
-      String token = LoginUtil.token;
-      String h5Domain =
-          PreInfoUtil.getPreInfoEntity()?.siteBaseConfig?.h5DomainUrl;
+      String token = bwManager.mainToken;
+      String h5Domain = bwManager.h5DomainUrl;
       return "$h5Domain$url?token=${token ?? ''}";
     }
   }

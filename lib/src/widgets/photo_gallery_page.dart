@@ -1,9 +1,9 @@
+import 'dart:async';
 import 'dart:io';
-
-import 'package:bw_utils/bw_utils.dart';
+import 'dart:math';
+import 'package:bw_sponsor_preferential/src/widgets/util.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:photo_view/photo_view.dart';
-import 'package:photo_view/photo_view_gallery.dart';
 
 class PhotoViewGalleryScreen extends StatefulWidget {
   List<File> images = [];
@@ -32,16 +32,35 @@ class PhotoViewGalleryScreen extends StatefulWidget {
   _PhotoViewGalleryScreenState createState() => _PhotoViewGalleryScreenState();
 }
 
-class _PhotoViewGalleryScreenState extends State<PhotoViewGalleryScreen> {
+class _PhotoViewGalleryScreenState extends State<PhotoViewGalleryScreen>
+    with SingleTickerProviderStateMixin {
   int currentIndex = 0;
+  var rebuildIndex = StreamController<int>.broadcast();
+  AnimationController _animationController;
+  Animation<double> _animation;
+  Function animationListener;
+
+  List<double> doubleTapScales = <double>[1.0, 2.0];
+  GlobalKey<ExtendedImageSlidePageState> slidePagekey =
+      GlobalKey<ExtendedImageSlidePageState>();
 
   @override
   void initState() {
+    currentIndex = widget.index;
+    _animationController = AnimationController(
+        duration: const Duration(milliseconds: 150), vsync: this);
     super.initState();
     currentIndex = widget.index;
   }
 
-// 弹出对话框
+  @override
+  void dispose() {
+    rebuildIndex.close();
+    _animationController?.dispose();
+    clearGestureDetailsCache();
+    super.dispose();
+  } // 弹出对话框
+
   Future<bool> _showDeleteConfirmDialog() {
     return showDialog<bool>(
       context: context,
@@ -69,6 +88,7 @@ class _PhotoViewGalleryScreenState extends State<PhotoViewGalleryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return WillPopScope(
       onWillPop: () {
         Navigator.pop(context, widget.images);
@@ -87,7 +107,13 @@ class _PhotoViewGalleryScreenState extends State<PhotoViewGalleryScreen> {
                 color: Colors.white,
               ),
             ),
-            title: Text("${currentIndex + 1}/${widget.images.length}"),
+            title: StreamBuilder<int>(
+              builder: (c, d) {
+                return Text("${currentIndex + 1}/${widget.images.length}");
+              },
+              initialData: currentIndex,
+              stream: rebuildIndex.stream,
+            ),
             actions: <Widget>[
               FlatButton(
                 onPressed: () async {
@@ -108,32 +134,120 @@ class _PhotoViewGalleryScreenState extends State<PhotoViewGalleryScreen> {
                   size: 24,
                   color: Colors.white,
                 ),
-              )
+              ),
             ],
           ),
         ),
         body: Container(
-            child: PhotoViewGallery.builder(
-          scrollPhysics: const BouncingScrollPhysics(),
-          builder: (BuildContext context, int index) {
-            return PhotoViewGalleryPageOptions(
-              imageProvider: FileImage(widget.images[index]),
-              heroAttributes: !StringUtil.isNullOrEmpty(widget.heroTag)
-                  ? PhotoViewHeroAttributes(tag: widget.heroTag)
-                  : null,
-            );
-          },
-          itemCount: widget.images.length,
-          loadingChild: Container(),
-          backgroundDecoration: null,
-          pageController: widget.controller,
-          enableRotation: true,
-          onPageChanged: (index) {
-            setState(() {
+          color: Colors.black,
+          child: ExtendedImageGesturePageView.builder(
+            itemBuilder: (BuildContext context, int index) {
+              var file = widget.images[index];
+              Widget image = ExtendedImage.file(
+                file,
+                fit: BoxFit.contain,
+                enableSlideOutPage: true,
+                mode: ExtendedImageMode.gesture,
+                heroBuilderForSlidingPage: (Widget result) {
+                  if (index < min(9, widget.images.length)) {
+                    return Hero(
+                      tag: file.path,
+                      child: result,
+                      flightShuttleBuilder: (BuildContext flightContext,
+                          Animation<double> animation,
+                          HeroFlightDirection flightDirection,
+                          BuildContext fromHeroContext,
+                          BuildContext toHeroContext) {
+                        final Hero hero =
+                            flightDirection == HeroFlightDirection.pop
+                                ? fromHeroContext.widget
+                                : toHeroContext.widget;
+                        return hero.child;
+                      },
+                    );
+                  } else {
+                    return result;
+                  }
+                },
+                initGestureConfigHandler: (state) {
+                  double initialScale = 1.0;
+
+                  if (state.extendedImageInfo != null &&
+                      state.extendedImageInfo.image != null) {
+                    initialScale = initScale(
+                        size: size,
+                        initialScale: initialScale,
+                        imageSize: Size(
+                            state.extendedImageInfo.image.width.toDouble(),
+                            state.extendedImageInfo.image.height.toDouble()));
+                  }
+                  return GestureConfig(
+                      inPageView: true,
+                      initialScale: initialScale,
+                      maxScale: max(initialScale, 5.0),
+                      animationMaxScale: max(initialScale, 5.0),
+                      initialAlignment: InitialAlignment.center,
+                      //you can cache gesture state even though page view page change.
+                      //remember call clearGestureDetailsCache() method at the right time.(for example,this page dispose)
+                      cacheGesture: false);
+                },
+                onDoubleTap: (ExtendedImageGestureState state) {
+                  ///you can use define pointerDownPosition as you can,
+                  ///default value is double tap pointer down postion.
+                  var pointerDownPosition = state.pointerDownPosition;
+                  double begin = state.gestureDetails.totalScale;
+                  double end;
+
+                  //remove old
+                  _animation?.removeListener(animationListener);
+
+                  //stop pre
+                  _animationController.stop();
+
+                  //reset to use
+                  _animationController.reset();
+
+                  if (begin == doubleTapScales[0]) {
+                    end = doubleTapScales[1];
+                  } else {
+                    end = doubleTapScales[0];
+                  }
+
+                  animationListener = () {
+                    //print(_animation.value);
+                    state.handleDoubleTap(
+                        scale: _animation.value,
+                        doubleTapPosition: pointerDownPosition);
+                  };
+                  _animation = _animationController
+                      .drive(Tween<double>(begin: begin, end: end));
+
+                  _animation.addListener(animationListener);
+
+                  _animationController.forward();
+                },
+              );
+              image = GestureDetector(
+                child: image,
+                onTap: () {
+                  slidePagekey.currentState.popPage();
+                  Navigator.pop(context);
+                },
+              );
+              return image;
+            },
+            itemCount: widget.images.length,
+            onPageChanged: (int index) {
               currentIndex = index;
-            });
-          },
-        )),
+              rebuildIndex.add(index);
+            },
+            controller: PageController(
+              initialPage: currentIndex,
+            ),
+            scrollDirection: Axis.horizontal,
+            physics: BouncingScrollPhysics(),
+          ),
+        ),
       ),
     );
   }

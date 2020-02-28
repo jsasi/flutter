@@ -28,7 +28,7 @@ class DialogSavePic extends StatelessWidget {
   /// 生成分享字符串
   _createShareLink() {
     shareLink =
-        "${PreInfoUtil.getPreInfoEntity()?.siteBaseConfig?.h5DomainUrl}/entry/register?r_code=";
+        "${bwManager.h5DomainUrl}/entry/register?r_code=";
   }
 
   /// 复制链接

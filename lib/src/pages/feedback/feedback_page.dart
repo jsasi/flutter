@@ -52,11 +52,6 @@ class _FeedbackPageState extends State<FeedbackPage> {
     }
   }
 
-  /// 获取意见反馈问题列表
-  _uploadFeeFiles() async {
-    await ApiService.uploadFeeFiles(_images);
-    print("结束_uploadFeeFiles");
-  }
 
   @override
   void initState() {
