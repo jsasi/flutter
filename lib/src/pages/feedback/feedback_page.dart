@@ -7,6 +7,7 @@ import 'package:bw_sponsor_preferential/src/model/api_service.dart';
 import 'package:bw_sponsor_preferential/src/model/fee_que_type_entity.dart';
 import 'package:bw_sponsor_preferential/src/model/feedback_add_entity.dart';
 import 'package:bw_sponsor_preferential/src/model/multi_upload_entity.dart';
+import 'package:bw_sponsor_preferential/src/pages/feedback/feedback_res_utils.dart';
 import 'package:bw_sponsor_preferential/src/widgets/dss_app_bar.dart';
 import 'package:bw_sponsor_preferential/src/widgets/photo_gallery_page.dart';
 import 'package:bw_sponsor_preferential/src/widgets/simple_imageview.dart';
@@ -222,7 +223,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
         child: Row(
           children: <Widget>[
             if (_selectTypeBean != null) ...{
-              SimpleImageView.assetImage(_getResIdByCode(_selectTypeBean.code),
+              SimpleImageView.assetImage(FeedbackResUtils.getResIdByCode(_selectTypeBean.code),
                   width: 32, height: 32),
               Expanded(
                 child: Text(
@@ -406,7 +407,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
         onTap: () => Navigator.pop(context, bean),
         child: Row(
           children: <Widget>[
-            SimpleImageView.assetImage(_getResIdByCode(bean.code),
+            SimpleImageView.assetImage(FeedbackResUtils.getResIdByCode(bean.code),
                 width: 32, height: 32),
             Expanded(
               child: Padding(
@@ -538,32 +539,4 @@ class _FeedbackPageState extends State<FeedbackPage> {
   }
 }
 
-/// 根据code返回图标资源
-String _getResIdByCode(String code) {
-  switch (code) {
-    case "1":
-      return R.feed_ic_deposit;
-      break;
-    case "2":
-      return R.feed_ic_withdrawal;
-      break;
-    case "3":
-      return R.feed_ic_game;
-      break;
-    case "4":
-      return R.feed_ic_discount;
-      break;
-    case "5":
-      return R.feed_ic_login;
-      break;
-    case "6":
-      return R.feed_ic_modify_info;
-      break;
-    case "7":
-      return R.feed_ic_flow_water;
-      break;
-    case "8":
-    default:
-      return R.feed_ic_other;
-  }
-}
+

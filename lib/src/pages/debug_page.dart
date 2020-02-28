@@ -24,6 +24,10 @@ class DebugPage extends StatelessWidget {
               child: Text('客服'),
             ),
             RaisedButton(
+              onPressed: () => Navigator.of(context).pushNamed(Routes.feedbackList),
+              child: Text('我的反馈'),
+            ),
+            RaisedButton(
               onPressed: () => Navigator.of(context).pushNamed(Routes.sponsor),
               child: Text('赞助'),
             ),

@@ -39,7 +39,7 @@ class DssAppBar extends StatelessWidget implements PreferredSizeWidget {
               icon: Icon(
                 CupertinoIcons.back,
                 color: BWColors.dssTitleLeftArrow,
-                size: 14,
+                size: 16,
               ),
               onPressed: () => Navigator.of(context).pop()),
       title: Text(
@@ -64,8 +64,8 @@ class DssAppBar extends StatelessWidget implements PreferredSizeWidget {
           InkWell(
             onTap: callBack,
             child: Padding(
-              padding: EdgeInsets.only(right: 0),
-              child: SimpleImageView.assetImage(rightImg, height: 20),
+              padding: EdgeInsets.only(right: 14),
+              child: SimpleImageView.assetImage(rightImg,width: 16, height: 16),
             ),
           )
       ],

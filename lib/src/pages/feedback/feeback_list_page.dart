@@ -1,8 +1,7 @@
 import 'package:bw_res/bw_res.dart';
-import 'package:bw_sponsor_preferential/src/common/h5_url_format.dart';
-import 'package:bw_sponsor_preferential/src/model/discount_entity.dart';
 import 'package:bw_sponsor_preferential/src/model/feedback_entity.dart';
 import 'package:bw_sponsor_preferential/src/pages/discount_details/discount_details_page.dart';
+import 'package:bw_sponsor_preferential/src/pages/feedback/feedback_details_page.dart';
 import 'package:bw_sponsor_preferential/src/pages/feedback/feedback_list_model.dart';
 import 'package:bw_sponsor_preferential/src/widgets/dss_app_bar.dart';
 import 'package:bw_sponsor_preferential/src/widgets/feedback_item.dart';
@@ -11,7 +10,6 @@ import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../common/page_status.dart';
 import '../../routers/routes.dart';
-import '../../widgets/discount_item.dart';
 import '../../widgets/net_error_view.dart';
 
 /// 优惠列表页面
@@ -39,7 +37,12 @@ class _FeedbackListPageState extends State<FeedbackListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DssAppBar(Strings.disTitle),
+      appBar: DssAppBar(
+        Strings.feeMyTitle,
+        hideLeftArrow: false,
+        rightImg: R.feedback_add,
+        callBack: () => Navigator.pushNamed(context, Routes.feedback),
+      ),
       body: ChangeNotifierProvider<FeedbackListModel>.value(
         value: viewModel,
         child: Consumer<FeedbackListModel>(builder: (context, vm, child) {
@@ -80,25 +83,38 @@ class _FeedbackListPageState extends State<FeedbackListPage> {
   /// 数据页面
   /// [viewModel] vm
   Widget _buildRefreshWidget() {
-    return SmartRefresher(
-        enablePullDown: true,
-        enablePullUp: true,
-        onRefresh: () => viewModel.refresh(),
-        onLoading: () => viewModel.loadMore(),
-        controller: _refreshController,
-        child: _buideList(viewModel.results));
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: SmartRefresher(
+          enablePullDown: true,
+          enablePullUp: true,
+          onRefresh: () => viewModel.refresh(),
+          onLoading: () => viewModel.loadMore(),
+          controller: _refreshController,
+          child: _buideList(viewModel.results)),
+    );
   }
 
   /// 数据页面
   /// [datas] 展示数据列表
   ListView _buideList(List<FeedbackItemBean> datas) {
-    return ListView.builder(
+    return ListView.separated(
       itemCount: datas.length,
+      //分割器构造器
+      separatorBuilder: (BuildContext context, int index) {
+        return Container(
+          height: 1,
+          color: Colors.white,
+          child: Divider(
+            height: 1,
+            indent: 58,
+            color: BWColors.serviceBg,
+          ),
+        );
+      },
       itemBuilder: (context, index) => InkWell(
-          onTap: () =>
-              Navigator.pushNamed(context, Routes.discountDetails, arguments: {
-                DiscountDetailsPage.KEY_DATA: datas[index]
-              }),
+          onTap: () => Navigator.pushNamed(context, Routes.feedbackDetails,
+              arguments: {FeedbackDetailsPage.KEY_ID: datas[index].id}),
           child: FeedbackItem(datas[index])),
     );
   }

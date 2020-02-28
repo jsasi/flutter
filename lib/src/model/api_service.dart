@@ -4,6 +4,7 @@ import 'package:biz_network_main/biz_network_main.dart';
 import 'package:bw_sponsor_preferential/src/model/discount_entity.dart';
 import 'package:bw_sponsor_preferential/src/model/fee_que_type_entity.dart';
 import 'package:bw_sponsor_preferential/src/model/feedback_add_entity.dart';
+import 'package:bw_sponsor_preferential/src/model/feedback_details_entity.dart';
 import 'package:bw_sponsor_preferential/src/model/feedback_entity.dart';
 import 'package:bw_sponsor_preferential/src/model/multi_upload_entity.dart';
 import 'package:bw_sponsor_preferential/src/model/service_entity.dart';
@@ -42,12 +43,16 @@ class ApiService {
   static const String _FEED_TYPE = "/api/component/dict/dictType/v1/query";
   static const String _DICT_CODE = "custom_feedback";
 
-  // 意见反馈问题提交
+  /// 意见反馈问题提交
   static const String _FEED_COMMIT =
       "/api/site/group/member/commentFeedback/v1/insertCommentFeedback";
 
+  /// 意见反馈详情
+  static const String _FEED_DETAILS =
+      "/api/site/group/member/commentFeedback/v1/getCommentFeedbackById";
+
   // 删除意见反馈
-  static const String FEED_DEL =
+  static const String _FEED_DEL =
       "/api/site/group/member/commentFeedback/v1/deleteByPrimaryKey";
 
   // 意见反馈上传多个文件
@@ -114,17 +119,19 @@ class ApiService {
 
   /// 意见反馈上传图片
   static Future<MultiUploadEntity> uploadFeeFiles(List<File> files) async {
-    var multipartFiles = files
-        .map((file) async => await MultipartFile.fromFile(file.path))
-        .toList();
-
-    FormData formData = new FormData.fromMap({"files": multipartFiles});
+    var multipartFiles = files.map((file) {
+      return MapEntry(
+        "files",
+        MultipartFile.fromFileSync(file.path),
+      );
+    }).toList();
+    var formData = FormData();
+    formData.files.addAll(multipartFiles);
     var response = await mainClient.dio.post(
       _FEED_UPLOAD_FILE,
       data: formData,
       options: Options()..contentType = 'multipart/form-data;',
     );
-    debugPrint("============ss$response");
     return MultiUploadEntity.fromJson(response.data);
   }
 
@@ -141,9 +148,7 @@ class ApiService {
       "content": content,
       if (picUrls != null && picUrls.isNotEmpty) "picUrls": picUrls,
     };
-    print('=======data======$data');
     var response = await mainClient.dio.post(_FEED_COMMIT, data: data);
-    print('=======response======$response');
     return FeedbackAddEntity.fromJson(response.data);
   }
 
@@ -157,7 +162,20 @@ class ApiService {
         "pageSize": 15,
       },
     );
-
     return FeedbackEntity.fromJson(response.data);
+  }
+
+  /// 获取反馈详情
+  /// [id] 详情id
+  static Future<FeedbackDetailsEntity> getFeedbackDetails(int id) async {
+    mainClient.setProxy('172.18.11.116', 8888);
+    var response = await mainClient.dio.post(
+      _FEED_DETAILS,
+      data: {
+        "id": id,
+      },
+    );
+    debugPrint('=============$response');
+    return FeedbackDetailsEntity.fromJson(response.data);
   }
 }

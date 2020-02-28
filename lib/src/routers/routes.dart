@@ -1,5 +1,6 @@
 import 'package:bw_sponsor_preferential/src/pages/debug_page.dart';
 import 'package:bw_sponsor_preferential/src/pages/feedback/feeback_list_page.dart';
+import 'package:bw_sponsor_preferential/src/pages/feedback/feedback_details_page.dart';
 import 'package:bw_sponsor_preferential/src/pages/feedback/feedback_page.dart';
 import 'package:bw_sponsor_preferential/src/pages/service/details/support_details_page.dart';
 import 'package:bw_sponsor_preferential/src/pages/service/home/customer_service_page.dart';
@@ -70,7 +71,7 @@ final _routes = {
   Routes.feedback: (context, {arguments}) => FeedbackPage(),
 
   /// 意见反馈详情
-  Routes.feedbackDetails: (context, {arguments}) => FeedbackListPage(),
+  Routes.feedbackDetails: (context, {arguments}) => FeedbackDetailsPage(),
 
   /// 意见反馈列表
   Routes.feedbackList: (context, {arguments}) => FeedbackListPage(),

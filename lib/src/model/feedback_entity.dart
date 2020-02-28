@@ -67,6 +67,7 @@ class Data  {
 @JsonSerializable()
 class FeedbackItemBean  {
 
+//  类型类型 0- 存款问题 1- 提款问题 2- 游戏问题 3- 优惠问题 4- 网站/APP登录 5- 修改资料 6- 流水问题 7- 其他
   int category;
 
   String content;
@@ -91,9 +92,10 @@ class FeedbackItemBean  {
 
   String siteName;
 
+//  状态0-未处理,1-已处理,2-已查看
   int status;
 
-  int updatedAt;
+  String updatedAt;
 
   FeedbackItemBean(this.category,this.content,this.createdAt,this.description,this.feedbackContent,this.id,this.memberId,this.memberName,this.pageNum,this.pageSize,this.picUrls,this.siteName,this.status,this.updatedAt,);
 

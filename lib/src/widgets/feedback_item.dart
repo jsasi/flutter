@@ -1,28 +1,11 @@
-import 'package:bw_res/res/bw_colors.dart';
-import 'package:bw_res/res/res.dart';
-import 'package:bw_res/res/strings.dart';
-import 'package:bw_sponsor_preferential/src/model/discount_entity.dart';
+import 'package:bw_res/bw_res.dart';
 import 'package:bw_sponsor_preferential/src/model/feedback_entity.dart';
+import 'package:bw_sponsor_preferential/src/pages/feedback/feedback_res_utils.dart';
 import 'package:bw_sponsor_preferential/src/widgets/simple_imageview.dart';
 import 'package:flutter/material.dart';
 
 class FeedbackItem extends StatelessWidget {
   final FeedbackItemBean data;
-
-  String _getTagName(String tag) {
-    switch (tag) {
-      case "1":
-        return R.discount_label_zuixin;
-      case "2":
-        return R.discount_label_richang;
-      case "3":
-        return R.discount_label_xinren;
-      case "4":
-        return R.discount_label_vip;
-      default:
-        return R.discount_label_richang;
-    }
-  }
 
   FeedbackItem(this.data, {Key key}) : super(key: key);
 
@@ -30,8 +13,65 @@ class FeedbackItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 70,
+      padding: EdgeInsets.only(left: 14, right: 14),
       color: Colors.white,
-      child: Text('data'),
+      child: Row(
+        children: <Widget>[
+          SimpleImageView.assetImage(
+              FeedbackResUtils.getResIdByCode(data.category.toString()),
+              width: 32,
+              height: 32),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 10),
+                        child: Text(
+                          data.description,
+                          style: TextStyle(
+                              fontSize: 14, color: BWColors.dssTitleLeftArrow),
+                        ),
+                      ),
+                    ),
+                    Text(
+                      data.createdAt,
+                      style: TextStyle(fontSize: 10, color: BWColors.dssDesc),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 3),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 10, right: 24),
+                          child: Text(
+                            data.content,
+                            style:
+                                TextStyle(fontSize: 12, color: BWColors.dssDesc),
+                            maxLines: 1,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 8,
+                        height: 8,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle, color: BWColors.feeRedDot),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
