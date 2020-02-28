@@ -31,6 +31,9 @@ class _FeedbackPageState extends State<FeedbackPage> {
   final StreamController<bool> _streamSubmitController =
       StreamController<bool>();
 
+  // 控制提交按钮是否可点击的通知
+  final StreamController<bool> _streamImgController = StreamController<bool>();
+
   //提交按钮是否可点击
   bool _enableSubmit = false;
 
@@ -52,7 +55,6 @@ class _FeedbackPageState extends State<FeedbackPage> {
     }
   }
 
-
   @override
   void initState() {
     super.initState();
@@ -71,6 +73,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
   @override
   void dispose() {
     _streamSubmitController.close();
+    _streamImgController.close();
     _inputController.dispose();
     super.dispose();
   }
@@ -150,25 +153,32 @@ class _FeedbackPageState extends State<FeedbackPage> {
           width: MediaQuery.of(context).size.width,
           padding: EdgeInsets.symmetric(vertical: 20, horizontal: 14),
           color: Colors.white,
-          child: Row(
-            children: <Widget>[
-              ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  //禁用滑动事件
-                  scrollDirection: Axis.horizontal,
-                  itemCount: _images.length < 3 ? _images.length + 1 : 3,
-                  itemBuilder: (context, index) {
-                    return _buildSelImageItem(index);
-                  }),
-              Expanded(
-                  child: Container(
-                      alignment: Alignment.topRight,
-                      child: Text(
-                        '${_images.length}/3',
-                        style: TextStyle(fontSize: 12, color: BWColors.dssDesc),
-                      ))),
-            ],
+          child: StreamBuilder(
+            initialData: false,
+            stream: _streamImgController.stream,
+            builder: (context, snapshot) {
+              return Row(
+                children: <Widget>[
+                  ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      //禁用滑动事件
+                      scrollDirection: Axis.horizontal,
+                      itemCount: _images.length < 3 ? _images.length + 1 : 3,
+                      itemBuilder: (context, index) {
+                        return _buildSelImageItem(index);
+                      }),
+                  Expanded(
+                      child: Container(
+                          alignment: Alignment.topRight,
+                          child: Text(
+                            '${_images.length}/3',
+                            style: TextStyle(
+                                fontSize: 12, color: BWColors.dssDesc),
+                          ))),
+                ],
+              );
+            },
           ),
         ),
         Container(
@@ -189,7 +199,6 @@ class _FeedbackPageState extends State<FeedbackPage> {
                 stream: _streamSubmitController.stream,
                 initialData: false,
                 builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-                  print(snapshot.data);
                   return FlatButton(
                     onPressed: snapshot.data ? _trySubmit : null,
                     color: BWColors.dssBtnBg,
@@ -218,8 +227,10 @@ class _FeedbackPageState extends State<FeedbackPage> {
         child: Row(
           children: <Widget>[
             if (_selectTypeBean != null) ...{
-              SimpleImageView.assetImage(FeedbackResUtils.getResIdByCode(_selectTypeBean.code),
-                  width: 32, height: 32),
+              SimpleImageView.assetImage(
+                  FeedbackResUtils.getResIdByCode(_selectTypeBean.code),
+                  width: 32,
+                  height: 32),
               Expanded(
                 child: Text(
                   _selectTypeBean.dictValue,
@@ -402,8 +413,10 @@ class _FeedbackPageState extends State<FeedbackPage> {
         onTap: () => Navigator.pop(context, bean),
         child: Row(
           children: <Widget>[
-            SimpleImageView.assetImage(FeedbackResUtils.getResIdByCode(bean.code),
-                width: 32, height: 32),
+            SimpleImageView.assetImage(
+                FeedbackResUtils.getResIdByCode(bean.code),
+                width: 32,
+                height: 32),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(left: 10, right: 10),
@@ -458,9 +471,8 @@ class _FeedbackPageState extends State<FeedbackPage> {
   _openGallery() async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
     if (mounted && image != null) {
-      setState(() {
-        _images.add(image);
-      });
+      _images.add(image);
+      _streamImgController.sink.add(true);
     }
   }
 
@@ -468,9 +480,8 @@ class _FeedbackPageState extends State<FeedbackPage> {
   _takePhoto() async {
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
     if (mounted && image != null) {
-      setState(() {
-        _images.add(image);
-      });
+      _images.add(image);
+      _streamImgController.sink.add(true);
     }
   }
 
@@ -514,9 +525,9 @@ class _FeedbackPageState extends State<FeedbackPage> {
   /// 删除照片
   _delImg(int index) {
     if (mounted && _images.length > index) {
-      setState(() {
-        _images.removeAt(index);
-      });
+      setState(() {});
+      _images.removeAt(index);
+      _streamImgController.sink.add(true);
     }
   }
 
@@ -527,11 +538,8 @@ class _FeedbackPageState extends State<FeedbackPage> {
       PhotoViewGalleryScreen.KEY_INDEX: index
     });
     if (mounted) {
-      setState(() {
-        _images = result;
-      });
+      _images = result;
+      _streamImgController.sink.add(true);
     }
   }
 }
-
-
