@@ -1,11 +1,18 @@
+import 'dart:convert';
+
+import 'package:bw_base/bw_base.dart';
 import 'package:bw_res/bw_res.dart';
 import 'package:bw_res/res/bw_colors.dart';
 import 'package:bw_res/res/strings.dart';
+import 'package:bw_sponsor_preferential/src/model/api_service.dart';
+import 'package:bw_sponsor_preferential/src/model/customer_entity.dart';
 import 'package:bw_sponsor_preferential/src/model/service_entity.dart';
+import 'package:bw_sponsor_preferential/src/pages/service/home/customer_service_page.dart';
 import 'package:bw_sponsor_preferential/src/pages/service/home/service_model.dart';
 import 'package:bw_sponsor_preferential/src/pages/service/support/support_center_page.dart';
 import 'package:bw_sponsor_preferential/src/widgets/dss_app_bar.dart';
 import 'package:bw_sponsor_preferential/src/widgets/service_item.dart';
+import 'package:bw_utils/bw_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -16,13 +23,24 @@ import '../../../widgets/net_error_view.dart';
 
 /// 客服页面
 class SevicePage extends StatelessWidget {
+  /// 如果有反馈列表数据，跳转反馈列表
+  /// 否则跳转到提交反馈页面
+  void _maybeRoute(BuildContext context) async {
+    var feedbackList = await ApiService.getFeedbackList();
+    if (feedbackList.code == 0 && feedbackList.data?.list?.isNotEmpty == true) {
+      Navigator.pushNamed(context, Routes.feedbackList);
+    } else {
+      Navigator.pushNamed(context, Routes.feedback);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: DssAppBar(
           Strings.serTitle,
           rightText: Strings.feeTitle,
-          callBack: () => Navigator.of(context).pushNamed(Routes.feedback),
+          callBack: () => _maybeRoute(context),
         ),
         body: _BodyWidget());
   }
@@ -37,11 +55,29 @@ class _BodyWidget extends StatefulWidget {
 class __BodyWidgetState extends State<_BodyWidget> {
   RefreshController _refreshController = RefreshController();
 
+  //客服列表
+  List<CustomerEntity> customerList;
+
+  //是否显示两个客服按钮
+  bool isShowTwoCustomer = false;
   final viewModel = ServiceModel();
+
+  /// 获取客服列表
+  _genCustomer() {
+    List list = json
+        .decode(PreInfoUtil.getPreInfoEntity().siteBaseConfig.customerService);
+    customerList = list.map((m) {
+      CustomerEntity entity = CustomerEntity.fromJson(m);
+      if (entity.code == "service_web2" &&
+          !StringUtil.isNullOrEmpty(entity.url)) isShowTwoCustomer = true;
+      return entity;
+    }).toList();
+  }
 
   @override
   void initState() {
     super.initState();
+    _genCustomer();
     viewModel.init();
   }
 
@@ -118,27 +154,33 @@ class __BodyWidgetState extends State<_BodyWidget> {
                   ),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(4.0)),
-                  onPressed: () {},
+                  onPressed: () => Navigator.pushNamed(
+                      context, Routes.customerService,
+                      arguments: {CustomerServicePage.KEY_INDEX: 0}),
                 ),
               )),
-              Expanded(
-                child: Container(
-                  margin: EdgeInsets.only(left: 10),
-                  height: 46,
-                  child: FlatButton(
-                    child: Text(
-                      Strings.serSecond,
-                      style: TextStyle(color: BWColors.dssBtnBg, fontSize: 16),
+              if (isShowTwoCustomer)
+                Expanded(
+                  child: Container(
+                    margin: EdgeInsets.only(left: 10),
+                    height: 46,
+                    child: FlatButton(
+                      child: Text(
+                        Strings.serSecond,
+                        style:
+                            TextStyle(color: BWColors.dssBtnBg, fontSize: 16),
+                      ),
+                      shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            color: BWColors.dssBtnBg,
+                          ),
+                          borderRadius: BorderRadius.circular(4.0)),
+                      onPressed: () => Navigator.pushNamed(
+                          context, Routes.customerService,
+                          arguments: {CustomerServicePage.KEY_INDEX: 1}),
                     ),
-                    shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                          color: BWColors.dssBtnBg,
-                        ),
-                        borderRadius: BorderRadius.circular(4.0)),
-                    onPressed: () {},
                   ),
                 ),
-              ),
             ],
           ),
         ),

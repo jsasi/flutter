@@ -12,8 +12,7 @@ class SupportFooterView extends StatelessWidget {
   Widget build(BuildContext context) {
     _recognizer.onTap = () => Navigator.of(context).pushNamed(
         Routes.customerService,
-        // todo
-        arguments: {CustomerServicePage.KEY_URL: "https://chat.8ztq7o.com/chat/chatClient/chatbox.jsp?companyID=5889090&configID=2"});
+        arguments: {CustomerServicePage.KEY_INDEX: 1});
 
     return Container(
       alignment: Alignment.center,
