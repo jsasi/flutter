@@ -1,25 +1,15 @@
-import 'dart:async';
-import 'dart:io';
-
 import 'package:biz_login/biz_login.dart';
 import 'package:bw_base/bw_base.dart';
 import 'package:bw_res/bw_res.dart';
-import 'package:bw_sponsor_preferential/bw_sponsor_preferential.dart';
 import 'package:bw_sponsor_preferential/src/model/api_service.dart';
-import 'package:bw_sponsor_preferential/src/model/fee_que_type_entity.dart';
-import 'package:bw_sponsor_preferential/src/model/feedback_add_entity.dart';
 import 'package:bw_sponsor_preferential/src/model/feedback_details_entity.dart';
-import 'package:bw_sponsor_preferential/src/model/multi_upload_entity.dart';
 import 'package:bw_sponsor_preferential/src/pages/feedback/feedback_res_utils.dart';
 import 'package:bw_sponsor_preferential/src/widgets/dss_app_bar.dart';
 import 'package:bw_sponsor_preferential/src/widgets/net_error_view.dart';
-import 'package:bw_sponsor_preferential/src/widgets/photo_gallery_page.dart';
 import 'package:bw_sponsor_preferential/src/widgets/simple_imageview.dart';
 import 'package:bw_utils/bw_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:oktoast/oktoast.dart';
 
 /// 意见反馈详情
 class FeedbackDetailsPage extends StatefulWidget {
@@ -60,8 +50,10 @@ class _FeedbackDetailsPageState extends State<FeedbackDetailsPage> {
 
   //解析路由数据
   void _initArguments() {
+    print("arguments=======${widget.arguments}");
     if (widget.arguments != null) {
       id = widget.arguments[FeedbackDetailsPage.KEY_ID];
+      print("id=======$id");
     }
   }
 
@@ -122,29 +114,37 @@ class _FeedbackDetailsPageState extends State<FeedbackDetailsPage> {
               color: BWColors.dssDivider,
             ),
           ),
-          Row(
-            children: <Widget>[
-              ClipOval(
-                  child: SizedBox(
-                      width: 28,
-                      height: 28,
-                      child: SimpleImageView.displayIcon(
-                          LoginUtil.getUserEntity()?.avatar ?? ""))),
-              Padding(
-                padding: EdgeInsets.only(left: 7),
-                child: Text(bwManager.mainUserName),
-              )
-            ],
-          ),
           Padding(
+            padding: const EdgeInsets.only(left: 19),
+            child: Row(
+              children: <Widget>[
+                ClipOval(
+                    child: SizedBox(
+                        width: 28,
+                        height: 28,
+                        child: SimpleImageView.displayIcon(
+                            LoginUtil.getUserEntity()?.avatar ?? ""))),
+                Padding(
+                  padding: EdgeInsets.only(left: 7),
+                  child: Text(bwManager.mainUserName),
+                )
+              ],
+            ),
+          ),
+          Container(
+            alignment: Alignment.topLeft,
             padding: EdgeInsets.only(left: 54, bottom: 10),
             child: Text(_bean.content),
           ),
           if (!StringUtil.isNullOrEmpty(_bean.picUrls))
-            Row(
-              children: <Widget>[..._buildImageViewList()],
+            Padding(
+              padding: const EdgeInsets.only(left: 54),
+              child: Row(
+                children: <Widget>[..._buildImageViewList()],
+              ),
             ),
-          Padding(
+          Container(
+            alignment: Alignment.topLeft,
             padding: EdgeInsets.only(left: 54, bottom: 10),
             child: Text(
               _bean.createdAt,

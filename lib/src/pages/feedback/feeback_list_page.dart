@@ -113,7 +113,8 @@ class _FeedbackListPageState extends State<FeedbackListPage> {
         );
       },
       itemBuilder: (context, index) => InkWell(
-          onTap: () => Navigator.pushNamed(context, Routes.feedbackDetails,
+          onTap: () => Navigator.pushNamed(
+              context, Routes.feedbackDetails,
               arguments: {FeedbackDetailsPage.KEY_ID: datas[index].id}),
           child: FeedbackItem(datas[index])),
     );

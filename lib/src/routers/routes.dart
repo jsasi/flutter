@@ -67,7 +67,8 @@ final _routes = {
   Routes.feedback: (context, {arguments}) => FeedbackPage(),
 
   /// 意见反馈详情
-  Routes.feedbackDetails: (context, {arguments}) => FeedbackDetailsPage(),
+  Routes.feedbackDetails: (context, {arguments}) =>
+      FeedbackDetailsPage(arguments: arguments),
 
   /// 意见反馈列表
   Routes.feedbackList: (context, {arguments}) => FeedbackListPage(),
