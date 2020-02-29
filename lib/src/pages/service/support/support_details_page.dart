@@ -1,3 +1,4 @@
+import 'package:bw_base/bw_base.dart';
 import 'package:bw_res/res/res.dart';
 import 'package:bw_sponsor_preferential/bw_sponsor_preferential.dart';
 import 'package:bw_sponsor_preferential/src/common/h5_url_format.dart';
@@ -82,20 +83,22 @@ class _SupportDetailsPageState extends State<SupportDetailsPage> {
   }
 
   Widget _buildBody() {
+    print(_appendHtml());
     return Container(
       margin: EdgeInsets.only(top: 10),
+      width: double.infinity,
       child: bean == null
           ? Container()
-          : SingleChildScrollView(
-              child: PrimaryScrollController(
-                controller: primaryScrollController,
-                child: Column(
-                  children: <Widget>[
-                    Text(_appendHtml()),
-                    SupportFooterView(),
-                  ],
+          : Column(
+              children: <Widget>[
+                Expanded(
+                  child: BwWebview(
+                    htmlText: _appendHtml(),
+                    showTitleBar: false,
+                  ),
                 ),
-              ),
+                SupportFooterView(),
+              ],
             ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:bw_sponsor_preferential/src/pages/feedback/feeback_list_page.dart';
 import 'package:bw_sponsor_preferential/src/pages/feedback/feedback_details_page.dart';
 import 'package:bw_sponsor_preferential/src/pages/feedback/feedback_page.dart';
+import 'package:bw_sponsor_preferential/src/pages/service/support/help_center_page.dart';
 import 'package:bw_sponsor_preferential/src/pages/service/support/support_details_page.dart';
 import 'package:bw_sponsor_preferential/src/pages/service/home/customer_service_page.dart';
 import 'package:bw_sponsor_preferential/src/pages/service/home/service_page.dart';
@@ -17,7 +18,7 @@ class Routes {
   static String discount = "/discount";
   static String discountDetails = "/discount-details";
   static String sponsorDetails = "/sponsor-details";
-  static String supportCenter = "/support-center";
+  static String supportCenter = "/support_center";
   static String supportDetails = "/support-details";
   static String sponsor = "/sponsor";
   static String service = "/service";
@@ -27,6 +28,7 @@ class Routes {
   static String webPage = "/webpage";
   static String customerService = "/customer-service";
   static String photoGallery = "/photo_allery";
+  static String helpCenter = "/help_center";
 }
 
 final _routes = {
@@ -76,6 +78,10 @@ final _routes = {
   /// 画廊
   Routes.photoGallery: (context, {arguments}) =>
       PhotoViewGalleryScreen(arguments: arguments),
+  /// 帮助中心
+  Routes.helpCenter: (context, {arguments}) =>
+      HelpCenterPage(),
+
 };
 
 final Function onGenerateRoute = (RouteSettings settings) {

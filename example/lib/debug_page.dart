@@ -45,8 +45,8 @@ class _DebugPageState extends State<DebugPage> {
               child: Text('客服'),
             ),
             RaisedButton(
-              onPressed: () => Navigator.of(context).pushNamed(Routes.feedbackList),
-              child: Text('我的反馈'),
+              onPressed: () => Navigator.of(context).pushNamed(Routes.helpCenter),
+              child: Text('帮助中心'),
             ),
             RaisedButton(
               onPressed: () => Navigator.of(context).pushNamed(Routes.sponsor),
