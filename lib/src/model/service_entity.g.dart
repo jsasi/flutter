@@ -37,6 +37,7 @@ ServiceItemBean _$ServiceItemBeanFromJson(Map<String, dynamic> json) {
     json['name'] as String,
     json['shortTitle'] as String,
     json['updatedAt'] as String,
+    json['linkUrl'] as String,
   );
 }
 
@@ -50,4 +51,5 @@ Map<String, dynamic> _$ServiceItemBeanToJson(ServiceItemBean instance) =>
       'name': instance.name,
       'shortTitle': instance.shortTitle,
       'updatedAt': instance.updatedAt,
+      'linkUrl': instance.linkUrl,
     };

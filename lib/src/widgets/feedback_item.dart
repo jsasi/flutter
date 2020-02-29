@@ -1,7 +1,9 @@
+import 'package:bw_base/bw_base.dart';
 import 'package:bw_res/bw_res.dart';
 import 'package:bw_sponsor_preferential/src/model/feedback_entity.dart';
 import 'package:bw_sponsor_preferential/src/pages/feedback/feedback_res_utils.dart';
 import 'package:bw_sponsor_preferential/src/widgets/simple_imageview.dart';
+import 'package:bw_utils/bw_utils.dart';
 import 'package:flutter/material.dart';
 
 class FeedbackItem extends StatelessWidget {
@@ -52,18 +54,22 @@ class FeedbackItem extends StatelessWidget {
                           padding: EdgeInsets.only(left: 10, right: 24),
                           child: Text(
                             data.content,
-                            style:
-                                TextStyle(fontSize: 12, color: BWColors.dssDesc),
+                            style: TextStyle(
+                                fontSize: 12, color: BWColors.dssDesc),
                             maxLines: 1,
                           ),
                         ),
                       ),
-                      Container(
-                        width: 8,
-                        height: 8,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle, color: BWColors.feeRedDot),
-                      )
+                      if (data.status == 0 &&
+                          appSharedPreferences.getBool(data.id.toString()) ==
+                              null)
+                        Container(
+                          width: 8,
+                          height: 8,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: BWColors.feeRedDot),
+                        )
                     ],
                   ),
                 ),

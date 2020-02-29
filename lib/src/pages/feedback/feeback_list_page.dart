@@ -5,6 +5,7 @@ import 'package:bw_sponsor_preferential/src/pages/feedback/feedback_details_page
 import 'package:bw_sponsor_preferential/src/pages/feedback/feedback_list_model.dart';
 import 'package:bw_sponsor_preferential/src/widgets/dss_app_bar.dart';
 import 'package:bw_sponsor_preferential/src/widgets/feedback_item.dart';
+import 'package:bw_utils/bw_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -113,9 +114,12 @@ class _FeedbackListPageState extends State<FeedbackListPage> {
         );
       },
       itemBuilder: (context, index) => InkWell(
-          onTap: () => Navigator.pushNamed(
-              context, Routes.feedbackDetails,
-              arguments: {FeedbackDetailsPage.KEY_ID: datas[index].id}),
+          onTap: () {
+            //设置已读
+            appSharedPreferences.setBool(datas[index].id.toString(), true);
+            Navigator.pushNamed(context, Routes.feedbackDetails,
+                arguments: {FeedbackDetailsPage.KEY_ID: datas[index].id});
+          },
           child: FeedbackItem(datas[index])),
     );
   }
