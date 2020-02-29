@@ -49,7 +49,7 @@ class DiscountDetailsPage extends StatelessWidget {
           callBack: () => _showModalBottomSheet(context),
         ),
         body: BwWebview(
-          _url ?? "",
+          url: _url ?? "",
           showTitleBar: false,
         ));
   }

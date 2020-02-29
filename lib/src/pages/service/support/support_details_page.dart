@@ -1,15 +1,17 @@
+import 'package:bw_res/res/res.dart';
+import 'package:bw_sponsor_preferential/bw_sponsor_preferential.dart';
 import 'package:bw_sponsor_preferential/src/common/h5_url_format.dart';
 import 'package:bw_sponsor_preferential/src/model/api_service.dart';
 import 'package:bw_sponsor_preferential/src/model/support_details_entity.dart';
 import 'package:bw_sponsor_preferential/src/widgets/dss_app_bar.dart';
 import 'package:bw_sponsor_preferential/src/widgets/support_footer_view.dart';
 import 'package:bw_utils/bw_utils.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+/// 帮助中心详情
 class SupportDetailsPage extends StatefulWidget {
   SupportDetailsPage({Key key, this.arguments}) : super(key: key);
-  static final String KEY_ID = "key_id";
+  static const String KEY_ID = "key_id";
 
   final arguments;
   int id;
@@ -44,8 +46,8 @@ class _SupportDetailsPageState extends State<SupportDetailsPage> {
     }
   }
 
-  // 获取url
-  String _formatUrl() {
+  // 获取html
+  String _appendHtml() {
     if (bean?.contextType == 1) {
       String head =
           ("<head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0," +
@@ -73,6 +75,8 @@ class _SupportDetailsPageState extends State<SupportDetailsPage> {
         appBar: DssAppBar(
           bean?.title ?? "详情",
           hideLeftArrow: false,
+          rightImg: R.service_icon,
+          callBack: () => Navigator.pushNamed(context, Routes.customerService),
         ),
         body: _buildBody());
   }
@@ -87,7 +91,7 @@ class _SupportDetailsPageState extends State<SupportDetailsPage> {
                 controller: primaryScrollController,
                 child: Column(
                   children: <Widget>[
-                    Text(_formatUrl()),
+                    Text(_appendHtml()),
                     SupportFooterView(),
                   ],
                 ),

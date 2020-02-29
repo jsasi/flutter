@@ -5,33 +5,30 @@ import 'package:bw_sponsor_preferential/src/common/page_status.dart';
 import 'package:bw_sponsor_preferential/src/model/service_entity.dart';
 import 'package:bw_sponsor_preferential/src/model/support_type_entity.dart';
 import 'package:bw_sponsor_preferential/src/pages/service/support/support_details_page.dart';
+import 'package:bw_sponsor_preferential/src/pages/service/home/service_model.dart';
 import 'package:bw_sponsor_preferential/src/pages/service/support/support_center_model.dart';
-import 'package:bw_sponsor_preferential/src/pages/web/web_page.dart';
+import 'package:bw_sponsor_preferential/src/pages/service/support/support_center_page.dart';
 import 'package:bw_sponsor_preferential/src/routers/routes.dart';
 import 'package:bw_sponsor_preferential/src/widgets/dss_app_bar.dart';
 import 'package:bw_sponsor_preferential/src/widgets/empty_view_.dart';
 import 'package:bw_sponsor_preferential/src/widgets/net_error_view.dart';
+import 'package:bw_sponsor_preferential/src/widgets/service_item.dart';
 import 'package:bw_sponsor_preferential/src/widgets/support_footer_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 /// 帮助中心列表页面
-class SupportCenterListPage extends StatefulWidget {
-  final arguments;
-
-  static final String KEY_DATA = "key_data";
-
-  SupportCenterListPage({Key key, this.arguments}) : super(key: key);
+class HelpCenterPage extends StatefulWidget {
+  HelpCenterPage({Key key}) : super(key: key);
 
   @override
-  _SupportCenterListPageState createState() => _SupportCenterListPageState();
+  _HelpCenterListPageState createState() => _HelpCenterListPageState();
 }
 
-class _SupportCenterListPageState extends State<SupportCenterListPage> {
-  ServiceItemBean _bean;
+class _HelpCenterListPageState extends State<HelpCenterPage> {
   RefreshController _refreshController = RefreshController();
-  SupportCenterModel _viewModel;
+  final _viewModel = ServiceModel();
 
   @override
   void dispose() {
@@ -42,35 +39,22 @@ class _SupportCenterListPageState extends State<SupportCenterListPage> {
   @override
   void initState() {
     super.initState();
-    _initArguments();
-    _viewModel = SupportCenterModel(_bean.id);
     _viewModel.init();
-    //客服点击 todo
-//    _recognizer.onTap = () => Navigator.pushNamed(context, Routes.service);
-  }
-
-  void _initArguments() {
-    if (widget.arguments != null) {
-      _bean = widget.arguments[SupportCenterListPage.KEY_DATA];
-    }
   }
 
   @override
   Widget build(BuildContext context) {
-    _initArguments();
     return Scaffold(
       appBar: DssAppBar(
-        _bean.name ?? "",
+        '帮助中心',
         hideLeftArrow: false,
-        rightImg: R.service_icon,
-        callBack: () => Navigator.pushNamed(context, Routes.customerService),
       ),
       body: Container(
         margin: EdgeInsets.only(top: 20),
         color: Colors.white,
-        child: ChangeNotifierProvider<SupportCenterModel>.value(
+        child: ChangeNotifierProvider<ServiceModel>.value(
           value: _viewModel,
-          child: Consumer<SupportCenterModel>(builder: (context, vm, child) {
+          child: Consumer<ServiceModel>(builder: (context, vm, child) {
             switch (vm.screenStatus) {
               case ScreenStatus.Error:
                 return NetErrorView(callBack: () => _viewModel.init());
@@ -108,66 +92,25 @@ class _SupportCenterListPageState extends State<SupportCenterListPage> {
 
   /// 数据页面
   /// [datas] 展示数据列表
-  ListView _buideList(List<SupportItemBean> datas) {
+  ListView _buideList(List<ServiceItemBean> datas) {
     return ListView.separated(
-      itemCount: datas.length + 1,
-      itemBuilder: (context, index) => index == datas.length
-          ? SupportFooterView()
-          : _buildItem(datas[index]),
+      itemCount: datas.length,
+      itemBuilder: (context, index) => InkWell(
+          onTap: () => Navigator.pushNamed(context, Routes.supportCenter,
+              arguments: {SupportCenterListPage.KEY_DATA: datas[index]}),
+          child: ServiceItem(datas[index])),
       //分割器构造器
       separatorBuilder: (BuildContext context, int index) {
         return Container(
-          padding: EdgeInsets.only(left: 14),
+          padding: EdgeInsets.only(left: 56),
           height: 1,
+          color: Colors.white,
           child: Divider(
             height: 1,
-            color: BWColors.dssDivider,
+            color: BWColors.serviceBg,
           ),
         );
       },
-    );
-  }
-
-  _itemClick(SupportItemBean data) {
-    if (data.contextType == 1) {
-      Navigator.pushNamed(context, Routes.supportDetails,
-          arguments: {SupportDetailsPage.KEY_ID: data.id});
-    } else if (data.contextType == 2) {
-      Navigator.pushNamed(context, Routes.webPage, arguments: {
-        WebPage.KEY_URL: _bean.linkUrl,
-        WebPage.KEY_TITLE: _bean.name
-      });
-    }
-  }
-
-  Widget _buildItem(SupportItemBean data) {
-    return InkWell(
-      onTap: () => _itemClick(data),
-      child: Container(
-        height: 70,
-        padding: EdgeInsets.only(left: 14, right: 14),
-        child: Row(
-          children: <Widget>[
-            Expanded(
-                child: Text(
-              data.title ?? "",
-              style: TextStyle(
-                  fontSize: 14,
-                  color: BWColors.serviceItemDesc,
-                  fontWeight: FontWeight.bold),
-              maxLines: 1,
-            )),
-            Padding(
-              padding: const EdgeInsets.only(left: 8),
-              child: Icon(
-                Icons.arrow_forward_ios,
-                size: 13,
-                color: BWColors.dssItemArrow,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

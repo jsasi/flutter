@@ -1,11 +1,13 @@
 import 'package:biz_login/biz_login.dart';
 import 'package:bw_base/bw_base.dart';
 import 'package:bw_res/bw_res.dart';
+import 'package:bw_sponsor_preferential/bw_sponsor_preferential.dart';
 import 'package:bw_sponsor_preferential/src/model/api_service.dart';
 import 'package:bw_sponsor_preferential/src/model/feedback_details_entity.dart';
 import 'package:bw_sponsor_preferential/src/pages/feedback/feedback_res_utils.dart';
 import 'package:bw_sponsor_preferential/src/widgets/dss_app_bar.dart';
 import 'package:bw_sponsor_preferential/src/widgets/net_error_view.dart';
+import 'package:bw_sponsor_preferential/src/widgets/photo_gallery_page.dart';
 import 'package:bw_sponsor_preferential/src/widgets/simple_imageview.dart';
 import 'package:bw_utils/bw_utils.dart';
 import 'package:flutter/cupertino.dart';
@@ -163,10 +165,15 @@ class _FeedbackDetailsPageState extends State<FeedbackDetailsPage> {
 
   List<Widget> _buildImageViewList() {
     var split = _bean.picUrls.split(",");
-    return split.map((String url) {
-      return Padding(
-        padding: EdgeInsets.only(right: 10, bottom: 10),
-        child: SimpleImageView.display(url, width: 50, height: 50),
+    return split.asMap().entries.map((entry) {
+      int idx = entry.key;
+      String url = entry.value;
+      return InkWell(
+        onTap: ()=>Navigator.pushNamed(context, Routes.photoGallery,arguments: {PhotoViewGalleryScreen.KEY_IMG_URLS:split,PhotoViewGalleryScreen.KEY_INDEX:idx}),
+        child: Padding(
+          padding: EdgeInsets.only(right: 10, bottom: 10),
+          child: SimpleImageView.display(url, width: 50, height: 50),
+        ),
       );
     }).toList();
   }

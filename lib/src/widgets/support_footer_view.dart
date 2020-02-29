@@ -3,6 +3,7 @@ import 'package:bw_sponsor_preferential/src/pages/service/home/customer_service_
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+/// 联系客服的底部控件
 class SupportFooterView extends StatelessWidget {
   final TapGestureRecognizer _recognizer = new TapGestureRecognizer();
 

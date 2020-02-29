@@ -17,8 +17,9 @@ class MyApp extends StatelessWidget {
             bottomSheetTheme: BottomSheetThemeData(
               backgroundColor: Color(0x66000000),
             )),
-        home: DebugPage(),
+        initialRoute: Routes.root,
         onGenerateRoute: onGenerateRoute,
+        home: DebugPage(),
       ),
     );
   }

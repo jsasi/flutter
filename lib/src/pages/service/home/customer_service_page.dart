@@ -18,7 +18,7 @@ class CustomerServicePage extends StatefulWidget {
 }
 
 class _CustomerServicePageState extends State<CustomerServicePage> {
-  int _index;
+  int _index=0;
   List<CustomerEntity> customerList;
   final String  defUrl =
       "https://chat.8ztq7o.com/chat/chatClient/chatbox.jsp?companyID=5889090&configID=2";
@@ -44,15 +44,15 @@ class _CustomerServicePageState extends State<CustomerServicePage> {
 
   @override
   Widget build(BuildContext context) {
+   var url= customerList != null && customerList.length > _index
+        ? customerList[_index].url : defUrl;
     return Scaffold(
         appBar: DssAppBar(
           "客服",
           hideLeftArrow: false,
         ),
         body: BwWebview(
-          customerList != null && customerList.length > _index
-              ? customerList[_index].url
-              : defUrl,
+          url:url,
           showTitleBar: false,
         ));
   }

@@ -36,7 +36,7 @@ packages:
     description:
       path: "."
       ref: "feature_v0.1"
-      resolved-ref: "2be72a2556627346d4d2009f136470d48c47d656"
+      resolved-ref: "7ab4731b5846650a84bfa4ef525dbf65ca9c17b7"
       url: "http://47.52.134.206/bw-flutter/biz_login.git"
     source: git
     version: "0.0.1"
@@ -61,7 +61,7 @@ packages:
     description:
       path: "."
       ref: "feature_v0.1"
-      resolved-ref: "949ecb7a953d30eec743a9241b5c8f24d138be76"
+      resolved-ref: "6fc14f6fe3d1bb811b8a00b85370218b12b643c1"
       url: "http://47.52.134.206/bw-flutter/bw_base.git"
     source: git
     version: "0.0.1"
@@ -70,7 +70,7 @@ packages:
     description:
       path: "packages/bw_res"
       ref: "feature_v0.1"
-      resolved-ref: "7e9f68b5c8d20a3432af2edfb948482f979dd3d4"
+      resolved-ref: f038d907af9042942156e32349c8c5349078f2e2
       url: "http://47.52.134.206/bw-flutter/bw_resources.git"
     source: git
     version: "0.0.1"
@@ -86,7 +86,7 @@ packages:
     description:
       path: "."
       ref: "feature_v0.1"
-      resolved-ref: "7be29e0f13150656cc0db600cbf1448904c35e17"
+      resolved-ref: a04fdaf84af0234e26219f54d740a8aa8d84aef2
       url: "http://47.52.134.206/bw-flutter/bw_utils.git"
     source: git
     version: "0.0.1"
@@ -314,7 +314,7 @@ packages:
       name: permission_handler
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.2.0+hotfix.3"
+    version: "4.3.0"
   petitparser:
     dependency: transitive
     description:

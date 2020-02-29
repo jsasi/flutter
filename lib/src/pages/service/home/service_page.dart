@@ -21,8 +21,8 @@ import '../../../routers/routes.dart';
 import '../../../widgets/empty_view_.dart';
 import '../../../widgets/net_error_view.dart';
 
-/// 客服页面
-class SevicePage extends StatelessWidget {
+/// 客服中心
+class ServicePage extends StatelessWidget {
   /// 如果有反馈列表数据，跳转反馈列表
   /// 否则跳转到提交反馈页面
   void _maybeRoute(BuildContext context) async {

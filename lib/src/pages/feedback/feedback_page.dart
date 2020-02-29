@@ -532,12 +532,15 @@ class _FeedbackPageState extends State<FeedbackPage> {
   }
 
   _previewPhoto(int index) async {
+    print('======index===============$index');
+
     final result =
         await Navigator.of(context).pushNamed(Routes.photoGallery, arguments: {
-      PhotoViewGalleryScreen.KEY_IMAGES: _images,
+      PhotoViewGalleryScreen.KEY_FILES: _images,
       PhotoViewGalleryScreen.KEY_INDEX: index
     });
     if (mounted) {
+      print('======result===============$result');
       _images = result;
       _streamImgController.sink.add(true);
     }

@@ -1,7 +1,7 @@
 import 'package:bw_sponsor_preferential/src/pages/feedback/feeback_list_page.dart';
 import 'package:bw_sponsor_preferential/src/pages/feedback/feedback_details_page.dart';
 import 'package:bw_sponsor_preferential/src/pages/feedback/feedback_page.dart';
-import 'package:bw_sponsor_preferential/src/pages/service/details/support_details_page.dart';
+import 'package:bw_sponsor_preferential/src/pages/service/support/support_details_page.dart';
 import 'package:bw_sponsor_preferential/src/pages/service/home/customer_service_page.dart';
 import 'package:bw_sponsor_preferential/src/pages/service/home/service_page.dart';
 import 'package:bw_sponsor_preferential/src/pages/service/support/support_center_page.dart';
@@ -45,7 +45,7 @@ final _routes = {
   Routes.sponsor: (context) => SponsorPage(),
 
   /// 客服首页
-  Routes.service: (context) => SevicePage(),
+  Routes.service: (context) => ServicePage(),
 
   /// 客服中心
   Routes.supportCenter: (context, {arguments}) =>

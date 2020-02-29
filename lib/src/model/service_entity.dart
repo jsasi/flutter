@@ -36,8 +36,9 @@ class ServiceItemBean {
 	String shortTitle;
 
 	String updatedAt;
+	String linkUrl;
 
-	ServiceItemBean(this.createdAt,this.createdBy,this.iconUrl,this.id,this.isDelete,this.name,this.shortTitle,this.updatedAt,);
+	ServiceItemBean(this.createdAt,this.createdBy,this.iconUrl,this.id,this.isDelete,this.name,this.shortTitle,this.updatedAt,this.linkUrl,);
 
 	factory ServiceItemBean.fromJson(Map<String, dynamic> srcJson) => _$ServiceItemBeanFromJson(srcJson);
 

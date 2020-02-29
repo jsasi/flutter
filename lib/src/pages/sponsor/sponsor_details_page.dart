@@ -22,7 +22,7 @@ class SponsorDetailsPage extends StatelessWidget {
           hideLeftArrow: false,
         ),
         body: BwWebview(
-          H5UrlFormat.appendUrl(arguments[KEY_URL]),
+         url: H5UrlFormat.appendUrl(arguments[KEY_URL]),
           showTitleBar: false,
         ));
   }
