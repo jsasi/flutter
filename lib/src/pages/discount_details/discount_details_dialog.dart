@@ -3,13 +3,13 @@ import 'package:bw_res/res/bw_colors.dart';
 import 'package:bw_res/res/res.dart';
 import 'package:bw_res/res/strings.dart';
 import 'package:bw_sponsor_preferential/src/widgets/simple_imageview.dart';
+import 'package:bw_sponsor_preferential/src/common/string_ext.dart';
 import 'package:bw_utils/bw_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../common/string_ext.dart';
 
 class DialogSavePic extends StatelessWidget {
   String title;
@@ -27,8 +27,7 @@ class DialogSavePic extends StatelessWidget {
 
   /// 生成分享字符串
   _createShareLink() {
-    shareLink =
-        "${bwManager.h5DomainUrl}/entry/register?r_code=";
+    shareLink = "${bwManager.h5DomainUrl}/entry/register?r_code=";
   }
 
   /// 复制链接

@@ -1,16 +1,15 @@
 import 'package:bw_res/bw_res.dart';
-import 'package:bw_res/res/bw_colors.dart';
+import 'package:bw_sponsor_preferential/bw_sponsor_preferential.dart';
 import 'package:bw_sponsor_preferential/src/common/h5_url_format.dart';
+import 'package:bw_sponsor_preferential/src/common/page_status.dart';
 import 'package:bw_sponsor_preferential/src/model/discount_entity.dart';
 import 'package:bw_sponsor_preferential/src/pages/discount_details/discount_details_page.dart';
+import 'package:bw_sponsor_preferential/src/widgets/discount_item.dart';
 import 'package:bw_sponsor_preferential/src/widgets/dss_app_bar.dart';
+import 'package:bw_sponsor_preferential/src/widgets/net_error_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import '../../common/page_status.dart';
-import '../../routers/routes.dart';
-import '../../widgets/discount_item.dart';
-import '../../widgets/net_error_view.dart';
 import 'discount_model.dart';
 
 /// 优惠列表页面

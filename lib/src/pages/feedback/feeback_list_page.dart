@@ -1,6 +1,5 @@
 import 'package:bw_res/bw_res.dart';
 import 'package:bw_sponsor_preferential/src/model/feedback_entity.dart';
-import 'package:bw_sponsor_preferential/src/pages/discount_details/discount_details_page.dart';
 import 'package:bw_sponsor_preferential/src/pages/feedback/feedback_details_page.dart';
 import 'package:bw_sponsor_preferential/src/pages/feedback/feedback_list_model.dart';
 import 'package:bw_sponsor_preferential/src/widgets/dss_app_bar.dart';
