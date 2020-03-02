@@ -1,9 +1,8 @@
 import 'package:bw_res/res/bw_colors.dart';
 import 'package:bw_res/res/res.dart';
 import 'package:bw_res/res/strings.dart';
+import 'package:bw_sponsor_preferential/src/sponsor/model/service_entity.dart';
 import 'package:bw_sponsor_preferential/src/widgets/simple_imageview.dart';
-import 'package:bw_sponsor_preferential/src/model/discount_entity.dart';
-import 'package:bw_sponsor_preferential/src/model/service_entity.dart';
 import 'package:flutter/material.dart';
 
 class ServiceItem extends StatelessWidget {

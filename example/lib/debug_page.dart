@@ -23,8 +23,7 @@ class _DebugPageState extends State<DebugPage> {
     if(!_initialized) {
       _initialized = true;
       await appInit.initialize();
-        debugPrint("====initialize=====");
-      mainClient.setProxy('172.18.11.116', 8888);
+//      mainClient.setProxy('172.18.11.116', 8888);
       await appInit.initRequest();
     }
   }
@@ -51,6 +50,10 @@ class _DebugPageState extends State<DebugPage> {
             RaisedButton(
               onPressed: () => Navigator.of(context).pushNamed(Routes.sponsor),
               child: Text('赞助'),
+            ),
+            RaisedButton(
+              onPressed: () => Navigator.of(context).pushNamed(Routes.deposit),
+              child: Text('存款'),
             ),
             RaisedButton(
               onPressed: () async => await Navigator.push(context,

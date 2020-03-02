@@ -1,18 +1,18 @@
-import 'package:bw_sponsor_preferential/src/pages/discount/discount_page.dart';
-import 'package:bw_sponsor_preferential/src/pages/discount_details/discount_details_page.dart';
-import 'package:bw_sponsor_preferential/src/pages/feedback/feeback_list_page.dart';
-import 'package:bw_sponsor_preferential/src/pages/feedback/feedback_details_page.dart';
-import 'package:bw_sponsor_preferential/src/pages/feedback/feedback_page.dart';
-import 'package:bw_sponsor_preferential/src/pages/service/support/help_center_page.dart';
-import 'package:bw_sponsor_preferential/src/pages/service/support/support_details_page.dart';
-import 'package:bw_sponsor_preferential/src/pages/service/home/customer_service_page.dart';
-import 'package:bw_sponsor_preferential/src/pages/service/home/service_page.dart';
-import 'package:bw_sponsor_preferential/src/pages/service/support/support_center_page.dart';
-import 'package:bw_sponsor_preferential/src/pages/sponsor/sponsor_details_page.dart';
-import 'package:bw_sponsor_preferential/src/pages/sponsor/sponsor_page.dart';
+import 'package:bw_sponsor_preferential/src/deposit/pages/deposit_page.dart';
+import 'package:bw_sponsor_preferential/src/sponsor/pages/discount/discount_page.dart';
+import 'package:bw_sponsor_preferential/src/sponsor/pages/discount_details/discount_details_page.dart';
+import 'package:bw_sponsor_preferential/src/sponsor/pages/feedback/feeback_list_page.dart';
+import 'package:bw_sponsor_preferential/src/sponsor/pages/feedback/feedback_details_page.dart';
+import 'package:bw_sponsor_preferential/src/sponsor/pages/feedback/feedback_page.dart';
+import 'package:bw_sponsor_preferential/src/sponsor/pages/service/home/customer_service_page.dart';
+import 'package:bw_sponsor_preferential/src/sponsor/pages/service/home/service_page.dart';
+import 'package:bw_sponsor_preferential/src/sponsor/pages/service/support/help_center_page.dart';
+import 'package:bw_sponsor_preferential/src/sponsor/pages/service/support/support_center_page.dart';
+import 'package:bw_sponsor_preferential/src/sponsor/pages/service/support/support_details_page.dart';
+import 'package:bw_sponsor_preferential/src/sponsor/pages/sponsor/sponsor_details_page.dart';
+import 'package:bw_sponsor_preferential/src/sponsor/pages/sponsor/sponsor_page.dart';
 import 'package:bw_sponsor_preferential/src/widgets/photo_gallery_page.dart';
 import 'package:flutter/material.dart';
-
 
 class Routes {
   static String root = "/";
@@ -30,6 +30,7 @@ class Routes {
   static String customerService = "/customer-service";
   static String photoGallery = "/photo_allery";
   static String helpCenter = "/help_center";
+  static String deposit = "/deposit";
 }
 
 final _routes = {
@@ -79,10 +80,12 @@ final _routes = {
   /// 画廊
   Routes.photoGallery: (context, {arguments}) =>
       PhotoViewGalleryScreen(arguments: arguments),
-  /// 帮助中心
-  Routes.helpCenter: (context, {arguments}) =>
-      HelpCenterPage(),
 
+  /// 帮助中心
+  Routes.helpCenter: (context, {arguments}) => HelpCenterPage(),
+
+  /// 存款
+  Routes.helpCenter: (context, {arguments}) => DepositPage(),
 };
 
 final Function onGenerateRoute = (RouteSettings settings) {

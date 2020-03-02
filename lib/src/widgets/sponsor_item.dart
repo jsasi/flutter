@@ -1,6 +1,6 @@
 import 'package:bw_res/res/bw_colors.dart';
+import 'package:bw_sponsor_preferential/src/sponsor/model/sponsor_entity.dart';
 import 'package:bw_sponsor_preferential/src/widgets/simple_imageview.dart';
-import 'package:bw_sponsor_preferential/src/model/sponsor_entity.dart';
 import 'package:flutter/material.dart';
 
 class SponsorItem extends StatelessWidget {

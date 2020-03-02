@@ -1,5 +1,5 @@
 import 'package:bw_sponsor_preferential/bw_sponsor_preferential.dart';
-import 'package:bw_sponsor_preferential/src/pages/service/home/customer_service_page.dart';
+import 'package:bw_sponsor_preferential/src/sponsor/pages/service/home/customer_service_page.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 

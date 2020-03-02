@@ -1,7 +1,7 @@
 import 'package:bw_base/bw_base.dart';
 import 'package:bw_res/bw_res.dart';
-import 'package:bw_sponsor_preferential/src/model/feedback_entity.dart';
-import 'package:bw_sponsor_preferential/src/pages/feedback/feedback_res_utils.dart';
+import 'package:bw_sponsor_preferential/src/sponsor/model/feedback_entity.dart';
+import 'package:bw_sponsor_preferential/src/sponsor/pages/feedback/feedback_res_utils.dart';
 import 'package:bw_sponsor_preferential/src/widgets/simple_imageview.dart';
 import 'package:bw_utils/bw_utils.dart';
 import 'package:flutter/material.dart';

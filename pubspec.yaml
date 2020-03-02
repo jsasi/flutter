@@ -22,6 +22,7 @@ dependencies:
   extended_image: ^0.7.1
   dio: ^3.0.9
   oktoast: ^2.3.1+1
+  permission_handler: '^4.3.0'
 
 
   bw_utils:
