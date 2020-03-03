@@ -23,7 +23,7 @@ class _DebugPageState extends State<DebugPage> {
     if(!_initialized) {
       _initialized = true;
       await appInit.initialize();
-//      mainClient.setProxy('172.18.11.116', 8888);
+      mainClient.setProxy('172.18.11.116', 8888);
       await appInit.initRequest();
     }
   }
@@ -67,6 +67,6 @@ class _DebugPageState extends State<DebugPage> {
             ),
           ],
         ));
-    ;
+
   }
 }

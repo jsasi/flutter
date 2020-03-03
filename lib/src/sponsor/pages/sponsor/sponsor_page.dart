@@ -85,8 +85,6 @@ class _SponsorPageState extends State<SponsorPage> {
     if (viewModel.results.length == 1) {
       return BwWebview(
        url: H5UrlFormat.appendUrl(viewModel.results[0].infoUrl),
-        showTitleBar: false,
-        canGoBack: false,
       );
     } else {
       return SmartRefresher(

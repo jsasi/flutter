@@ -1,4 +1,7 @@
 import 'package:bw_sponsor_preferential/src/common/page_status.dart';
+import 'package:bw_sponsor_preferential/src/deposit/model/api_deposit.dart';
+import 'package:bw_sponsor_preferential/src/deposit/model/deposit_pay_type_entity.dart';
+import 'package:bw_sponsor_preferential/src/deposit/model/deposit_unfinished_entity.dart';
 import 'package:bw_sponsor_preferential/src/sponsor/model/api_service.dart';
 import 'package:bw_sponsor_preferential/src/sponsor/model/discount_entity.dart';
 import 'package:flutter/material.dart';
@@ -8,45 +11,67 @@ class DepositModel extends ChangeNotifier {
 
   ScreenStatus get screenStatus => _screenStatus;
 
-  List<DiscountItemBean> _results = List();
+  //支付方式
+  List<TypeEntryBean> _typeList = List();
 
-  List<DiscountItemBean> get results => _results;
+  List<TypeEntryBean> get typeList => _typeList;
 
   DepositModel();
 
-  bool isInit = true;
+  //true 显示订单页，false显示存款
+  bool _isShowOrder = true;
 
-  void loadMore() async {
-    var entity = await ApiService.getDisList(pageNum: pageNum);
-    if (entity.code == 0) {
-      if (entity.data.list.isNotEmpty) {
-        pageNum++;
-        _results.addAll(entity.data.list);
-        _screenStatus = ScreenStatus.LoadMoreComplete;
-      } else {
-        _screenStatus = ScreenStatus.LoadMoreNoData;
-      }
+  bool get isShowOrder => _isShowOrder;
+
+  //订单是否已取消
+  bool _isOrderCanceled = false;
+
+  bool get isOrderCanceled => _isOrderCanceled;
+
+  String _billNumber = "_1.1";
+
+  //支付方式列表获取
+  Future getPayTypeList() async {
+    var entity = await ApiDeposit.getPayTypeList();
+    if (entity.code == 0 && entity.data?.typeList?.isNotEmpty == true) {
+      _typeList = entity.data.typeList;
+      _screenStatus = ScreenStatus.LoadSuccess;
     } else {
-      _screenStatus = ScreenStatus.LoadMoreFail;
+      _screenStatus = ScreenStatus.Error;
     }
-    notifyListeners();
   }
 
-  int pageNum = 1;
-
-  void refresh() async {
-    pageNum = 1;
-    var entity = await ApiService.getDisList();
-    if (entity.code == 0) {
-      _results.clear();
-      if (entity.data.list.isNotEmpty) {
-        pageNum++;
-        _results.addAll(entity.data.list);
-        _screenStatus = ScreenStatus.RefreshComplete;
+  //多订单 moreSwitch: 0-是 1-否
+  void getLastUnfinished() async {
+    var entity = await ApiDeposit.getLastUnfinished();
+    if (entity.code == 0 && entity.data != null) {
+      DepositUnfinishedBean bean = entity.data;
+      if (bean.records == null) {
+        //显示存款页
+        _isShowOrder = false;
+        await getPayTypeList();
       } else {
-        _screenStatus = ScreenStatus.Empty;
+        //显示订单的状态
+        var showDetailsPayStatus =
+            bean.records.payStatus == 1 || bean.records.payStatus == 4;
+        //是否是当前有效订单
+        var isCurrentValidOrider =
+            _billNumber == bean.records.billNo && !isOrderCanceled;
+        //是否是单笔订单
+        var isSingOrder = bean.moreSwitch == "1";
+        if (showDetailsPayStatus && (isSingOrder || isCurrentValidOrider)) {
+          //显示订单详情页
+          _isShowOrder = true;
+          _billNumber = bean.records.billNo;
+          _screenStatus = ScreenStatus.LoadSuccess;
+        } else {
+          //显示存款页
+          _isShowOrder = false;
+          await getPayTypeList();
+        }
       }
     } else {
+      //显示缺省页
       _screenStatus = ScreenStatus.Error;
     }
     notifyListeners();
@@ -54,22 +79,7 @@ class DepositModel extends ChangeNotifier {
 
   void init() async {
     _screenStatus = ScreenStatus.Loading;
-    notifyListeners();
-    refresh();
-  }
-}
-
-/// 判断标题栏是否显示帮助图标
-class TitleModel with ChangeNotifier {
-  bool isShowHelpIcon = false;
-
-  void getHelpList() async {
-    var entity = await ApiService.getSerHelpList();
-    if (entity.code == 0 && entity.data.isNotEmpty) {
-      isShowHelpIcon = true;
-    } else {
-      isShowHelpIcon = false;
-    }
+    getLastUnfinished();
     notifyListeners();
   }
 }

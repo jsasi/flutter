@@ -53,7 +53,6 @@ class _CustomerServicePageState extends State<CustomerServicePage> {
         ),
         body: BwWebview(
           url:url,
-          showTitleBar: false,
         ));
   }
 }

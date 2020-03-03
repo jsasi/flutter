@@ -1,3 +1,4 @@
+import 'package:bw_res/bw_res.dart';
 import 'package:bw_sponsor_preferential/bw_sponsor_preferential.dart';
 import 'package:bw_sponsor_preferential/src/sponsor/pages/service/home/customer_service_page.dart';
 import 'package:flutter/gestures.dart';
@@ -16,8 +17,9 @@ class SupportFooterView extends StatelessWidget {
         arguments: {CustomerServicePage.KEY_INDEX: 1});
 
     return Container(
+      color: BWColors.allGgColor,
       alignment: Alignment.center,
-      margin: EdgeInsets.only(top: 24, bottom: 10),
+      padding: EdgeInsets.only(top: 24, bottom: 10),
       child: RichText(
         text: TextSpan(
           children: [

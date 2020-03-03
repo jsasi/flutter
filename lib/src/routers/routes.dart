@@ -85,7 +85,7 @@ final _routes = {
   Routes.helpCenter: (context, {arguments}) => HelpCenterPage(),
 
   /// 存款
-  Routes.helpCenter: (context, {arguments}) => DepositPage(),
+  Routes.deposit: (context, {arguments}) => DepositPage(),
 };
 
 final Function onGenerateRoute = (RouteSettings settings) {

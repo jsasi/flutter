@@ -94,7 +94,6 @@ class _SupportDetailsPageState extends State<SupportDetailsPage> {
                 Expanded(
                   child: BwWebview(
                     htmlText: _appendHtml(),
-                    showTitleBar: false,
                   ),
                 ),
                 SupportFooterView(),

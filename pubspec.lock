@@ -41,7 +41,7 @@ packages:
     description:
       path: "."
       ref: "feature_v0.1"
-      resolved-ref: "22b8d0015b74b3b6dfe88dec66e848539b78194b"
+      resolved-ref: c67d25b5c7c428fa2fd3b054fcf108249ef0677b
       url: "http://47.52.134.206/bw-flutter/biz_login.git"
     source: git
     version: "0.0.1"
@@ -122,7 +122,7 @@ packages:
     description:
       path: "."
       ref: "feature_v0.1"
-      resolved-ref: "76bbe9ca3855900993885af35c3628d9388f4218"
+      resolved-ref: "26a6e85b91b18815680c41a1ab41d3c7bcff3f48"
       url: "http://47.52.134.206/bw-flutter/bw_base.git"
     source: git
     version: "0.0.1"
@@ -131,7 +131,7 @@ packages:
     description:
       path: "packages/bw_res"
       ref: "feature_v0.1"
-      resolved-ref: b080e02390ede19013f5012d7b2d92f8884b30fd
+      resolved-ref: "939f7bc94757bab1ba4b0795f813b8a3b2ca83c3"
       url: "http://47.52.134.206/bw-flutter/bw_resources.git"
     source: git
     version: "0.0.1"
@@ -473,7 +473,21 @@ packages:
       name: path_provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.6.1"
+    version: "1.6.4"
+  path_provider_macos:
+    dependency: transitive
+    description:
+      name: path_provider_macos
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.4"
+  path_provider_platform_interface:
+    dependency: transitive
+    description:
+      name: path_provider_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   pedantic:
     dependency: transitive
     description:

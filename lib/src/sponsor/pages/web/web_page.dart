@@ -28,9 +28,8 @@ class WebPage extends StatelessWidget {
           _title,
           hideLeftArrow: false,
         ),
-        body: BwWebview(
+        body: BwWebviewPage(
           url: _url,
-          showTitleBar: false,
         ));
   }
 }

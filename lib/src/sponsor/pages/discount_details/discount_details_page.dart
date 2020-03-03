@@ -50,7 +50,6 @@ class DiscountDetailsPage extends StatelessWidget {
         ),
         body: BwWebview(
           url: _url ?? "",
-          showTitleBar: false,
         ));
   }
 }
