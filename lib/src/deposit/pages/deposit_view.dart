@@ -61,6 +61,7 @@ class _DepositViewState extends State<DepositView> {
   void initState() {
     super.initState();
     _initMoneyList();
+    setIsShowDisTip(selTypeIndex);
     _moneyController.addListener(() {
       // todo 验证
       _setSubmitBtnState();
@@ -121,10 +122,7 @@ class _DepositViewState extends State<DepositView> {
                           _setSubmitBtnState();
                           isRequiredName =
                               widget.data[selTypeIndex].transfer == "1";
-                          isShowDiscountTip = !StringUtil.isNullOrEmpty(
-                                  widget.data[index].depositRate) ||
-                              !StringUtil.isNullOrEmpty(
-                                  widget.data[index].maxDailyDiscount);
+                          setIsShowDisTip(index);
                           _isShowDisKey.currentState
                               ?.setShowState(isShowDiscountTip);
                           _setSubmitBtnState();
@@ -277,6 +275,12 @@ class _DepositViewState extends State<DepositView> {
         ]),
       ),
     );
+  }
+
+  void setIsShowDisTip(int index) {
+    isShowDiscountTip =
+        !StringUtil.isNullOrEmpty(widget.data[index].depositRate) ||
+            !StringUtil.isNullOrEmpty(widget.data[index].maxDailyDiscount);
   }
 
   /// 存款金额item
