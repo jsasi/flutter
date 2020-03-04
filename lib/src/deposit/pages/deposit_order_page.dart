@@ -24,7 +24,7 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
   RefreshController _refreshController = RefreshController();
   Stream<int> _streamCountDown;
 
-  StreamController<String> _streamTime = new StreamController();
+  StreamController<String> _streamTime = new StreamController.broadcast();
 
   // 解析路由数据
   void _initArguments() {
@@ -41,7 +41,7 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
   }
 
   @override
-  Future<void> initState() async {
+  void initState()  {
     super.initState();
     _initArguments();
     _addICountDownListener();
@@ -64,6 +64,7 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
   @override
   void dispose() {
     super.dispose();
+    _streamTime.close();
   }
 
   @override
@@ -89,6 +90,7 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
         child: Column(
           children: <Widget>[
             Container(
+              alignment: Alignment.center,
               width: width,
               padding: EdgeInsets.only(top: 22),
               color: Colors.white,
@@ -103,16 +105,24 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
                     ),
                   ])),
             ),
-            Container(
-              padding: EdgeInsets.only(top: 12),
-              color: Colors.white,
-              child: Row(
-                children: <Widget>[
-                  Text('请在'),
-                  Text('29:29:30'),
-                  Text('内完成支付'),
-                ],
-              ),
+            StreamBuilder<String>(
+              stream: _streamTime.stream,
+              initialData: _getountDownTxt(1800),
+              builder: (context, snapshot) {
+                return Container(
+                  alignment: Alignment.center,
+                  width: width,
+                  padding: EdgeInsets.only(top: 12),
+                  color: Colors.white,
+                  child: Row(
+                    children: <Widget>[
+                      Text('请在'),
+                      Text('29:29:30'),
+                      Text('内完成支付'),
+                    ],
+                  ),
+                );
+              }
             ),
             Container(
               padding: EdgeInsets.only(top: 11, bottom: 18),

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:biz_network_main/biz_network_main.dart';
+import 'package:bw_base/bw_base.dart';
 import 'package:bw_sponsor_preferential/src/sponsor/model/discount_entity.dart';
 import 'package:bw_sponsor_preferential/src/sponsor/model/fee_que_type_entity.dart';
 import 'package:bw_sponsor_preferential/src/sponsor/model/feedback_add_entity.dart';
@@ -12,7 +13,6 @@ import 'package:bw_sponsor_preferential/src/sponsor/model/sponsor_entity.dart';
 import 'package:bw_sponsor_preferential/src/sponsor/model/support_details_entity.dart';
 import 'package:bw_sponsor_preferential/src/sponsor/model/support_type_entity.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 
 class ApiService {
   /// 帮助中心列表
@@ -59,9 +59,6 @@ class ApiService {
   static const String _FEED_UPLOAD_FILE =
       "/api/component/memberfile/staticSource/v1/uploadMulti";
 
-
-
-
   /// 获取优惠列表
   /// [pageNum] 分页
   static Future<DiscountEntity> getDisList({int pageNum = 1}) async {
@@ -71,6 +68,7 @@ class ApiService {
         "pageNum": pageNum,
         "pageSize": 15,
       },
+      options: Options(extra: BwManager.noneToken),
     );
 
     return DiscountEntity.fromJson(response.data);
@@ -85,6 +83,7 @@ class ApiService {
         "pageNum": pageNum,
         "pageSize": 15,
       },
+      options: Options(extra: BwManager.noneToken),
     );
     return SponsorEntity.fromJson(response.data);
   }
@@ -93,6 +92,7 @@ class ApiService {
   static Future<ServiceEntity> getSerHelpList() async {
     var response = await mainClient.dio.post(
       _SSERVICE_HELP_LIST_URL,
+      options: Options(extra: BwManager.noneToken),
     );
 
     return ServiceEntity.fromJson(response.data);
@@ -101,15 +101,22 @@ class ApiService {
   /// 获取客服分类列表Help
   /// [helpCateId]分类id
   static Future<SupportTypeEntity> getSupTypeList(int helpCateId) async {
-    var response = await mainClient.dio
-        .post(_QUERYSITEHELPINFOLIST, data: {"helpCateId": helpCateId});
+    var response = await mainClient.dio.post(
+      _QUERYSITEHELPINFOLIST,
+      data: {"helpCateId": helpCateId},
+      options: Options(extra: BwManager.noneToken),
+    );
     return SupportTypeEntity.fromJson(response.data);
   }
 
   /// 获取客服问题详情
   /// [id]问题id
   static Future<SupportDetailsEntity> getSupDetailsInfo(int id) async {
-    var response = await mainClient.dio.post(_SUPPORTDETAILS, data: {"id": id});
+    var response = await mainClient.dio.post(
+      _SUPPORTDETAILS,
+      data: {"id": id},
+      options: Options(extra: BwManager.noneToken),
+    );
     return SupportDetailsEntity.fromJson(response.data);
   }
 
@@ -177,7 +184,6 @@ class ApiService {
         "id": id,
       },
     );
-    debugPrint('=============$response');
     return FeedbackDetailsEntity.fromJson(response.data);
   }
 }
