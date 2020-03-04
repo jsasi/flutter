@@ -1,8 +1,11 @@
 import 'dart:async';
 
+import 'package:biz_network_main/biz_network_main.dart';
 import 'package:bw_res/bw_res.dart';
 import 'package:bw_sponsor_preferential/bw_sponsor_preferential.dart';
+import 'package:bw_sponsor_preferential/src/deposit/model/api_deposit.dart';
 import 'package:bw_sponsor_preferential/src/deposit/model/deposit_pay_entity.dart';
+import 'package:bw_sponsor_preferential/src/deposit/model/deposit_unfinished_entity.dart';
 import 'package:bw_sponsor_preferential/src/widgets/dss_app_bar.dart';
 import 'package:bw_sponsor_preferential/src/widgets/simple_imageview.dart';
 import 'package:flutter/material.dart';
@@ -21,10 +24,9 @@ class DepositOrderPage extends StatefulWidget {
 
 class _DepositOrderPageState extends State<DepositOrderPage> {
   bool isShowBankView = false;
-  int money = 998;
   PayBean _data;
+
   RefreshController _refreshController = RefreshController();
-  Stream<int> _streamCountDown;
 
   StreamController<String> _streamTime = new StreamController.broadcast();
 
@@ -35,44 +37,98 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
     }
   }
 
+  //获取订单状态
+  void _getLastUnfinished() async {
+    var entity = await ApiDeposit.getLastUnfinished();
+    if (entity.code == 0 && entity.data != null) {
+      DepositUnfinishedBean bean = entity.data;
+      if (bean.records == null) {
+        Navigator.pop(context);
+      } else {
+        //显示订单的状态
+        var showDetailsPayStatus =
+            bean.records.payStatus == 1 || bean.records.payStatus == 4;
+        //是否是当前有效订单
+        var isCurrentValidOrider = _data.bankName == bean.records.billNo;
+        //是否是单笔订单
+        var isSingOrder = bean.moreSwitch == "1";
+        if (showDetailsPayStatus && (isSingOrder || isCurrentValidOrider)) {
+          setState(() {
+            _data.trnasfer = bean.transfer;
+            _data.alert = null;
+            _data.amount = bean.records.orderAmount;
+            _data.billNo = bean.records.billNo;
+            _data.expierTime = bean.expireTime;
+            _data.id = bean.records.id;
+            _data.payTypeName = bean.payTypeName;
+            _data.qrUrl = bean.records.qrUrl;
+            _data.recipientAccount = bean.records.recipientAccount;
+            _data.recipientAddress = bean.records.recipientAddress;
+            _data.recipientBank = bean.records.recipientBank;
+            _data.bankName = bean.bankName;
+            _data.recipientName = bean.records.recipientName;
+            _data.icon = bean.icon;
+            _data.remark = bean.records.recipientCode;
+            _data.payStatus = bean.records.payStatus;
+            _refreshController.refreshCompleted();
+          });
+        } else {
+          Navigator.pop(context);
+        }
+      }
+    } else {
+      _refreshController.refreshFailed();
+    }
+  }
+
   //获取倒计时时间
   String _getountDownTxt(int seconds) {
     int minute = (seconds / 60).floor();
-    int second = seconds % 60; /*存在取余运算*/
+    String second = (seconds % 60).toString(); /*存在取余运算*/
+    if (second.toString().length == 1) {
+      second = "0$second";
+    }
     return "$minute:$second";
+  }
+
+  _refresh() {
+    _getLastUnfinished();
   }
 
   @override
   void initState() {
     super.initState();
     _initArguments();
-    _addICountDownListener();
   }
 
   //倒计时
   void _addICountDownListener() {
-    _streamCountDown =
-        Stream<int>.periodic(Duration(seconds: int.parse(_data.expierTime)));
-    _streamCountDown.listen((data) {
-      print("===data=====$data");
-      _getountDownTxt(int.parse(_data.expierTime) - data);
-      _streamTime.sink.add(_getountDownTxt(int.parse(_data.expierTime) - data));
-    }, onError: (error) {
-      print("流发生错误");
-    }, onDone: () {
-      print("流已完成");
-    }, cancelOnError: false);
+    Stream<int> _streamCountDown =
+        Stream<int>.periodic(Duration(seconds: 1), (data) => data);
+    _streamCountDown.take(int.parse(_data.expierTime));
+    _streamCountDown.listen(
+        (data) {
+          _getountDownTxt(int.parse(_data.expierTime) - data);
+          _streamTime.sink
+              .add(_getountDownTxt(int.parse(_data.expierTime) - data));
+        },
+        onError: (error) {},
+        onDone: () {
+          _getLastUnfinished();
+        },
+        cancelOnError: false);
   }
 
   @override
   void dispose() {
     super.dispose();
     _streamTime.close();
+    _refreshController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    _addICountDownListener();
     return Scaffold(
       appBar: DssAppBar(
         '存款信息',
@@ -87,7 +143,7 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
     return SmartRefresher(
       enablePullDown: true,
       enablePullUp: false,
-      onRefresh: () => _ss(),
+      onRefresh: () => _refresh(),
       controller: _refreshController,
       child: SingleChildScrollView(
         child: Column(
@@ -187,8 +243,9 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
                           top: 15, left: 12, right: 12, bottom: 15),
                       child: Row(
                         children: <Widget>[
-                          Text('订单号码',style: TextStyle(
-                              fontSize: 14, color: BWColors.depOrdDesTxt)),
+                          Text('订单号码',
+                              style: TextStyle(
+                                  fontSize: 14, color: BWColors.depOrdDesTxt)),
                           Expanded(
                               child: Text('${_data.billNo}',
                                   textDirection: TextDirection.rtl,
@@ -217,7 +274,8 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
                 color: Colors.white,
                 margin: EdgeInsets.all(14),
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 20,right: 20,top:20,bottom: 34 ),
+                  padding: const EdgeInsets.only(
+                      left: 20, right: 20, top: 20, bottom: 34),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -229,7 +287,9 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
                             padding: const EdgeInsets.only(left: 7),
                             child: Text('${_data.bankName}',
                                 style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.bold,color: BWColors.depInput)),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: BWColors.depInput)),
                           ),
                         ],
                       ),
@@ -237,9 +297,16 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
                         padding: const EdgeInsets.only(top: 5),
                         child: Row(
                           children: <Widget>[
-                            Text('姓名：',style: TextStyle(
-                                fontSize: 14, color: BWColors.depOrdDesTxt)),
-                            Expanded(child: Text('${_data.recipientName}',style: TextStyle(fontSize: 12,color: BWColors.depOrdValueTxt),)),
+                            Text('姓名：',
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: BWColors.depOrdDesTxt)),
+                            Expanded(
+                                child: Text(
+                              '${_data.recipientName}',
+                              style: TextStyle(
+                                  fontSize: 12, color: BWColors.depOrdValueTxt),
+                            )),
                             Container(
                               width: 34,
                               height: 15,
@@ -248,7 +315,13 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
                                 borderRadius: BorderRadius.circular(2),
                                 border: Border.all(color: BWColors.depOrdColor),
                               ),
-                              child: Text('复制',style: TextStyle(fontSize: 12,color: BWColors.depOrdColor,height: 1),),
+                              child: Text(
+                                '复制',
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: BWColors.depOrdColor,
+                                    height: 1),
+                              ),
                             ),
                           ],
                         ),
@@ -257,9 +330,15 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
                         padding: const EdgeInsets.only(top: 10),
                         child: Row(
                           children: <Widget>[
-                            Text('金额：',style: TextStyle(
-                                fontSize: 14, color: BWColors.depOrdDesTxt)),
-                            Expanded(child: Text('${_data.amount}元',style: TextStyle(fontSize: 12,color: BWColors.depOrdValueTxt))),
+                            Text('金额：',
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: BWColors.depOrdDesTxt)),
+                            Expanded(
+                                child: Text('${_data.amount}元',
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: BWColors.depOrdValueTxt))),
                             Container(
                               width: 34,
                               height: 15,
@@ -268,22 +347,35 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
                                 border: Border.all(color: BWColors.depOrdColor),
                                 borderRadius: BorderRadius.circular(2),
                               ),
-                              child: Text('复制',style: TextStyle(fontSize: 12,color: BWColors.depOrdColor,height: 1),),
+                              child: Text(
+                                '复制',
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: BWColors.depOrdColor,
+                                    height: 1),
+                              ),
                             ),
                           ],
                         ),
                       ),
                       Text(
                         '(转账金额务必于订单金额一致)',
-                        style: TextStyle(fontSize: 12, color: BWColors.depError),
+                        style:
+                            TextStyle(fontSize: 12, color: BWColors.depError),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10),
                         child: Row(
                           children: <Widget>[
-                            Text('地址：',style: TextStyle(
-                                fontSize: 14, color: BWColors.depOrdDesTxt)),
-                            Expanded(child: Text('${_data.recipientAddress}',style: TextStyle(fontSize: 12,color: BWColors.depOrdValueTxt))),
+                            Text('地址：',
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: BWColors.depOrdDesTxt)),
+                            Expanded(
+                                child: Text('${_data.recipientAddress}',
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: BWColors.depOrdValueTxt))),
                             Container(
                               width: 34,
                               height: 15,
@@ -292,7 +384,13 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
                                 borderRadius: BorderRadius.circular(2),
                                 border: Border.all(color: BWColors.depOrdColor),
                               ),
-                              child: Text('复制',style: TextStyle(fontSize: 12,color: BWColors.depOrdColor,height: 1),),
+                              child: Text(
+                                '复制',
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: BWColors.depOrdColor,
+                                    height: 1),
+                              ),
                             ),
                           ],
                         ),
@@ -301,9 +399,15 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
                         padding: const EdgeInsets.only(top: 10),
                         child: Row(
                           children: <Widget>[
-                            Text('附言/备注：',style: TextStyle(
-                                fontSize: 14, color: BWColors.depOrdDesTxt)),
-                            Expanded(child: Text('${_data.remark}',style: TextStyle(fontSize: 12,color: BWColors.depOrdValueTxt))),
+                            Text('附言/备注：',
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: BWColors.depOrdDesTxt)),
+                            Expanded(
+                                child: Text('${_data.remark}',
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: BWColors.depOrdValueTxt))),
                             Container(
                               width: 34,
                               height: 15,
@@ -312,14 +416,21 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
                                 borderRadius: BorderRadius.circular(2),
                                 border: Border.all(color: BWColors.depOrdColor),
                               ),
-                              child: Text('复制',style: TextStyle(fontSize: 12,color: BWColors.depOrdColor,height: 1),),
+                              child: Text(
+                                '复制',
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: BWColors.depOrdColor,
+                                    height: 1),
+                              ),
                             ),
                           ],
                         ),
                       ),
                       Text(
                         '((请务必填写正确的附言/备注))',
-                        style: TextStyle(fontSize: 12, color: BWColors.depError),
+                        style:
+                            TextStyle(fontSize: 12, color: BWColors.depError),
                       ),
                     ],
                   ),
@@ -327,28 +438,76 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
               ),
             if (_data.trnasfer == "1")
               Card(
-              color: Colors.white,
-              margin: EdgeInsets.all(14),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text('重要提醒',style: TextStyle(fontSize: 14,color: BWColors.depOrdValueTxt),),
-                    Text('1.转账金额须与订单金额一致，否则存款无法及时到账',style: TextStyle(fontSize: 12,color: BWColors.depOrdDesTxt,height: 1.4),),
-                    Text('2.转账必须填写正确附言（备注），否则存款无法及时到账',style: TextStyle(fontSize: 12,color: BWColors.depOrdDesTxt,height: 1.4),),
-                    Text('3.下次存款时，请获取新的账号，存入旧账号将无法到账',style: TextStyle(fontSize: 12,color: BWColors.depOrdDesTxt,height: 1.4),),
-                    Text('4.请及时前往存款，附言（备注）有效时间只有15分钟',style: TextStyle(fontSize: 12,color: BWColors.depOrdDesTxt,height: 1.4),),
-                    Text('5.请勿使用支付宝、微信转账至公司账户',style: TextStyle(fontSize: 12,color: BWColors.depOrdDesTxt,height: 1.4),),
-                    Text('6.若存款存在疑问，请及时联系客服',style: TextStyle(fontSize: 12,color: BWColors.depOrdDesTxt,height: 1.4),),
-                    Text('7.不知如何存款，请移步至 存款教程',style: TextStyle(fontSize: 12,color: BWColors.depOrdDesTxt,height: 1.4),),
-                  ],
+                color: Colors.white,
+                margin: EdgeInsets.all(14),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        '重要提醒',
+                        style: TextStyle(
+                            fontSize: 14, color: BWColors.depOrdValueTxt),
+                      ),
+                      Text(
+                        '1.转账金额须与订单金额一致，否则存款无法及时到账',
+                        style: TextStyle(
+                            fontSize: 12,
+                            color: BWColors.depOrdDesTxt,
+                            height: 1.4),
+                      ),
+                      Text(
+                        '2.转账必须填写正确附言（备注），否则存款无法及时到账',
+                        style: TextStyle(
+                            fontSize: 12,
+                            color: BWColors.depOrdDesTxt,
+                            height: 1.4),
+                      ),
+                      Text(
+                        '3.下次存款时，请获取新的账号，存入旧账号将无法到账',
+                        style: TextStyle(
+                            fontSize: 12,
+                            color: BWColors.depOrdDesTxt,
+                            height: 1.4),
+                      ),
+                      Text(
+                        '4.请及时前往存款，附言（备注）有效时间只有15分钟',
+                        style: TextStyle(
+                            fontSize: 12,
+                            color: BWColors.depOrdDesTxt,
+                            height: 1.4),
+                      ),
+                      Text(
+                        '5.请勿使用支付宝、微信转账至公司账户',
+                        style: TextStyle(
+                            fontSize: 12,
+                            color: BWColors.depOrdDesTxt,
+                            height: 1.4),
+                      ),
+                      Text(
+                        '6.若存款存在疑问，请及时联系客服',
+                        style: TextStyle(
+                            fontSize: 12,
+                            color: BWColors.depOrdDesTxt,
+                            height: 1.4),
+                      ),
+                      Text(
+                        '7.不知如何存款，请移步至 存款教程',
+                        style: TextStyle(
+                            fontSize: 12,
+                            color: BWColors.depOrdDesTxt,
+                            height: 1.4),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
             Padding(
-              padding: const EdgeInsets.only(top: 6,bottom: 40),
-              child: Text('取消存款申请'),
+              padding: const EdgeInsets.only(top: 6, bottom: 40),
+              child:
+                  InkWell(onTap: () => _cancelOrder(), child: Text('取消存款申请')),
             ),
           ],
         ),
@@ -356,5 +515,11 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
     );
   }
 
-  _ss() {}
+  ///取消订单
+  _cancelOrder() async {
+    BaseEntity entity = await ApiDeposit.cancelOrder(_data.id);
+    if (entity.code == 0) {
+      Navigator.pop(context);
+    }
+  }
 }

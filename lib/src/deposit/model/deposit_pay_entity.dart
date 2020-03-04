@@ -53,7 +53,9 @@ class PayBean  {
 
   String trnasfer;
 
-  PayBean(this.alert,this.amount,this.bankName,this.billNo,this.expierTime,this.icon,this.id,this.payTypeName,this.payUrl,this.qrUrl,this.recipientAccount,this.recipientAddress,this.recipientBank,this.recipientName,this.remark,this.trnasfer,);
+  int payStatus;
+
+  PayBean(this.alert,this.amount,this.bankName,this.billNo,this.expierTime,this.icon,this.id,this.payTypeName,this.payUrl,this.qrUrl,this.recipientAccount,this.recipientAddress,this.recipientBank,this.recipientName,this.remark,this.trnasfer,this.payStatus,);
 
   factory PayBean.fromJson(Map<String, dynamic> srcJson) => _$PayBeanFromJson(srcJson);
 

@@ -15,6 +15,9 @@ class ApiDeposit {
   ///存款
   static const String _WALLET_DEPOSIT = "/api/site/finance/payment/v1/pay";
 
+  /// 用户关闭存款
+  static const String _WALLET_DEPOSIT_CANCEL = "/api/site/finance/payment/v1/closeOrder";
+
 
   /// 获取支付方式
   static Future<DepositPayTypeEntity> getPayTypeList() async {
@@ -52,4 +55,12 @@ class ApiDeposit {
     return DepositPayEntity.fromJson(response.data);
   }
 
+  /// 取消订单
+  static Future<BaseEntity> cancelOrder(String id) async {
+    var response = await mainClient.dio.post(
+        _WALLET_DEPOSIT_CANCEL,
+        data: {"id":id}
+    );
+    return BaseEntity.fromJson(response.data);
+  }
 }

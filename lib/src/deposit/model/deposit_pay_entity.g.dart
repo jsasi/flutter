@@ -43,6 +43,7 @@ PayBean _$PayBeanFromJson(Map<String, dynamic> json) {
     json['recipientName'] as String,
     json['remark'] as String,
     json['trnasfer'] as String,
+    json['payStatus'] as int,
   );
 }
 
@@ -63,4 +64,5 @@ Map<String, dynamic> _$PayBeanToJson(PayBean instance) => <String, dynamic>{
       'recipientName': instance.recipientName,
       'remark': instance.remark,
       'trnasfer': instance.trnasfer,
+      'payStatus': instance.payStatus,
     };
