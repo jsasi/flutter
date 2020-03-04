@@ -1,13 +1,14 @@
 import 'dart:async';
 
 import 'package:bw_res/bw_res.dart';
+import 'package:bw_sponsor_preferential/bw_sponsor_preferential.dart';
 import 'package:bw_sponsor_preferential/src/deposit/model/deposit_pay_entity.dart';
 import 'package:bw_sponsor_preferential/src/widgets/dss_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class DepositOrderPage extends StatefulWidget {
-  DepositOrderPage( {Key key, this.arguments}) : super(key: key);
+  DepositOrderPage({Key key, this.arguments}) : super(key: key);
   final arguments;
   static const String KEY_DATA = "key_data";
 
@@ -41,7 +42,7 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
   }
 
   @override
-  void initState()  {
+  void initState() {
     super.initState();
     _initArguments();
     _addICountDownListener();
@@ -96,45 +97,50 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
               color: Colors.white,
               child: Text.rich(TextSpan(
                   text: "${_data.amount}",
-                  style: TextStyle(fontSize: 32, color: BWColors.depOriMoney),
+                  style: TextStyle(fontSize: 32, color: BWColors.depOrdMoney),
                   children: <TextSpan>[
                     TextSpan(
                       text: "元",
                       style:
-                          TextStyle(fontSize: 14, color: BWColors.depOriMoney),
+                          TextStyle(fontSize: 14, color: BWColors.depOrdMoney),
                     ),
                   ])),
             ),
             StreamBuilder<String>(
-              stream: _streamTime.stream,
-              initialData: _getountDownTxt(1800),
-              builder: (context, snapshot) {
-                return Container(
-                  alignment: Alignment.center,
-                  width: width,
-                  padding: EdgeInsets.only(top: 12),
-                  color: Colors.white,
-                  child: Row(
-                    children: <Widget>[
-                      Text('请在'),
-                      Text('29:29:30'),
-                      Text('内完成支付'),
-                    ],
-                  ),
-                );
-              }
-            ),
+                stream: _streamTime.stream,
+                initialData: _getountDownTxt(1800),
+                builder: (context, snapshot) {
+                  return Container(
+                    alignment: Alignment.center,
+                    width: width,
+                    padding: EdgeInsets.only(top: 12),
+                    color: Colors.white,
+                    child: Row(
+                      children: <Widget>[
+                        Text('请在',style: TextStyle(fontSize: 12,color: BWColors.depOrdDesTxt),),
+                        Text('${snapshot.data}',style: TextStyle(fontSize: 12,color: BWColors.depOrdCountDown)),
+                        Text('内完成支付',style: TextStyle(fontSize: 12,color: BWColors.depOrdDesTxt),),
+                      ],
+                    ),
+                  );
+                }),
             Container(
+              alignment: Alignment.center,
+              width: width,
               padding: EdgeInsets.only(top: 11, bottom: 18),
               color: Colors.white,
               child: Row(
                 children: <Widget>[
-                  Text('如已完成支付，请'),
-                  Text('联系客服'),
-                  Text('确认'),
+                  Text('如已完成支付，请',style: TextStyle(fontSize: 12,color: BWColors.depOrdDesTxt)),
+                  InkWell(
+                      onTap: () => Navigator.of(context)
+                          .pushNamed(Routes.customerService),
+                      child: Text(' 联系客服 ',style: TextStyle(fontSize: 12,color: BWColors.depOrdColor))),
+                  Text('确认',style: TextStyle(fontSize: 12,color: BWColors.depOrdDesTxt)),
                 ],
               ),
             ),
+            if(_data.trnasfer=="0")
             Card(
               color: Colors.white,
               margin: EdgeInsets.all(14),
@@ -182,7 +188,7 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
                         height: 15,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(2),
-                          border: Border.all(color: BWColors.depOriCopyBorder),
+                          border: Border.all(color: BWColors.depOrdColor),
                         ),
                         child: Text('复制'),
                       ),
@@ -196,7 +202,7 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
                         width: 34,
                         height: 15,
                         decoration: BoxDecoration(
-                          border: Border.all(color: BWColors.depOriCopyBorder),
+                          border: Border.all(color: BWColors.depOrdColor),
                           borderRadius: BorderRadius.circular(2),
                         ),
                         child: Text('复制'),
@@ -215,7 +221,7 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
                         width: 34,
                         height: 15,
                         decoration: BoxDecoration(
-                          border: Border.all(color: BWColors.depOriCopyBorder),
+                          border: Border.all(color: BWColors.depOrdColor),
                           borderRadius: BorderRadius.circular(2),
                         ),
                         child: Text('复制'),
@@ -230,7 +236,7 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
                         width: 34,
                         height: 15,
                         decoration: BoxDecoration(
-                          border: Border.all(color: BWColors.depOriCopyBorder),
+                          border: Border.all(color: BWColors.depOrdColor),
                           borderRadius: BorderRadius.circular(2),
                         ),
                         child: Text('复制'),

@@ -70,7 +70,7 @@ packages:
     description:
       path: "packages/bw_res"
       ref: "feature_v0.1"
-      resolved-ref: "6e23383e7ea7227bc1388991da47a3a2f9c2f3d0"
+      resolved-ref: "6c46104bc41d1b4c16192cd686847b61b9636edd"
       url: "http://47.52.134.206/bw-flutter/bw_resources.git"
     source: git
     version: "0.0.1"
