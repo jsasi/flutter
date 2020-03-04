@@ -1,3 +1,4 @@
+import 'package:bw_sponsor_preferential/src/deposit/pages/deposit_order_page.dart';
 import 'package:bw_sponsor_preferential/src/deposit/pages/deposit_page.dart';
 import 'package:bw_sponsor_preferential/src/sponsor/pages/discount/discount_page.dart';
 import 'package:bw_sponsor_preferential/src/sponsor/pages/discount_details/discount_details_page.dart';
@@ -30,6 +31,7 @@ class Routes {
   static String customerService = "/customer-service";
   static String photoGallery = "/photo_allery";
   static String helpCenter = "/help_center";
+  static String depositOrder = "/deposit-order";
   static String deposit = "/deposit";
 }
 
@@ -86,6 +88,9 @@ final _routes = {
 
   /// 存款
   Routes.deposit: (context, {arguments}) => DepositPage(),
+
+  /// 订单详情
+  Routes.depositOrder: (context, {arguments}) =>DepositOrderPage(arguments: arguments),
 };
 
 final Function onGenerateRoute = (RouteSettings settings) {

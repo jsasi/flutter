@@ -3,7 +3,11 @@ import 'dart:math';
 
 import 'package:bw_res/bw_res.dart';
 import 'package:bw_res/res/strings.dart';
+import 'package:bw_sponsor_preferential/bw_sponsor_preferential.dart';
+import 'package:bw_sponsor_preferential/src/deposit/model/api_deposit.dart';
+import 'package:bw_sponsor_preferential/src/deposit/model/deposit_pay_entity.dart';
 import 'package:bw_sponsor_preferential/src/deposit/model/deposit_pay_type_entity.dart';
+import 'package:bw_sponsor_preferential/src/deposit/pages/deposit_order_page.dart';
 import 'package:bw_sponsor_preferential/src/widgets/deposit_dis_tip_view.dart';
 import 'package:bw_sponsor_preferential/src/widgets/simple_imageview.dart';
 import 'package:bw_sponsor_preferential/src/widgets/support_footer_view.dart';
@@ -11,6 +15,8 @@ import 'package:bw_utils/bw_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:oktoast/oktoast.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// 存款
 class DepositView extends StatefulWidget {
@@ -36,7 +42,7 @@ class _DepositViewState extends State<DepositView> {
   bool verifyName = false;
 
   //金额输入是否合法
-  bool verifyMoney = false;
+  bool verifyMoney = true;
 
   //是否需要键入名字
   bool isRequiredName = false;
@@ -63,18 +69,23 @@ class _DepositViewState extends State<DepositView> {
     _initMoneyList();
     setIsShowDisTip(selTypeIndex);
     _moneyController.addListener(() {
-      // todo 验证
+      if (_verifyMoney(_moneyController.text.toString()) != verifyMoney) {
+        verifyMoney = _verifyMoney(_moneyController.text.toString());
+        _streamMoneyController.sink.add(selMoneyIndex);
+      }
+
       _setSubmitBtnState();
     });
     _nameController.addListener(() {
-      // todo 验证
+      verifyName = _verifyName(_nameController.text.toString());
+      //改变输入框提示语和错误语显隐
+      _streamNameController.sink.add(verifyName ? 0 : 1);
       _setSubmitBtnState();
     });
   }
 
   @override
   void dispose() {
-    print("=========dispose=============");
     _streamNameController.close();
     _streamMoneyController.close();
     _streamSubmitController.close();
@@ -234,12 +245,18 @@ class _DepositViewState extends State<DepositView> {
                         indent: 14,
                         endIndent: 16,
                       ),
-                    if (isRequiredMoney)
+                    if (isRequiredMoney &&
+                        !verifyMoney &&
+                        !StringUtil.isNullOrEmpty(
+                            _moneyController.text.toString()))
                       Container(
                         alignment: Alignment.centerLeft,
                         padding: EdgeInsets.only(left: 14, right: 16),
                         height: 30,
-                        child: Text(Strings.depositsTips),
+                        child: Text(
+                          Strings.depositsTips,
+                          style: TextStyle(color: BWColors.depError),
+                        ),
                       ),
                   ],
                 );
@@ -505,5 +522,73 @@ class _DepositViewState extends State<DepositView> {
   }
 
   //提交
-  _submit() {}
+  _submit() async {
+    String name;
+    int money = moneyList[selMoneyIndex];
+    String type = widget.data[selTypeIndex].pay_type_id;
+    if (isRequiredName) {
+      name = _nameController.text.toString();
+    }
+    if (isRequiredMoney) {
+      money = int.parse(_moneyController.text.toString());
+    }
+    DepositPayEntity entity =
+        await ApiDeposit.loadPayment(money, type, depositName: name);
+
+    if (entity.code == 0) {
+      Navigator.of(context).pushNamed(Routes.depositOrder,
+          arguments: {DepositOrderPage.KEY_DATA: entity.data});
+    }
+  }
+
+  //如果转账的就跳转
+  _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      // 判断当前手机是否安装某app. 能否正常跳转
+      await launch(url);
+    } else {
+//      val dialog = CommonDialogFactory.createDialogByType(context, DialogType.DIALOG_TYPE_1001)
+//      dialog.setContentText("未检测到客户端，请安装后重试。")
+//      dialog.setOnConfirmListener { dialog.dismiss() }
+//      dialog.show()
+    }
+  }
+
+  ///验证名字是否合法
+  bool _verifyName(String name) {
+    if (name.length < 2) {}
+    RegExp nameReg = new RegExp(r"^[\u4e00-\u9fa5a-zA-Z.·•]+$");
+    if (!nameReg.hasMatch(name)) {
+      return false;
+    }
+
+    if (name.startsWith(" ") || name.startsWith("·")) {
+      return false;
+    }
+
+    if (name.endsWith(" ") ||
+        name.endsWith("·") ||
+        name.endsWith("•") ||
+        name.endsWith(".")) {
+      return false;
+    }
+    if (name.contains("  ")) {
+      return false;
+    }
+    if (name.contains("··")) {
+      return false;
+    }
+    return true;
+  }
+
+  ///验证金额是否合法
+  bool _verifyMoney(String money) {
+    if (StringUtil.isNullOrEmpty(money)) {
+      return false;
+    }
+    if (double.parse(money) < 100 || double.parse(money) > 49999) {
+      return false;
+    }
+    return true;
+  }
 }
