@@ -16,17 +16,15 @@ class AppRoute extends NavigatorObserver {
   static final Map<String, WidgetBuilder> _routes = {
     //这里只能定义调试用路由
     '/': (_) => DebugPage(),
-  }
-    ..addAll(loginRoute.packageRoutes())
-  ..addAll(BwSpRoutes.routes);
-
+  }..addAll(loginRoute.packageRoutes())
+    ..addAll(bwSpRoute.packageRoutes());
   Map<String, WidgetBuilder> get routes => _routes;
 
   /// 带参数路由
   Route<dynamic> generateRoute(RouteSettings settings) {
     MaterialPageRoute targetPage = loginRoute.generatePackageRoute(settings);
     if (targetPage == null) {
-      targetPage = BwSpRoutes.generatePackageRoute(settings);
+      targetPage = bwSpRoute.generatePackageRoute(settings);
     }
     return targetPage;
   }
