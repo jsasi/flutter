@@ -5,6 +5,7 @@ import 'package:bw_res/bw_res.dart';
 import 'package:bw_res/res/strings.dart';
 import 'package:bw_sponsor_preferential/bw_sponsor_preferential.dart';
 import 'package:bw_sponsor_preferential/src/deposit/model/api_deposit.dart';
+import 'package:bw_sponsor_preferential/src/deposit/model/dep_dis_entity.dart';
 import 'package:bw_sponsor_preferential/src/deposit/model/deposit_pay_entity.dart';
 import 'package:bw_sponsor_preferential/src/deposit/model/deposit_pay_type_entity.dart';
 import 'package:bw_sponsor_preferential/src/deposit/pages/deposit_order_page.dart';
@@ -52,6 +53,9 @@ class _DepositViewState extends State<DepositView> {
 
 //提交按钮是否可点击
   bool disabledSubmit = true;
+
+// 优惠列表
+  Map<String, List<DepDisBean>> discountCache = Map();
 
   List<int> moneyList = [];
   final TextEditingController _nameController = new TextEditingController();
@@ -298,6 +302,19 @@ class _DepositViewState extends State<DepositView> {
     isShowDiscountTip =
         !StringUtil.isNullOrEmpty(widget.data[index].depositRate) ||
             !StringUtil.isNullOrEmpty(widget.data[index].maxDailyDiscount);
+    var typeId = widget.data[index].pay_type_id;
+    //如果显示优惠，并且没有当前优惠列表，去获取。
+    if (isShowDiscountTip && !discountCache.containsKey(typeId)) {
+      getDiscountList(typeId);
+    }
+  }
+
+  ///获取优惠列表
+  getDiscountList(String typeId) async {
+    DepDisEntity entity = await ApiDeposit.getDepositDicList(typeId);
+    if (entity.code == 0 && entity.data.isNotEmpty) {
+      discountCache[typeId] = entity.data;
+    }
   }
 
   /// 存款金额item

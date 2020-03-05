@@ -17,14 +17,10 @@ class DepositDisTipsView extends StatefulWidget {
 }
 
 class DepositDisTipsViewState extends State<DepositDisTipsView> {
-  DepositDisTipsViewState(this._isShow){
-    print('=======_isShow====$_isShow');
-
-  }
+  DepositDisTipsViewState(this._isShow);
   bool _isShow ;
 
   setShowState(bool show){
-    print('=======show====$show');
     _isShow=show;
     setState(() {
 
