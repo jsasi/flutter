@@ -118,7 +118,7 @@ class _FeedbackListPageState extends State<FeedbackListPage> {
             //设置已读
             appSharedPreferences.setBool(datas[index].id.toString(), true);
             Navigator.pushNamed(context, BwSpRoutes.feedbackDetails,
-                arguments: {FeedbackDetailsPage.KEY_ID: datas[index].id});
+                arguments: datas[index].id);
           },
           child: FeedbackItem(datas[index])),
     );

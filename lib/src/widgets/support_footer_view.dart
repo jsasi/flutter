@@ -14,7 +14,7 @@ class SupportFooterView extends StatelessWidget {
   Widget build(BuildContext context) {
     _recognizer.onTap = () => Navigator.of(context).pushNamed(
         BwSpRoutes.customerService,
-        arguments: {CustomerServicePage.KEY_INDEX: 1});
+        arguments: "");
 
     return Container(
       color: BWColors.allGgColor,

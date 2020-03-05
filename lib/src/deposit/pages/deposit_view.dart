@@ -563,7 +563,7 @@ class _DepositViewState extends State<DepositView> {
 
     if (entity.code == 0) {
       Navigator.of(context).pushNamed(BwSpRoutes.depositOrder,
-          arguments: {DepositOrderPage.KEY_DATA: entity.data});
+          arguments:  entity.data);
     } else {
       showToast(entity.msg);
     }

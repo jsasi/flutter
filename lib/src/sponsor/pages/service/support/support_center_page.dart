@@ -18,18 +18,16 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 /// 帮助中心列表页面
 class SupportCenterListPage extends StatefulWidget {
-  final arguments;
 
-  static final String KEY_DATA = "key_data";
 
-  SupportCenterListPage({Key key, this.arguments}) : super(key: key);
+  SupportCenterListPage({Key key, @required this.bean}) : super(key: key);
+  final ServiceItemBean bean;
 
   @override
   _SupportCenterListPageState createState() => _SupportCenterListPageState();
 }
 
 class _SupportCenterListPageState extends State<SupportCenterListPage> {
-  ServiceItemBean _bean;
   RefreshController _refreshController = RefreshController();
   SupportCenterModel _viewModel;
 
@@ -42,25 +40,18 @@ class _SupportCenterListPageState extends State<SupportCenterListPage> {
   @override
   void initState() {
     super.initState();
-    _initArguments();
-    _viewModel = SupportCenterModel(_bean.id);
+    _viewModel = SupportCenterModel(widget.bean.id);
     _viewModel.init();
     //客服点击 todo
 //    _recognizer.onTap = () => Navigator.pushNamed(context, Routes.service);
   }
 
-  void _initArguments() {
-    if (widget.arguments != null) {
-      _bean = widget.arguments[SupportCenterListPage.KEY_DATA];
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
-    _initArguments();
     return Scaffold(
       appBar: DssAppBar(
-        _bean.name ?? "",
+        widget.bean.name ?? "",
         hideLeftArrow: false,
         rightImg: R.service_icon,
         callBack: () => Navigator.pushNamed(context, BwSpRoutes.customerService),
@@ -131,11 +122,11 @@ class _SupportCenterListPageState extends State<SupportCenterListPage> {
   _itemClick(SupportItemBean data) {
     if (data.contextType == 1) {
       Navigator.pushNamed(context, BwSpRoutes.supportDetails,
-          arguments: {SupportDetailsPage.KEY_ID: data.id});
+          arguments: data.id);
     } else if (data.contextType == 2) {
       Navigator.pushNamed(context, BwSpRoutes.webPage, arguments: {
-        WebPage.KEY_URL: _bean.linkUrl,
-        WebPage.KEY_TITLE: _bean.name
+        WebPage.KEY_URL: widget.bean.linkUrl,
+        WebPage.KEY_TITLE: widget.bean.name
       });
     }
   }

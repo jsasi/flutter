@@ -9,8 +9,9 @@ import 'package:flutter/material.dart';
 
 /// 赞助详情页
 class SponsorDetailsPage extends StatelessWidget {
-  const SponsorDetailsPage({Key key, this.arguments}) : super(key: key);
-  final arguments;
+  const SponsorDetailsPage({Key key, this.title,this.url}) : super(key: key);
+  final String title;
+  final String url;
   static final String KEY_URL = "key_url";
   static final String KEY_TITLE = "key_title";
 
@@ -18,11 +19,11 @@ class SponsorDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: DssAppBar(
-          arguments != null ? arguments[KEY_TITLE] : Strings.spoTitle,
+          title?? Strings.spoTitle,
           hideLeftArrow: false,
         ),
         body: BwWebview(
-         url: H5UrlFormat.appendUrl(arguments[KEY_URL]),
+         url: H5UrlFormat.appendUrl(url),
         ));
   }
 }

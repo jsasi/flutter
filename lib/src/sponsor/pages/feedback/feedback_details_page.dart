@@ -15,9 +15,8 @@ import 'package:flutter/material.dart';
 
 /// 意见反馈详情
 class FeedbackDetailsPage extends StatefulWidget {
-  FeedbackDetailsPage({Key key, this.arguments}) : super(key: key);
-  static const String KEY_ID = "key_id";
-  final arguments;
+  FeedbackDetailsPage({Key key, @required this.id}) : super(key: key);
+  final  int id;
 
   @override
   _FeedbackDetailsPageState createState() {
@@ -26,7 +25,7 @@ class FeedbackDetailsPage extends StatefulWidget {
 }
 
 class _FeedbackDetailsPageState extends State<FeedbackDetailsPage> {
-  int id;
+
   FeedbackDetailsBean _bean;
 
   //获取过数据
@@ -34,7 +33,7 @@ class _FeedbackDetailsPageState extends State<FeedbackDetailsPage> {
 
   /// 获取意见反馈问详情
   _loadDetails() async {
-    FeedbackDetailsEntity entity = await ApiService.getFeedbackDetails(id);
+    FeedbackDetailsEntity entity = await ApiService.getFeedbackDetails(widget.id);
     if (entity.code == 0 && entity.data != null) {
       _bean = entity.data;
     }
@@ -46,18 +45,10 @@ class _FeedbackDetailsPageState extends State<FeedbackDetailsPage> {
   @override
   void initState() {
     super.initState();
-    _initArguments();
     _loadDetails();
   }
 
-  //解析路由数据
-  void _initArguments() {
-    print("arguments=======${widget.arguments}");
-    if (widget.arguments != null) {
-      id = widget.arguments[FeedbackDetailsPage.KEY_ID];
-      print("id=======$id");
-    }
-  }
+
 
   @override
   void dispose() {

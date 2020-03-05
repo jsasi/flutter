@@ -10,9 +10,10 @@ class PhotoViewGalleryScreen extends StatefulWidget {
   static const KEY_FILES = "key_files";
   static const KEY_IMG_URLS = "key_img_urls";
   static const KEY_INDEX = "key_index";
-  final arguments;
-
-  PhotoViewGalleryScreen({Key key, this.arguments}) : super(key: key);
+  final List<File> files ;
+  final List<String> imgUrls;
+  int index = 0;
+  PhotoViewGalleryScreen({Key key, this.files,this.imgUrls,this.index}) : super(key: key);
 
   @override
   _PhotoViewGalleryScreenState createState() => _PhotoViewGalleryScreenState();
@@ -20,9 +21,7 @@ class PhotoViewGalleryScreen extends StatefulWidget {
 
 class _PhotoViewGalleryScreenState extends State<PhotoViewGalleryScreen>
     with SingleTickerProviderStateMixin {
-  List<File> _files = [];
-  List<String> _imgUrls = [];
-  int index = 0;
+
   String heroTag;
   PageController controller;
 
@@ -38,25 +37,15 @@ class _PhotoViewGalleryScreenState extends State<PhotoViewGalleryScreen>
   GlobalKey<ExtendedImageSlidePageState> slidePagekey =
       GlobalKey<ExtendedImageSlidePageState>();
 
-  // 解析路由数据
-  void _initArguments() {
-    if (widget.arguments != null) {
-      _files.addAll(widget.arguments[PhotoViewGalleryScreen.KEY_FILES] ?? []);
-      _imgUrls
-          .addAll(widget.arguments[PhotoViewGalleryScreen.KEY_IMG_URLS] ?? []);
-      index = widget.arguments[PhotoViewGalleryScreen.KEY_INDEX] ?? 0;
-    }
-  }
+
 
   @override
   void initState() {
-    _initArguments();
-    controller = PageController(initialPage: index);
-    currentIndex = index;
+    controller = PageController(initialPage: widget.index);
+    currentIndex = widget.index;
     _animationController = AnimationController(
         duration: const Duration(milliseconds: 150), vsync: this);
     super.initState();
-    currentIndex = index;
   }
 
   @override
@@ -98,7 +87,7 @@ class _PhotoViewGalleryScreenState extends State<PhotoViewGalleryScreen>
     var size = MediaQuery.of(context).size;
     return WillPopScope(
       onWillPop: () {
-        Navigator.pop(context, _files.isNotEmpty ? _files : _imgUrls);
+        Navigator.pop(context, widget.imgUrls==null ? widget.files : widget.imgUrls);
         return;
       },
       child: Scaffold(
@@ -107,7 +96,7 @@ class _PhotoViewGalleryScreenState extends State<PhotoViewGalleryScreen>
           color: Colors.black,
           child: ExtendedImageGesturePageView.builder(
             itemBuilder: (BuildContext context, int index) {
-              Widget image = _files.isNotEmpty
+              Widget image = widget.imgUrls==null
                   ? _buildImageFile(index, size)
                   : _buildImageNetwork(index, size);
               image = GestureDetector(
@@ -119,7 +108,7 @@ class _PhotoViewGalleryScreenState extends State<PhotoViewGalleryScreen>
               );
               return image;
             },
-            itemCount: _files.isNotEmpty ? _files.length : _imgUrls.length,
+            itemCount: widget.imgUrls==null ? widget.files.length : widget.imgUrls.length,
             onPageChanged: (int index) {
               currentIndex = index;
               rebuildIndex.add(index);
@@ -142,7 +131,7 @@ class _PhotoViewGalleryScreenState extends State<PhotoViewGalleryScreen>
         backgroundColor: Colors.white12,
         leading: FlatButton(
           onPressed: () =>
-              Navigator.pop(context, _files.isNotEmpty ? _files : _imgUrls),
+              Navigator.pop(context, widget.imgUrls==null?  widget.files :  widget.imgUrls),
           child: Icon(
             Icons.arrow_back,
             size: 24,
@@ -152,22 +141,22 @@ class _PhotoViewGalleryScreenState extends State<PhotoViewGalleryScreen>
         title: StreamBuilder<int>(
           builder: (c, d) {
             return Text(
-                "${currentIndex + 1}/${_files.isNotEmpty ? _files.length : _imgUrls.length}");
+                "${currentIndex + 1}/${widget.imgUrls==null? widget.files.length : widget.imgUrls.length}");
           },
           initialData: currentIndex,
           stream: rebuildIndex.stream,
         ),
         actions: <Widget>[
-          if (_files.isNotEmpty)
+          if (widget.imgUrls==null)
             FlatButton(
               onPressed: () async {
                 //弹出对话框并等待其关闭
                 bool delete = await _showDeleteConfirmDialog();
                 if (delete == null) {
                 } else {
-                  _files.removeAt(currentIndex);
-                  if (_files.length == 0) {
-                    Navigator.pop(context, _files);
+                  widget.files.removeAt(currentIndex);
+                  if (widget.files.length == 0) {
+                    Navigator.pop(context, widget.files);
                   } else {
                     setState(() {});
                   }
@@ -186,14 +175,14 @@ class _PhotoViewGalleryScreenState extends State<PhotoViewGalleryScreen>
 
   ExtendedImage _buildImageNetwork(int index, Size size) {
     return ExtendedImage.network(
-      _imgUrls[index],
+      widget.imgUrls[index],
       fit: BoxFit.contain,
       enableSlideOutPage: true,
       mode: ExtendedImageMode.gesture,
       heroBuilderForSlidingPage: (Widget result) {
-        if (index < min(9, _imgUrls.length)) {
+        if (index < min(9, widget.imgUrls.length)) {
           return Hero(
-            tag: _imgUrls[index],
+            tag: widget.imgUrls[index],
             child: result,
             flightShuttleBuilder: (BuildContext flightContext,
                 Animation<double> animation,
@@ -269,14 +258,14 @@ class _PhotoViewGalleryScreenState extends State<PhotoViewGalleryScreen>
 
   ExtendedImage _buildImageFile(int index, Size size) {
     return ExtendedImage.file(
-      _files[index],
+      widget.files[index],
       fit: BoxFit.contain,
       enableSlideOutPage: true,
       mode: ExtendedImageMode.gesture,
       heroBuilderForSlidingPage: (Widget result) {
-        if (index < min(9, _files.length)) {
+        if (index < min(9, widget.files.length)) {
           return Hero(
-            tag: _files[index].path,
+            tag: widget.files[index].path,
             child: result,
             flightShuttleBuilder: (BuildContext flightContext,
                 Animation<double> animation,

@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:biz_network_main/biz_network_main.dart';
 import 'package:bw_base/bw_base.dart';
 import 'package:bw_res/bw_res.dart';
@@ -15,9 +14,8 @@ import 'package:oktoast/oktoast.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class DepositOrderPage extends StatefulWidget {
-  DepositOrderPage({Key key, this.arguments}) : super(key: key);
-  final arguments;
-  static const String KEY_DATA = "key_data";
+  DepositOrderPage({Key key, this.data}) : super(key: key);
+  final   PayBean data;
 
   @override
   _DepositOrderPageState createState() {
@@ -27,19 +25,12 @@ class DepositOrderPage extends StatefulWidget {
 
 class _DepositOrderPageState extends State<DepositOrderPage> {
   bool isShowBankView = false;
-  PayBean _data;
 
   RefreshController _refreshController = RefreshController();
 
   StreamController<String> _streamTime = new StreamController.broadcast();
   StreamSubscription _streamSubscription;
 
-  // 解析路由数据
-  void _initArguments() {
-    if (widget.arguments != null) {
-      _data = widget.arguments[DepositOrderPage.KEY_DATA];
-    }
-  }
 
   //获取订单状态
   void _getLastUnfinished() async {
@@ -53,27 +44,27 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
         var showDetailsPayStatus =
             bean.records.payStatus == 1 || bean.records.payStatus == 4;
         //是否是当前有效订单
-        var isCurrentValidOrider = _data.bankName == bean.records.billNo;
+        var isCurrentValidOrider = widget.data.bankName == bean.records.billNo;
         //是否是单笔订单
         var isSingOrder = bean.moreSwitch == "1";
         if (showDetailsPayStatus && (isSingOrder || isCurrentValidOrider)) {
           setState(() {
-            _data.trnasfer = bean.transfer;
-            _data.alert = null;
-            _data.amount = bean.records.orderAmount;
-            _data.billNo = bean.records.billNo;
-            _data.expierTime = bean.expireTime;
-            _data.id = bean.records.id;
-            _data.payTypeName = bean.payTypeName;
-            _data.qrUrl = bean.records.qrUrl;
-            _data.recipientAccount = bean.records.recipientAccount;
-            _data.recipientAddress = bean.records.recipientAddress;
-            _data.recipientBank = bean.records.recipientBank;
-            _data.bankName = bean.bankName;
-            _data.recipientName = bean.records.recipientName;
-            _data.icon = bean.icon;
-            _data.remark = bean.records.recipientCode;
-            _data.payStatus = bean.records.payStatus;
+            widget.data.trnasfer = bean.transfer;
+            widget.data.alert = null;
+            widget.data.amount = bean.records.orderAmount;
+            widget.data.billNo = bean.records.billNo;
+            widget.data.expierTime = bean.expireTime;
+            widget.data.id = bean.records.id;
+            widget.data.payTypeName = bean.payTypeName;
+            widget.data.qrUrl = bean.records.qrUrl;
+            widget.data.recipientAccount = bean.records.recipientAccount;
+            widget.data.recipientAddress = bean.records.recipientAddress;
+            widget.data.recipientBank = bean.records.recipientBank;
+            widget.data.bankName = bean.bankName;
+            widget.data.recipientName = bean.records.recipientName;
+            widget.data.icon = bean.icon;
+            widget.data.remark = bean.records.recipientCode;
+            widget.data.payStatus = bean.records.payStatus;
             _refreshController.refreshCompleted();
           });
         } else {
@@ -102,7 +93,6 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
   @override
   void initState() {
     super.initState();
-    _initArguments();
   }
 
   //倒计时
@@ -110,12 +100,12 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
     _streamSubscription?.cancel();
     Stream<int> _streamCountDown =
         Stream<int>.periodic(Duration(seconds: 1), (data) => data);
-    _streamCountDown.take(int.parse(_data.expierTime));
+    _streamCountDown.take(int.parse(widget.data.expierTime));
     _streamSubscription = _streamCountDown.listen(
         (data) {
-          _getountDownTxt(int.parse(_data.expierTime) - data);
+          _getountDownTxt(int.parse(widget.data.expierTime) - data);
           _streamTime.sink
-              .add(_getountDownTxt(int.parse(_data.expierTime) - data));
+              .add(_getountDownTxt(int.parse(widget.data.expierTime) - data));
         },
         onError: (error) {},
         onDone: () {
@@ -160,7 +150,7 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
               padding: EdgeInsets.only(top: 22),
               color: Colors.white,
               child: Text.rich(TextSpan(
-                  text: "${_data.amount}",
+                  text: "${widget.data.amount}",
                   style: TextStyle(fontSize: 32, color: BWColors.depOrdMoney),
                   children: <TextSpan>[
                     TextSpan(
@@ -222,7 +212,7 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
                 ],
               ),
             ),
-            if (_data.trnasfer == "0")
+            if (widget.data.trnasfer == "0")
               Card(
                 color: Colors.white,
                 margin: EdgeInsets.all(14),
@@ -237,7 +227,7 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
                           Text('存款方式',
                               style: TextStyle(
                                   fontSize: 14, color: BWColors.depOrdDesTxt)),
-                          Text(_data.payTypeName ?? "",
+                          Text(widget.data.payTypeName ?? "",
                               style: TextStyle(
                                   fontSize: 14,
                                   color: BWColors.depOrdValueTxt)),
@@ -253,7 +243,7 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
                               style: TextStyle(
                                   fontSize: 14, color: BWColors.depOrdDesTxt)),
                           Expanded(
-                              child: Text('${_data.billNo}',
+                              child: Text('${widget.data.billNo}',
                                   textDirection: TextDirection.rtl,
                                   style: TextStyle(
                                       fontSize: 14,
@@ -263,7 +253,7 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
                             alignment: Alignment.centerRight,
                             padding: EdgeInsets.all(0),
                             onPressed: () {
-                              Clipboard.setData(ClipboardData(text: '${_data.billNo}'));
+                              Clipboard.setData(ClipboardData(text: '${widget.data.billNo}'));
                             },
                             icon: Icon(
                               Icons.content_copy,
@@ -275,7 +265,7 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
                   ],
                 ),
               ),
-            if (_data.trnasfer == "1")
+            if (widget.data.trnasfer == "1")
               Card(
                 color: Colors.white,
                 margin: EdgeInsets.all(14),
@@ -287,11 +277,11 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          SimpleImageView.display(_data.icon,
+                          SimpleImageView.display(widget.data.icon,
                               width: 24, height: 24),
                           Padding(
                             padding: const EdgeInsets.only(left: 7),
-                            child: Text('${_data.bankName}',
+                            child: Text('${widget.data.bankName}',
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
@@ -299,15 +289,15 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
                           ),
                         ],
                       ),
-                      _buildItem('姓名：','${_data.recipientName}'),
-                      _buildItem('金额：','${_data.amount}元'),
+                      _buildItem('姓名：','${widget.data.recipientName}'),
+                      _buildItem('金额：','${widget.data.amount}元'),
                       Text(
                         '(转账金额务必于订单金额一致)',
                         style:
                             TextStyle(fontSize: 12, color: BWColors.depError),
                       ),
-                      _buildItem('地址：','${_data.recipientAddress}'),
-                      _buildItem('附言/备注：','${_data.remark}'),
+                      _buildItem('地址：','${widget.data.recipientAddress}'),
+                      _buildItem('附言/备注：','${widget.data.remark}'),
                       Text(
                         '((请务必填写正确的附言/备注))',
                         style:
@@ -317,7 +307,7 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
                   ),
                 ),
               ),
-            if (_data.trnasfer == "1")
+            if (widget.data.trnasfer == "1")
               Card(
                 color: Colors.white,
                 margin: EdgeInsets.all(14),
@@ -461,7 +451,7 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
 
   ///取消订单
   _cancelOrder() async {
-    BaseEntity entity = await ApiDeposit.cancelOrder(_data.id);
+    BaseEntity entity = await ApiDeposit.cancelOrder(widget.data.id);
     if (entity.code == 0) {
       Navigator.pop(context);
     } else {

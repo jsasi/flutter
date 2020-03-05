@@ -11,22 +11,13 @@ import 'package:flutter/material.dart';
 
 /// 帮助中心详情
 class SupportDetailsPage extends StatefulWidget {
-  SupportDetailsPage({Key key, this.arguments}) : super(key: key);
-  static const String KEY_ID = "key_id";
+  SupportDetailsPage({Key key, @required this.id}) : super(key: key);
 
-  final arguments;
-  int id;
+  final int id;
 
-  // 解析路由数据
-  void _initArguments() {
-    if (arguments != null) {
-      id = arguments[KEY_ID];
-    }
-  }
 
   @override
   _SupportDetailsPageState createState() {
-    _initArguments();
     return _SupportDetailsPageState();
   }
 }

@@ -22,19 +22,6 @@ class _DiscountPageState extends State<DiscountPage> {
   RefreshController _refreshController = RefreshController();
   final viewModel = DiscountModel();
 
-  String _getDetailsUrl(DiscountItemBean bean) {
-    String appLink = bean.appTopicLink;
-    if (appLink.isNotEmpty) {
-      if (!appLink.contains("http") && !appLink.contains("https")) {
-        appLink = H5UrlFormat.appendUrl(appLink);
-      }
-    } else {
-      appLink =
-          H5UrlFormat.appendUrl("/app/promo/list/${bean?.id}"); //;+ data?.id
-    }
-    return appLink;
-  }
-
   @override
   void initState() {
     super.initState();
@@ -107,10 +94,7 @@ class _DiscountPageState extends State<DiscountPage> {
       itemCount: datas.length,
       itemBuilder: (context, index) => InkWell(
           onTap: () =>
-              Navigator.pushNamed(context, BwSpRoutes.discountDetails, arguments: {
-                DiscountDetailsPage.KEY_URL: _getDetailsUrl(datas[index]),
-                DiscountDetailsPage.KEY_DATA: datas[index]
-              }),
+              Navigator.pushNamed(context, BwSpRoutes.discountDetails, arguments: datas[index]),
           child: DiscountItem(datas[index])),
     );
   }

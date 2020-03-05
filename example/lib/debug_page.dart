@@ -3,6 +3,7 @@ import 'package:biz_login/biz_login.dart';
 import 'package:biz_network_main/biz_network_main.dart';
 import 'package:bw_sponsor_preferential/bw_sponsor_preferential.dart';
 import 'package:flutter/material.dart';
+import 'package:bw_res/bw_res.dart';
 
 class DebugPage extends StatefulWidget {
   DebugPage({Key key}) : super(key: key);
@@ -23,7 +24,7 @@ class _DebugPageState extends State<DebugPage> {
     if(!_initialized) {
       _initialized = true;
       await appInit.initialize();
-//      mainClient.setProxy('172.18.11.116', 8888);
+      mainClient.setProxy('172.18.11.116', 8888);
       await appInit.initRequest();
     }
   }
@@ -56,15 +57,10 @@ class _DebugPageState extends State<DebugPage> {
               child: Text('存款'),
             ),
             RaisedButton(
-              onPressed: () async => await Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => UserRegisterPage())),
-              child: Text('注册'),
-            ),
-            RaisedButton(
-              onPressed: () async => await Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => LoginPage())),
+              onPressed: ()  =>  Navigator.popAndPushNamed(context, RoutesNames.loginPage),
               child: Text('登录'),
             ),
+
           ],
         ));
 

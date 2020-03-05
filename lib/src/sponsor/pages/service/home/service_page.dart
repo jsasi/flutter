@@ -7,16 +7,13 @@ import 'package:bw_res/res/strings.dart';
 import 'package:bw_sponsor_preferential/src/common/page_status.dart';
 import 'package:bw_sponsor_preferential/src/routers/routes.dart';
 import 'package:bw_sponsor_preferential/src/sponsor/model/api_service.dart';
-import 'package:bw_sponsor_preferential/src/sponsor/model/customer_entity.dart';
 import 'package:bw_sponsor_preferential/src/sponsor/model/service_entity.dart';
-import 'package:bw_sponsor_preferential/src/sponsor/pages/service/home/customer_service_page.dart';
 import 'package:bw_sponsor_preferential/src/sponsor/pages/service/home/service_model.dart';
 import 'package:bw_sponsor_preferential/src/sponsor/pages/service/support/support_center_page.dart';
 import 'package:bw_sponsor_preferential/src/widgets/dss_app_bar.dart';
 import 'package:bw_sponsor_preferential/src/widgets/empty_view_.dart';
 import 'package:bw_sponsor_preferential/src/widgets/net_error_view.dart';
 import 'package:bw_sponsor_preferential/src/widgets/service_item.dart';
-import 'package:bw_utils/bw_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -56,7 +53,7 @@ class __BodyWidgetState extends State<_BodyWidget> {
   RefreshController _refreshController = RefreshController();
 
   //客服列表
-  List<CustomerEntity> customerList;
+  List<CustomerServiceEntity> customerList;
 
   //是否显示两个客服按钮
   bool isShowTwoCustomer = false;
@@ -64,14 +61,10 @@ class __BodyWidgetState extends State<_BodyWidget> {
 
   /// 获取客服列表
   _genCustomer() {
-    List list = json
-        .decode(PreInfoUtil.getPreInfoEntity().siteBaseConfig.customerService);
-    customerList = list.map((m) {
-      CustomerEntity entity = CustomerEntity.fromJson(m);
-      if (entity.code == "service_web2" &&
-          !StringUtil.isNullOrEmpty(entity.url)) isShowTwoCustomer = true;
-      return entity;
-    }).toList();
+    customerList = PreInfoUtil.getPreInfoEntity().siteBaseConfig.getCustomerServices();
+    if(customerList.length>1){
+      isShowTwoCustomer = true;
+    }
   }
 
   @override
@@ -156,7 +149,7 @@ class __BodyWidgetState extends State<_BodyWidget> {
                       borderRadius: BorderRadius.circular(4.0)),
                   onPressed: () => Navigator.pushNamed(
                       context, BwSpRoutes.customerService,
-                      arguments: {CustomerServicePage.KEY_INDEX: 0}),
+                      arguments: customerList[0].url),
                 ),
               )),
               if (isShowTwoCustomer)
@@ -177,7 +170,7 @@ class __BodyWidgetState extends State<_BodyWidget> {
                           borderRadius: BorderRadius.circular(4.0)),
                       onPressed: () => Navigator.pushNamed(
                           context, BwSpRoutes.customerService,
-                          arguments: {CustomerServicePage.KEY_INDEX: 1}),
+                          arguments: customerList[1].url),
                     ),
                   ),
                 ),
@@ -195,7 +188,7 @@ class __BodyWidgetState extends State<_BodyWidget> {
       itemCount: datas.length,
       itemBuilder: (context, index) => InkWell(
           onTap: () => Navigator.pushNamed(context, BwSpRoutes.supportCenter,
-              arguments: {SupportCenterListPage.KEY_DATA: datas[index]}),
+              arguments: datas[index]),
           child: ServiceItem(datas[index])),
       //分割器构造器
       separatorBuilder: (BuildContext context, int index) {
