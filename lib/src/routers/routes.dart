@@ -36,15 +36,15 @@ class BwSpRoutes {
   static final Function onGenerateRoute = (RouteSettings settings) {
     final String name = settings.name;
     debugPrint('name==============================$name');
-    final Function pageContentBuider = _routes[name];
+    final Function pageContentBuilder = _routes[name];
 
-    assert(pageContentBuider != null);
+    assert(pageContentBuilder != null);
 
     return MaterialPageRoute(builder: (context) {
       if (settings.arguments != null) {
-        return pageContentBuider(context, arguments: settings.arguments);
+        return pageContentBuilder(context, arguments: settings.arguments);
       } else {
-        return pageContentBuider(context);
+        return pageContentBuilder(context);
       }
     });
   };
