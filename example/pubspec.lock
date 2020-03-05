@@ -36,7 +36,7 @@ packages:
     description:
       path: "."
       ref: "feature_v0.1"
-      resolved-ref: "4f734b5d1999a13f8dc8028c3803f11c4dd8b240"
+      resolved-ref: abf374c1b977c4c9dae650f10137e8da945b782b
       url: "http://47.52.134.206/bw-flutter/biz_login.git"
     source: git
     version: "0.0.1"
@@ -45,7 +45,7 @@ packages:
     description:
       path: "."
       ref: "feature_v0.1"
-      resolved-ref: e4a7bab597070bf0700300750ac4a4c941d143dd
+      resolved-ref: "5c53b29db3e8ea85d1c1f0dc7992c6a749b14278"
       url: "http://47.52.134.206/bw-flutter/biz_network_main.git"
     source: git
     version: "0.0.1"
@@ -61,7 +61,7 @@ packages:
     description:
       path: "."
       ref: "feature_v0.1"
-      resolved-ref: "49f470d1f117d296cbd65f1d3b9f69345f6abe31"
+      resolved-ref: "1ba78f94bad6a4047a681d3feda32fe13f3de2df"
       url: "http://47.52.134.206/bw-flutter/bw_base.git"
     source: git
     version: "0.0.1"
@@ -70,7 +70,7 @@ packages:
     description:
       path: "packages/bw_res"
       ref: "feature_v0.1"
-      resolved-ref: "6c46104bc41d1b4c16192cd686847b61b9636edd"
+      resolved-ref: "5bfa0c40b1e1f9712bd0d000e4d620b030eddbf1"
       url: "http://47.52.134.206/bw-flutter/bw_resources.git"
     source: git
     version: "0.0.1"
@@ -550,7 +550,7 @@ packages:
       name: webview_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.19+8"
+    version: "0.3.19+9"
   xml:
     dependency: transitive
     description:
