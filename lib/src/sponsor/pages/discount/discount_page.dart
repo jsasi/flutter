@@ -1,9 +1,7 @@
 import 'package:bw_res/bw_res.dart';
 import 'package:bw_sponsor_preferential/bw_sponsor_preferential.dart';
-import 'package:bw_sponsor_preferential/src/common/h5_url_format.dart';
 import 'package:bw_sponsor_preferential/src/common/page_status.dart';
 import 'package:bw_sponsor_preferential/src/sponsor/model/discount_entity.dart';
-import 'package:bw_sponsor_preferential/src/sponsor/pages/discount_details/discount_details_page.dart';
 import 'package:bw_sponsor_preferential/src/widgets/discount_item.dart';
 import 'package:bw_sponsor_preferential/src/widgets/dss_app_bar.dart';
 import 'package:bw_sponsor_preferential/src/widgets/load_footer.dart';

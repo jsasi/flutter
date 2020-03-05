@@ -17,7 +17,8 @@ class AppRoute extends NavigatorObserver {
     //这里只能定义调试用路由
     '/': (_) => DebugPage(),
   }
-    ..addAll(loginRoute.packageRoutes());
+    ..addAll(loginRoute.packageRoutes())
+  ..addAll(BwSpRoutes.routes);
 
   Map<String, WidgetBuilder> get routes => _routes;
 
@@ -25,7 +26,7 @@ class AppRoute extends NavigatorObserver {
   Route<dynamic> generateRoute(RouteSettings settings) {
     MaterialPageRoute targetPage = loginRoute.generatePackageRoute(settings);
     if (targetPage == null) {
-      targetPage = BwSpRoutes.onGenerateRoute(settings);
+      targetPage = BwSpRoutes.generatePackageRoute(settings);
     }
     return targetPage;
   }
