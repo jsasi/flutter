@@ -514,7 +514,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
           _inputController.text.trim().toString(),
           imgUrls);
       if (feedbackAddEntity.code == 0) {
-        Navigator.of(context).popAndPushNamed(Routes.feedbackList);
+        Navigator.of(context).popAndPushNamed(BwSpRoutes.feedbackList);
       } else {
         showToast(feedbackAddEntity.msg ?? '');
       }
@@ -534,7 +534,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
     print('======index===============$index');
 
     final result =
-        await Navigator.of(context).pushNamed(Routes.photoGallery, arguments: {
+        await Navigator.of(context).pushNamed(BwSpRoutes.photoGallery, arguments: {
       PhotoViewGalleryScreen.KEY_FILES: _images,
       PhotoViewGalleryScreen.KEY_INDEX: index
     });

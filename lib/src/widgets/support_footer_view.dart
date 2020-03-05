@@ -13,7 +13,7 @@ class SupportFooterView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _recognizer.onTap = () => Navigator.of(context).pushNamed(
-        Routes.customerService,
+        BwSpRoutes.customerService,
         arguments: {CustomerServicePage.KEY_INDEX: 1});
 
     return Container(

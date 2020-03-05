@@ -206,7 +206,7 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
                           fontSize: 12, color: BWColors.depOrdDesTxt)),
                   InkWell(
                       onTap: () => Navigator.of(context)
-                          .pushNamed(Routes.customerService),
+                          .pushNamed(BwSpRoutes.customerService),
                       child: Text(' 联系客服 ',
                           style: TextStyle(
                               fontSize: 12, color: BWColors.depOrdColor))),

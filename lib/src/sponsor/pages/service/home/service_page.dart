@@ -28,9 +28,9 @@ class ServicePage extends StatelessWidget {
   void _maybeRoute(BuildContext context) async {
     var feedbackList = await ApiService.getFeedbackList();
     if (feedbackList.code == 0 && feedbackList.data?.list?.isNotEmpty == true) {
-      Navigator.pushNamed(context, Routes.feedbackList);
+      Navigator.pushNamed(context, BwSpRoutes.feedbackList);
     } else {
-      Navigator.pushNamed(context, Routes.feedback);
+      Navigator.pushNamed(context, BwSpRoutes.feedback);
     }
   }
 
@@ -155,7 +155,7 @@ class __BodyWidgetState extends State<_BodyWidget> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(4.0)),
                   onPressed: () => Navigator.pushNamed(
-                      context, Routes.customerService,
+                      context, BwSpRoutes.customerService,
                       arguments: {CustomerServicePage.KEY_INDEX: 0}),
                 ),
               )),
@@ -176,7 +176,7 @@ class __BodyWidgetState extends State<_BodyWidget> {
                           ),
                           borderRadius: BorderRadius.circular(4.0)),
                       onPressed: () => Navigator.pushNamed(
-                          context, Routes.customerService,
+                          context, BwSpRoutes.customerService,
                           arguments: {CustomerServicePage.KEY_INDEX: 1}),
                     ),
                   ),
@@ -194,7 +194,7 @@ class __BodyWidgetState extends State<_BodyWidget> {
     return ListView.separated(
       itemCount: datas.length,
       itemBuilder: (context, index) => InkWell(
-          onTap: () => Navigator.pushNamed(context, Routes.supportCenter,
+          onTap: () => Navigator.pushNamed(context, BwSpRoutes.supportCenter,
               arguments: {SupportCenterListPage.KEY_DATA: datas[index]}),
           child: ServiceItem(datas[index])),
       //分割器构造器

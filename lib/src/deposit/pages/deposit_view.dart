@@ -553,7 +553,7 @@ class _DepositViewState extends State<DepositView> {
         await ApiDeposit.loadPayment(money, type, depositName: name);
 
     if (entity.code == 0) {
-      Navigator.of(context).pushNamed(Routes.depositOrder,
+      Navigator.of(context).pushNamed(BwSpRoutes.depositOrder,
           arguments: {DepositOrderPage.KEY_DATA: entity.data});
     }
   }

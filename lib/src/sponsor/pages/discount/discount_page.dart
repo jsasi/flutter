@@ -107,7 +107,7 @@ class _DiscountPageState extends State<DiscountPage> {
       itemCount: datas.length,
       itemBuilder: (context, index) => InkWell(
           onTap: () =>
-              Navigator.pushNamed(context, Routes.discountDetails, arguments: {
+              Navigator.pushNamed(context, BwSpRoutes.discountDetails, arguments: {
                 DiscountDetailsPage.KEY_URL: _getDetailsUrl(datas[index]),
                 DiscountDetailsPage.KEY_DATA: datas[index]
               }),

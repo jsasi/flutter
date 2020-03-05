@@ -63,7 +63,7 @@ class _SupportCenterListPageState extends State<SupportCenterListPage> {
         _bean.name ?? "",
         hideLeftArrow: false,
         rightImg: R.service_icon,
-        callBack: () => Navigator.pushNamed(context, Routes.customerService),
+        callBack: () => Navigator.pushNamed(context, BwSpRoutes.customerService),
       ),
       body: Container(
         margin: EdgeInsets.only(top: 20),
@@ -130,10 +130,10 @@ class _SupportCenterListPageState extends State<SupportCenterListPage> {
 
   _itemClick(SupportItemBean data) {
     if (data.contextType == 1) {
-      Navigator.pushNamed(context, Routes.supportDetails,
+      Navigator.pushNamed(context, BwSpRoutes.supportDetails,
           arguments: {SupportDetailsPage.KEY_ID: data.id});
     } else if (data.contextType == 2) {
-      Navigator.pushNamed(context, Routes.webPage, arguments: {
+      Navigator.pushNamed(context, BwSpRoutes.webPage, arguments: {
         WebPage.KEY_URL: _bean.linkUrl,
         WebPage.KEY_TITLE: _bean.name
       });

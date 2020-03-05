@@ -93,7 +93,7 @@ class _HelpCenterListPageState extends State<HelpCenterPage> {
     return ListView.separated(
       itemCount: datas.length,
       itemBuilder: (context, index) => InkWell(
-          onTap: () => Navigator.pushNamed(context, Routes.supportCenter,
+          onTap: () => Navigator.pushNamed(context, BwSpRoutes.supportCenter,
               arguments: {SupportCenterListPage.KEY_DATA: datas[index]}),
           child: ServiceItem(datas[index])),
       //分割器构造器

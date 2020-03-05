@@ -169,7 +169,7 @@ class _FeedbackDetailsPageState extends State<FeedbackDetailsPage> {
       int idx = entry.key;
       String url = entry.value;
       return InkWell(
-        onTap: ()=>Navigator.pushNamed(context, Routes.photoGallery,arguments: {PhotoViewGalleryScreen.KEY_IMG_URLS:split,PhotoViewGalleryScreen.KEY_INDEX:idx}),
+        onTap: ()=>Navigator.pushNamed(context, BwSpRoutes.photoGallery,arguments: {PhotoViewGalleryScreen.KEY_IMG_URLS:split,PhotoViewGalleryScreen.KEY_INDEX:idx}),
         child: Padding(
           padding: EdgeInsets.only(right: 10, bottom: 10),
           child: SimpleImageView.display(url, width: 50, height: 50),

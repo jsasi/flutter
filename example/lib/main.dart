@@ -17,8 +17,7 @@ class MyApp extends StatelessWidget {
             bottomSheetTheme: BottomSheetThemeData(
               backgroundColor: Color(0x66000000),
             )),
-        initialRoute: Routes.root,
-        onGenerateRoute: onGenerateRoute,
+        onGenerateRoute: BwSpRoutes.onGenerateRoute,
         home: DebugPage(),
       ),
     );

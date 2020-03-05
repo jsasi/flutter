@@ -59,7 +59,7 @@ class _DepositPageState extends State<DepositPage> {
             Strings.depositTitle,
             hideLeftArrow: false,
             rightImg: R.deposit_help_center,
-            callBack: () => Navigator.of(context).pushNamed(Routes.helpCenter),
+            callBack: () => Navigator.of(context).pushNamed(BwSpRoutes.helpCenter),
           )
         : DssAppBar(Strings.depositTitle, hideLeftArrow: false);
   }

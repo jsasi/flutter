@@ -36,23 +36,23 @@ class _DebugPageState extends State<DebugPage> {
         body: Column(
           children: <Widget>[
             RaisedButton(
-              onPressed: () => Navigator.of(context).pushNamed(Routes.discount),
+              onPressed: () => Navigator.of(context).pushNamed(BwSpRoutes.discount),
               child: Text('优惠'),
             ),
             RaisedButton(
-              onPressed: () => Navigator.of(context).pushNamed(Routes.service),
+              onPressed: () => Navigator.of(context).pushNamed(BwSpRoutes.service),
               child: Text('客服'),
             ),
             RaisedButton(
-              onPressed: () => Navigator.of(context).pushNamed(Routes.helpCenter),
+              onPressed: () => Navigator.of(context).pushNamed(BwSpRoutes.helpCenter),
               child: Text('帮助中心'),
             ),
             RaisedButton(
-              onPressed: () => Navigator.of(context).pushNamed(Routes.sponsor),
+              onPressed: () => Navigator.of(context).pushNamed(BwSpRoutes.sponsor),
               child: Text('赞助'),
             ),
             RaisedButton(
-              onPressed: () => Navigator.of(context).pushNamed(Routes.deposit),
+              onPressed: () => Navigator.of(context).pushNamed(BwSpRoutes.deposit),
               child: Text('存款'),
             ),
             RaisedButton(

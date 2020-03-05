@@ -77,7 +77,7 @@ class _SupportDetailsPageState extends State<SupportDetailsPage> {
           bean?.title ?? "详情",
           hideLeftArrow: false,
           rightImg: R.service_icon,
-          callBack: () => Navigator.pushNamed(context, Routes.customerService),
+          callBack: () => Navigator.pushNamed(context, BwSpRoutes.customerService),
         ),
         body: _buildBody());
   }
