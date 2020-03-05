@@ -2,7 +2,7 @@ import 'package:bw_res/res/bw_colors.dart';
 import 'package:bw_res/res/res.dart';
 import 'package:bw_res/res/strings.dart';
 import 'package:bw_sponsor_preferential/src/common/page_status.dart';
-import 'package:bw_sponsor_preferential/src/routers/routes.dart';
+import 'package:bw_sponsor_preferential/src/routers/sponsor_preferential_route.dart';
 import 'package:bw_sponsor_preferential/src/sponsor/model/service_entity.dart';
 import 'package:bw_sponsor_preferential/src/sponsor/pages/service/home/service_model.dart';
 import 'package:bw_sponsor_preferential/src/sponsor/pages/service/support/support_center_page.dart';
@@ -95,7 +95,7 @@ class _HelpCenterListPageState extends State<HelpCenterPage> {
     return ListView.separated(
       itemCount: datas.length,
       itemBuilder: (context, index) => InkWell(
-          onTap: () => Navigator.pushNamed(context, BwSpRoutes.supportCenter,
+          onTap: () => Navigator.pushNamed(context, SponsorPreferentialRoute.supportCenter,
               arguments:  datas[index]),
           child: ServiceItem(datas[index])),
       //分割器构造器

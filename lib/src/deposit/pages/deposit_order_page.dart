@@ -457,7 +457,7 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
   _cancelOrder() async {
     BaseEntity entity = await ApiDeposit.cancelOrder(widget.data.id);
     if (entity.code == 0) {
-      Navigator.popAndPushNamed(context,BwSpRoutes.deposit);
+      Navigator.popAndPushNamed(context,SponsorPreferentialRoute.deposit);
     } else {
       showToast(entity.msg);
     }

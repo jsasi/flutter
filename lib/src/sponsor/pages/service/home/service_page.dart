@@ -6,7 +6,7 @@ import 'package:bw_res/res/bw_colors.dart';
 import 'package:bw_res/res/strings.dart';
 import 'package:bw_sponsor_preferential/src/common/customer_route_utils.dart';
 import 'package:bw_sponsor_preferential/src/common/page_status.dart';
-import 'package:bw_sponsor_preferential/src/routers/routes.dart';
+import 'package:bw_sponsor_preferential/src/routers/sponsor_preferential_route.dart';
 import 'package:bw_sponsor_preferential/src/sponsor/model/api_service.dart';
 import 'package:bw_sponsor_preferential/src/sponsor/model/service_entity.dart';
 import 'package:bw_sponsor_preferential/src/sponsor/pages/service/home/service_model.dart';
@@ -27,9 +27,9 @@ class ServicePage extends StatelessWidget {
   void _maybeRoute(BuildContext context) async {
     var feedbackList = await ApiService.getFeedbackList();
     if (feedbackList.code == 0 && feedbackList.data?.list?.isNotEmpty == true) {
-      Navigator.pushNamed(context, BwSpRoutes.feedbackList);
+      Navigator.pushNamed(context, SponsorPreferentialRoute.feedbackList);
     } else {
-      Navigator.pushNamed(context, BwSpRoutes.feedback);
+      Navigator.pushNamed(context, SponsorPreferentialRoute.feedback);
     }
   }
 
@@ -186,7 +186,7 @@ class __BodyWidgetState extends State<_BodyWidget> {
     return ListView.separated(
       itemCount: datas.length,
       itemBuilder: (context, index) => InkWell(
-          onTap: () => Navigator.pushNamed(context, BwSpRoutes.supportCenter,
+          onTap: () => Navigator.pushNamed(context, SponsorPreferentialRoute.supportCenter,
               arguments: datas[index]),
           child: ServiceItem(datas[index])),
       //分割器构造器

@@ -44,7 +44,7 @@ class _FeedbackListPageState extends State<FeedbackListPage> {
         Strings.feeMyTitle,
         hideLeftArrow: false,
         rightImg: R.feedback_add,
-        callBack: () => Navigator.pushNamed(context, BwSpRoutes.feedback),
+        callBack: () => Navigator.pushNamed(context, SponsorPreferentialRoute.feedback),
       ),
       body: ChangeNotifierProvider<FeedbackListModel>.value(
         value: viewModel,
@@ -121,7 +121,7 @@ class _FeedbackListPageState extends State<FeedbackListPage> {
           onTap: () {
             //设置已读
             appSharedPreferences.setBool(datas[index].id.toString(), true);
-            Navigator.pushNamed(context, BwSpRoutes.feedbackDetails,
+            Navigator.pushNamed(context, SponsorPreferentialRoute.feedbackDetails,
                 arguments: datas[index].id);
           },
           child: FeedbackItem(datas[index])),

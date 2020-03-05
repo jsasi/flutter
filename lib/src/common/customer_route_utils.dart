@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class CustomerRouteUtils {
   static goCustomerPage(BuildContext context, {int index = 0}) {
-    Navigator.of(context).pushNamed(BwSpRoutes.customerService,
+    Navigator.of(context).pushNamed(SponsorPreferentialRoute.customerService,
         arguments: PreInfoUtil.getPreInfoEntity()
             .siteBaseConfig
             .getCustomerServices()[index]

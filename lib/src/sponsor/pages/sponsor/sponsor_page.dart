@@ -108,7 +108,7 @@ class _SponsorPageState extends State<SponsorPage> {
       itemCount: datas.length,
       itemBuilder: (context, index) => InkWell(
           onTap: () =>
-              Navigator.pushNamed(context, BwSpRoutes.sponsorDetails, arguments: {
+              Navigator.pushNamed(context, SponsorPreferentialRoute.sponsorDetails, arguments: {
                 SponsorDetailsPage.KEY_URL: datas[index].infoUrl,
                 SponsorDetailsPage.KEY_TITLE: datas[index].sponsoredTile
               }),

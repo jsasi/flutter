@@ -17,7 +17,7 @@ import 'package:bw_sponsor_preferential/src/sponsor/pages/web/web_page.dart';
 import 'package:bw_sponsor_preferential/src/widgets/photo_gallery_page.dart';
 import 'package:flutter/material.dart';
 
-class BwSpRoutes implements BwPackageRoute {
+class SponsorPreferentialRoute implements BwPackageRoute {
   static const String discount = "/bw_sp_discount";
   static const String discountDetails = "/bw_sp_discount-details";
   static const String sponsorDetails = "/bw_sp_sponsor-details";
@@ -35,84 +35,84 @@ class BwSpRoutes implements BwPackageRoute {
   static const String depositOrder = "/bw_sp_deposit-order";
   static const String deposit = "/bw_sp_deposit";
 
-  BwSpRoutes._();
+  SponsorPreferentialRoute._();
 
-  static final BwSpRoutes _bwSpRoutes = BwSpRoutes._();
+  static final SponsorPreferentialRoute _bwSpRoutes = SponsorPreferentialRoute._();
 
-  factory BwSpRoutes() => _bwSpRoutes;
+  factory SponsorPreferentialRoute() => _bwSpRoutes;
 
   @override
   Map<String, WidgetBuilder> packageRoutes() {
     return {
       /// 优惠列表
-      BwSpRoutes.discount: (context) => DiscountPage(),
+      SponsorPreferentialRoute.discount: (context) => DiscountPage(),
 
       /// 赞助
-      BwSpRoutes.sponsor: (context) => SponsorPage(),
+      SponsorPreferentialRoute.sponsor: (context) => SponsorPage(),
 
       /// 客服首页
-      BwSpRoutes.service: (context) => ServicePage(),
+      SponsorPreferentialRoute.service: (context) => ServicePage(),
 
       /// 意见反馈
-      BwSpRoutes.feedback: (context) => FeedbackPage(),
+      SponsorPreferentialRoute.feedback: (context) => FeedbackPage(),
 
       /// 意见反馈列表
-      BwSpRoutes.feedbackList: (context) => FeedbackListPage(),
+      SponsorPreferentialRoute.feedbackList: (context) => FeedbackListPage(),
 
       /// 帮助中心
-      BwSpRoutes.helpCenter: (context) => HelpCenterPage(),
+      SponsorPreferentialRoute.helpCenter: (context) => HelpCenterPage(),
 
       /// 存款
-      BwSpRoutes.deposit: (context) => DepositPage(),
+      SponsorPreferentialRoute.deposit: (context) => DepositPage(),
     };
   }
 
   @override
   Route<dynamic> generatePackageRoute(RouteSettings settings) {
     switch (settings.name) {
-      case BwSpRoutes.supportCenter: // 客服中心
+      case SponsorPreferentialRoute.supportCenter: // 客服中心
         return MaterialPageRoute(
           settings: settings,
           builder: (context) {
             return SupportCenterListPage(bean: settings.arguments);
           },
         );
-      case BwSpRoutes.supportDetails: // 客服帮助详情
+      case SponsorPreferentialRoute.supportDetails: // 客服帮助详情
         return MaterialPageRoute(
           settings: settings,
           builder: (context) {
             return SupportDetailsPage(id: settings.arguments);
           },
         );
-      case BwSpRoutes.customerService: // 客服页面
+      case SponsorPreferentialRoute.customerService: // 客服页面
         return MaterialPageRoute(
           settings: settings,
           builder: (context) {
             return CustomerServicePage(url: settings.arguments);
           },
         );
-      case BwSpRoutes.feedbackDetails: // 意见反馈详情
+      case SponsorPreferentialRoute.feedbackDetails: // 意见反馈详情
         return MaterialPageRoute(
           settings: settings,
           builder: (context) {
             return FeedbackDetailsPage(id: settings.arguments);
           },
         );
-      case BwSpRoutes.depositOrder: // 订单详情
+      case SponsorPreferentialRoute.depositOrder: // 订单详情
         return MaterialPageRoute(
           settings: settings,
           builder: (context) {
             return DepositOrderPage(data: settings.arguments);
           },
         );
-      case BwSpRoutes.discountDetails: // 优惠详情
+      case SponsorPreferentialRoute.discountDetails: // 优惠详情
         return MaterialPageRoute(
           settings: settings,
           builder: (context) {
             return DiscountDetailsPage(data: settings.arguments);
           },
         );
-      case BwSpRoutes.photoGallery: // 画廊
+      case SponsorPreferentialRoute.photoGallery: // 画廊
         return MaterialPageRoute(
           settings: settings,
           builder: (context) {
@@ -124,7 +124,7 @@ class BwSpRoutes implements BwPackageRoute {
             );
           },
         );
-      case BwSpRoutes.webPage: // web
+      case SponsorPreferentialRoute.webPage: // web
         return MaterialPageRoute(
           settings: settings,
           builder: (context) {
@@ -135,7 +135,7 @@ class BwSpRoutes implements BwPackageRoute {
             );
           },
         );
-      case BwSpRoutes.sponsorDetails: // 赞助详情
+      case SponsorPreferentialRoute.sponsorDetails: // 赞助详情
         return MaterialPageRoute(
           settings: settings,
           builder: (context) {
@@ -152,4 +152,4 @@ class BwSpRoutes implements BwPackageRoute {
   }
 }
 
-BwSpRoutes bwSpRoute = BwSpRoutes();
+SponsorPreferentialRoute bwSpRoute = SponsorPreferentialRoute();

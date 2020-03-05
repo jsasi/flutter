@@ -3,7 +3,7 @@ import 'package:bw_res/res/res.dart';
 import 'package:bw_res/res/strings.dart';
 import 'package:bw_sponsor_preferential/src/common/customer_route_utils.dart';
 import 'package:bw_sponsor_preferential/src/common/page_status.dart';
-import 'package:bw_sponsor_preferential/src/routers/routes.dart';
+import 'package:bw_sponsor_preferential/src/routers/sponsor_preferential_route.dart';
 import 'package:bw_sponsor_preferential/src/sponsor/model/service_entity.dart';
 import 'package:bw_sponsor_preferential/src/sponsor/model/support_type_entity.dart';
 import 'package:bw_sponsor_preferential/src/sponsor/pages/service/support/support_center_model.dart';
@@ -124,10 +124,10 @@ class _SupportCenterListPageState extends State<SupportCenterListPage> {
 
   _itemClick(SupportItemBean data) {
     if (data.contextType == 1) {
-      Navigator.pushNamed(context, BwSpRoutes.supportDetails,
+      Navigator.pushNamed(context, SponsorPreferentialRoute.supportDetails,
           arguments: data.id);
     } else if (data.contextType == 2) {
-      Navigator.pushNamed(context, BwSpRoutes.webPage, arguments: {
+      Navigator.pushNamed(context, SponsorPreferentialRoute.webPage, arguments: {
         WebPage.KEY_URL: widget.bean.linkUrl,
         WebPage.KEY_TITLE: widget.bean.name
       });

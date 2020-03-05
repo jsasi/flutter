@@ -58,7 +58,7 @@ class _DepositPageState extends State<DepositPage> {
             Strings.depositTitle,
             hideLeftArrow: false,
             rightImg: R.deposit_help_center,
-            callBack: () => Navigator.of(context).pushNamed(BwSpRoutes.helpCenter),
+            callBack: () => Navigator.of(context).pushNamed(SponsorPreferentialRoute.helpCenter),
           )
         : DssAppBar(Strings.depositTitle, hideLeftArrow: false);
   }
@@ -72,7 +72,7 @@ class _DepositPageState extends State<DepositPage> {
           switch (vm.screenStatus) {
             case ScreenStatus.LoadSuccess:
               if (vm.isShowOrder) {
-                WidgetsBinding.instance.addPostFrameCallback((_){Navigator.popAndPushNamed(context, BwSpRoutes.depositOrder,arguments:vm.payBean );
+                WidgetsBinding.instance.addPostFrameCallback((_){Navigator.popAndPushNamed(context, SponsorPreferentialRoute.depositOrder,arguments:vm.payBean );
                 });
                 return Container();
               } else {
