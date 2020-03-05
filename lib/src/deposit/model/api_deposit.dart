@@ -1,3 +1,4 @@
+import 'package:bw_sponsor_preferential/src/deposit/model/dep_dis_entity.dart';
 import 'package:bw_sponsor_preferential/src/deposit/model/deposit_pay_entity.dart';
 import 'package:bw_sponsor_preferential/src/deposit/model/deposit_pay_type_entity.dart';
 import 'package:bw_sponsor_preferential/src/deposit/model/deposit_unfinished_entity.dart';
@@ -13,12 +14,13 @@ class ApiDeposit {
   static const String _DEPOSIT_PAY_WAY = "/api/site/finance/payment/v1/types";
 
   ///存款
-  static const String _WALLET_DEPOSIT = "/api/site/finance/payment/v1/pay";
+  static const String _DEPOSIT_PAY = "/api/site/finance/payment/v1/pay";
 
   /// 用户关闭存款
-  static const String _WALLET_DEPOSIT_CANCEL = "/api/site/finance/payment/v1/closeOrder";
+  static const String _DEPOSIT_CANCEL = "/api/site/finance/payment/v1/closeOrder";
 
-
+   ///存款优惠列表 VIP 等级 及 优惠 百分比 对照表
+  static const String _DEPOSITE_DISCOUNT = "/api/site/finance/depositDiscount/v1/getDiscountListByType" ;
   /// 获取支付方式
   static Future<DepositPayTypeEntity> getPayTypeList() async {
     var response = await mainClient.dio.post(
@@ -48,7 +50,7 @@ class ApiDeposit {
       data["depositName"]=depositName;
     }
     var response = await mainClient.dio.post(
-        _WALLET_DEPOSIT,
+        _DEPOSIT_PAY,
         data:data
     );
     print('========loadPayment=======$response');
@@ -58,9 +60,17 @@ class ApiDeposit {
   /// 取消订单
   static Future<BaseEntity> cancelOrder(String id) async {
     var response = await mainClient.dio.post(
-        _WALLET_DEPOSIT_CANCEL,
+        _DEPOSIT_CANCEL,
         data: {"id":id}
     );
     return BaseEntity.fromJson(response.data);
+  }
+  /// 存款优惠列表
+  static Future<DepDisEntity> getDepositDicList(String type) async {
+    var response = await mainClient.dio.post(
+        _DEPOSITE_DISCOUNT,
+        data: {"payType":type}
+    );
+    return DepDisEntity.fromJson(response.data);
   }
 }
