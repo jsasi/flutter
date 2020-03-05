@@ -1,6 +1,7 @@
 import 'package:bw_base/bw_base.dart';
 import 'package:bw_res/res/res.dart';
 import 'package:bw_sponsor_preferential/bw_sponsor_preferential.dart';
+import 'package:bw_sponsor_preferential/src/common/customer_route_utils.dart';
 import 'package:bw_sponsor_preferential/src/common/h5_url_format.dart';
 import 'package:bw_sponsor_preferential/src/sponsor/model/api_service.dart';
 import 'package:bw_sponsor_preferential/src/sponsor/model/support_details_entity.dart';
@@ -68,7 +69,7 @@ class _SupportDetailsPageState extends State<SupportDetailsPage> {
           bean?.title ?? "详情",
           hideLeftArrow: false,
           rightImg: R.service_icon,
-          callBack: () => Navigator.pushNamed(context, BwSpRoutes.customerService),
+          callBack: () => CustomerRouteUtils.goCustomerPage(context),
         ),
         body: _buildBody());
   }

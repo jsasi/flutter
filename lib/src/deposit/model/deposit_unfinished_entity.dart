@@ -45,7 +45,7 @@ class DepositUnfinishedBean  {
 
 
 @JsonSerializable()
-class Records extends Object {
+class Records  {
 
   String billNo;
 

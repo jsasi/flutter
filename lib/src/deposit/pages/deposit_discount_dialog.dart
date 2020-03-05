@@ -9,81 +9,84 @@ class DepositDiscountDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-      ),
-      padding: EdgeInsets.only(left: 22, right: 30, top: 18, bottom: 18),
-      child: Column(
-        children: <Widget>[
-          Text(
-            '存款优惠说明',
-            style: TextStyle(fontSize: 18, color: Colors.black),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 15, bottom: 8),
-            child: Table(
-              columnWidths: const <int, TableColumnWidth>{
-                0: FixedColumnWidth(60.0),
-                1: FixedColumnWidth(110.0),
-                2: FixedColumnWidth(110.0),
-              },
-              border: TableBorder.all(
-                  color: BWColors.dssDivider,
-                  width: 1.0,
-                  style: BorderStyle.solid),
-              children: <TableRow>[
-                TableRow(
-                  children: <Widget>[
-                    Container(
-                      height: 35,
-                      alignment: Alignment.center,
-                      child: Text(
-                        '会员等级',
-                        style: TextStyle(fontSize: 12, color: Colors.black),
-                      ),
-                    ),
-                    Container(
-                      height: 35,
-                      alignment: Alignment.center,
-                      child: Text(
-                        '优惠百分比(%)',
-                        style: TextStyle(fontSize: 12, color: Colors.black),
-                      ),
-                    ),
-                    Container(
-                      height: 35,
-                      alignment: Alignment.center,
-                      child: Text(
-                        '每日最高优惠(元)',
-                        style: TextStyle(fontSize: 12, color: Colors.black),
-                      ),
-                    ),
-                  ],
-                ),
-                ...getTableRow(),
-              ],
+    return Center(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+        ),
+        padding: EdgeInsets.only(left: 22, right: 30, top: 18, bottom: 18),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Text(
+              '存款优惠说明',
+              style: TextStyle(fontSize: 18, color: Colors.black),
             ),
-          ),
-          Text(
-            '*具体到账金额以实际到账为准',
-            style: TextStyle(fontSize: 12, color: BWColors.depDesRed),
-          ),
-          Container(
-            height: 45,
-            width: 184,
-            margin: EdgeInsets.only(top: 21, bottom: 18),
-            child: FlatButton(
-              color: BWColors.dssBtnBg,
-              onPressed: () => Navigator.pop(context),
-              child: Text(
-                '关闭',
-                style: TextStyle(fontSize: 16, color: BWColors.dssBtnText),
+            Padding(
+              padding: const EdgeInsets.only(top: 15, bottom: 8),
+              child: Table(
+                columnWidths: const <int, TableColumnWidth>{
+                  0: FixedColumnWidth(60.0),
+                  1: FixedColumnWidth(110.0),
+                  2: FixedColumnWidth(110.0),
+                },
+                border: TableBorder.all(
+                    color: BWColors.dssDivider,
+                    width: 1.0,
+                    style: BorderStyle.solid),
+                children: <TableRow>[
+                  TableRow(
+                    children: <Widget>[
+                      Container(
+                        height: 35,
+                        alignment: Alignment.center,
+                        child: Text(
+                          '会员等级',
+                          style: TextStyle(fontSize: 12, color: Colors.black),
+                        ),
+                      ),
+                      Container(
+                        height: 35,
+                        alignment: Alignment.center,
+                        child: Text(
+                          '优惠百分比(%)',
+                          style: TextStyle(fontSize: 12, color: Colors.black),
+                        ),
+                      ),
+                      Container(
+                        height: 35,
+                        alignment: Alignment.center,
+                        child: Text(
+                          '每日最高优惠(元)',
+                          style: TextStyle(fontSize: 12, color: Colors.black),
+                        ),
+                      ),
+                    ],
+                  ),
+                  ...getTableRow(),
+                ],
               ),
             ),
-          )
-        ],
+            Text(
+              '*具体到账金额以实际到账为准',
+              style: TextStyle(fontSize: 12, color: BWColors.depDesRed),
+            ),
+            Container(
+              height: 45,
+              width: 184,
+              margin: EdgeInsets.only(top: 21, bottom: 18),
+              child: FlatButton(
+                color: BWColors.dssBtnBg,
+                onPressed: () => Navigator.pop(context),
+                child: Text(
+                  '关闭',
+                  style: TextStyle(fontSize: 16, color: BWColors.dssBtnText),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

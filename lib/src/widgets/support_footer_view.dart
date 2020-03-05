@@ -1,5 +1,6 @@
 import 'package:bw_res/bw_res.dart';
 import 'package:bw_sponsor_preferential/bw_sponsor_preferential.dart';
+import 'package:bw_sponsor_preferential/src/common/customer_route_utils.dart';
 import 'package:bw_sponsor_preferential/src/sponsor/pages/service/home/customer_service_page.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -12,9 +13,7 @@ class SupportFooterView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _recognizer.onTap = () => Navigator.of(context).pushNamed(
-        BwSpRoutes.customerService,
-        arguments: "");
+    _recognizer.onTap = () => CustomerRouteUtils.goCustomerPage(context);
 
     return Container(
       color: BWColors.allGgColor,

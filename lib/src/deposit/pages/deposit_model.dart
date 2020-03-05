@@ -1,5 +1,6 @@
 import 'package:bw_sponsor_preferential/src/common/page_status.dart';
 import 'package:bw_sponsor_preferential/src/deposit/model/api_deposit.dart';
+import 'package:bw_sponsor_preferential/src/deposit/model/deposit_pay_entity.dart';
 import 'package:bw_sponsor_preferential/src/deposit/model/deposit_pay_type_entity.dart';
 import 'package:bw_sponsor_preferential/src/deposit/model/deposit_unfinished_entity.dart';
 import 'package:bw_sponsor_preferential/src/sponsor/model/api_service.dart';
@@ -10,8 +11,8 @@ class DepositModel extends ChangeNotifier {
   ScreenStatus _screenStatus = ScreenStatus.Loading;
 
   ScreenStatus get screenStatus => _screenStatus;
-
-  //支付方式
+  PayBean _payBean;
+  PayBean get payBean => _payBean; //支付方式
   List<TypeEntryBean> _typeList = List();
 
   List<TypeEntryBean> get typeList => _typeList;
@@ -23,10 +24,6 @@ class DepositModel extends ChangeNotifier {
 
   bool get isShowOrder => _isShowOrder;
 
-  //订单是否已取消
-  bool _isOrderCanceled = false;
-
-  bool get isOrderCanceled => _isOrderCanceled;
 
   String _billNumber = "_1.1";
 
@@ -56,10 +53,11 @@ class DepositModel extends ChangeNotifier {
             bean.records.payStatus == 1 || bean.records.payStatus == 4;
         //是否是当前有效订单
         var isCurrentValidOrider =
-            _billNumber == bean.records.billNo && !isOrderCanceled;
+            _billNumber == bean.records.billNo;
         //是否是单笔订单
         var isSingOrder = bean.moreSwitch == "1";
         if (showDetailsPayStatus && (isSingOrder || isCurrentValidOrider)) {
+          _payBean=_transformEntry(bean);
           //显示订单详情页
           _isShowOrder = true;
           _billNumber = bean.records.billNo;
@@ -75,6 +73,27 @@ class DepositModel extends ChangeNotifier {
       _screenStatus = ScreenStatus.Error;
     }
     notifyListeners();
+  }
+
+  PayBean _transformEntry(DepositUnfinishedBean bean) {
+    PayBean data = PayBean();
+    data.trnasfer = bean.transfer;
+    data.alert = null;
+    data.amount = bean.records.orderAmount;
+    data.billNo = bean.records.billNo;
+    data.expierTime = bean.expireTime;
+    data.id = bean.records.id;
+    data.payTypeName = bean.payTypeName;
+    data.qrUrl = bean.records.qrUrl;
+    data.recipientAccount = bean.records.recipientAccount;
+    data.recipientAddress = bean.records.recipientAddress;
+    data.recipientBank = bean.records.recipientBank;
+    data.bankName = bean.bankName;
+    data.recipientName = bean.records.recipientName;
+    data.icon = bean.icon;
+    data.remark = bean.records.recipientCode;
+    data.payStatus = bean.records.payStatus;
+    return data;
   }
 
   void init() async {

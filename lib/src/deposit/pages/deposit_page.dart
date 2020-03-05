@@ -45,7 +45,6 @@ class _DepositPageState extends State<DepositPage> {
 
   @override
   Widget build(BuildContext context) {
-    print("====build========");
     return Scaffold(
       appBar: _buildAppBar(),
       body: _buildBody(),
@@ -73,7 +72,9 @@ class _DepositPageState extends State<DepositPage> {
           switch (vm.screenStatus) {
             case ScreenStatus.LoadSuccess:
               if (vm.isShowOrder) {
-                return _buildOrider();
+                WidgetsBinding.instance.addPostFrameCallback((_){Navigator.popAndPushNamed(context, BwSpRoutes.depositOrder,arguments:vm.payBean );
+                });
+                return Container();
               } else {
                 return DepositView(vm.typeList);
               }
@@ -88,7 +89,5 @@ class _DepositPageState extends State<DepositPage> {
         }));
   }
 
-  Widget _buildOrider() {
-    return Text('text');
-  }
+
 }

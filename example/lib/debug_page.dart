@@ -57,8 +57,10 @@ class _DebugPageState extends State<DebugPage> {
               child: Text('存款'),
             ),
             RaisedButton(
-              onPressed: ()  =>  Navigator.popAndPushNamed(context, RoutesNames.loginPage),
+//              onPressed: ()  =>  Navigator.popAndPushNamed(context, RoutesNames.loginPage),
               child: Text('登录'),
+              onPressed: () async => await Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => LoginPage())),
             ),
 
           ],

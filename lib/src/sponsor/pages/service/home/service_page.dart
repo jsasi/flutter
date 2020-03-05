@@ -4,6 +4,7 @@ import 'package:bw_base/bw_base.dart';
 import 'package:bw_res/bw_res.dart';
 import 'package:bw_res/res/bw_colors.dart';
 import 'package:bw_res/res/strings.dart';
+import 'package:bw_sponsor_preferential/src/common/customer_route_utils.dart';
 import 'package:bw_sponsor_preferential/src/common/page_status.dart';
 import 'package:bw_sponsor_preferential/src/routers/routes.dart';
 import 'package:bw_sponsor_preferential/src/sponsor/model/api_service.dart';
@@ -147,9 +148,7 @@ class __BodyWidgetState extends State<_BodyWidget> {
                   ),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(4.0)),
-                  onPressed: () => Navigator.pushNamed(
-                      context, BwSpRoutes.customerService,
-                      arguments: customerList[0].url),
+                  onPressed: () => CustomerRouteUtils.goCustomerPage(context),
                 ),
               )),
               if (isShowTwoCustomer)
@@ -168,9 +167,7 @@ class __BodyWidgetState extends State<_BodyWidget> {
                             color: BWColors.dssBtnBg,
                           ),
                           borderRadius: BorderRadius.circular(4.0)),
-                      onPressed: () => Navigator.pushNamed(
-                          context, BwSpRoutes.customerService,
-                          arguments: customerList[1].url),
+                      onPressed: () => CustomerRouteUtils.goCustomerPage(context,index: 1),
                     ),
                   ),
                 ),

@@ -3,6 +3,7 @@ import 'package:biz_network_main/biz_network_main.dart';
 import 'package:bw_base/bw_base.dart';
 import 'package:bw_res/bw_res.dart';
 import 'package:bw_sponsor_preferential/bw_sponsor_preferential.dart';
+import 'package:bw_sponsor_preferential/src/common/customer_route_utils.dart';
 import 'package:bw_sponsor_preferential/src/deposit/model/api_deposit.dart';
 import 'package:bw_sponsor_preferential/src/deposit/model/deposit_pay_entity.dart';
 import 'package:bw_sponsor_preferential/src/deposit/model/deposit_unfinished_entity.dart';
@@ -116,10 +117,10 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
 
   @override
   void dispose() {
-    super.dispose();
     _streamSubscription?.cancel();
     _streamTime.close();
     _refreshController.dispose();
+    super.dispose();
   }
 
   @override
@@ -201,8 +202,7 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
                       style: TextStyle(
                           fontSize: 12, color: BWColors.depOrdDesTxt)),
                   InkWell(
-                      onTap: () => Navigator.of(context)
-                          .pushNamed(BwSpRoutes.customerService),
+                      onTap: () => CustomerRouteUtils.goCustomerPage(context),
                       child: Text(' 联系客服 ',
                           style: TextStyle(
                               fontSize: 12, color: BWColors.depOrdColor))),
@@ -453,7 +453,7 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
   _cancelOrder() async {
     BaseEntity entity = await ApiDeposit.cancelOrder(widget.data.id);
     if (entity.code == 0) {
-      Navigator.pop(context);
+      Navigator.popAndPushNamed(context,BwSpRoutes.deposit);
     } else {
       showToast(entity.msg);
     }

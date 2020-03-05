@@ -29,10 +29,9 @@ class _CustomerServicePageState extends State<CustomerServicePage> {
         "客服",
         hideLeftArrow: false,
       ),
-      body: Text(widget.url),
-//        body: BwWebview(
-//          url:url,
-//        )
+        body: BwWebview(
+          url:widget.url,
+        )
     );
   }
 }

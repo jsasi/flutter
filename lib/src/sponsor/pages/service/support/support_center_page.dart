@@ -1,6 +1,7 @@
 import 'package:bw_res/res/bw_colors.dart';
 import 'package:bw_res/res/res.dart';
 import 'package:bw_res/res/strings.dart';
+import 'package:bw_sponsor_preferential/src/common/customer_route_utils.dart';
 import 'package:bw_sponsor_preferential/src/common/page_status.dart';
 import 'package:bw_sponsor_preferential/src/routers/routes.dart';
 import 'package:bw_sponsor_preferential/src/sponsor/model/service_entity.dart';
@@ -54,7 +55,7 @@ class _SupportCenterListPageState extends State<SupportCenterListPage> {
         widget.bean.name ?? "",
         hideLeftArrow: false,
         rightImg: R.service_icon,
-        callBack: () => Navigator.pushNamed(context, BwSpRoutes.customerService),
+        callBack: () => CustomerRouteUtils.goCustomerPage(context),
       ),
       body: Container(
         margin: EdgeInsets.only(top: 20),

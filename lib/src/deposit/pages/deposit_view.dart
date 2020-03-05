@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'dart:math';
-
-import 'package:bw_base/bw_base.dart';
 import 'package:bw_res/bw_res.dart';
 import 'package:bw_res/res/strings.dart';
 import 'package:bw_sponsor_preferential/bw_sponsor_preferential.dart';
@@ -10,7 +8,6 @@ import 'package:bw_sponsor_preferential/src/deposit/model/dep_dis_entity.dart';
 import 'package:bw_sponsor_preferential/src/deposit/model/deposit_pay_entity.dart';
 import 'package:bw_sponsor_preferential/src/deposit/model/deposit_pay_type_entity.dart';
 import 'package:bw_sponsor_preferential/src/deposit/pages/deposit_discount_dialog.dart';
-import 'package:bw_sponsor_preferential/src/deposit/pages/deposit_order_page.dart';
 import 'package:bw_sponsor_preferential/src/widgets/deposit_dis_tip_view.dart';
 import 'package:bw_sponsor_preferential/src/widgets/simple_imageview.dart';
 import 'package:bw_sponsor_preferential/src/widgets/support_footer_view.dart';
