@@ -131,7 +131,7 @@ packages:
     description:
       path: "packages/bw_res"
       ref: "feature_v0.1"
-      resolved-ref: "6c46104bc41d1b4c16192cd686847b61b9636edd"
+      resolved-ref: "744c995cbce0843a10ff88707d4ffbf80e2ee3a2"
       url: "http://47.52.134.206/bw-flutter/bw_resources.git"
     source: git
     version: "0.0.1"
@@ -793,7 +793,7 @@ packages:
       name: webview_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.19+8"
+    version: "0.3.19+9"
   xml:
     dependency: transitive
     description:

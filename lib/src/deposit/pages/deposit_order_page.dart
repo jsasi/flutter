@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:biz_network_main/biz_network_main.dart';
+import 'package:bw_base/bw_base.dart';
 import 'package:bw_res/bw_res.dart';
 import 'package:bw_sponsor_preferential/bw_sponsor_preferential.dart';
 import 'package:bw_sponsor_preferential/src/deposit/model/api_deposit.dart';
@@ -9,6 +10,8 @@ import 'package:bw_sponsor_preferential/src/deposit/model/deposit_unfinished_ent
 import 'package:bw_sponsor_preferential/src/widgets/dss_app_bar.dart';
 import 'package:bw_sponsor_preferential/src/widgets/simple_imageview.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class DepositOrderPage extends StatefulWidget {
@@ -29,6 +32,7 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
   RefreshController _refreshController = RefreshController();
 
   StreamController<String> _streamTime = new StreamController.broadcast();
+  StreamSubscription _streamSubscription;
 
   // 解析路由数据
   void _initArguments() {
@@ -103,10 +107,11 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
 
   //倒计时
   void _addICountDownListener() {
+    _streamSubscription?.cancel();
     Stream<int> _streamCountDown =
         Stream<int>.periodic(Duration(seconds: 1), (data) => data);
     _streamCountDown.take(int.parse(_data.expierTime));
-    _streamCountDown.listen(
+    _streamSubscription = _streamCountDown.listen(
         (data) {
           _getountDownTxt(int.parse(_data.expierTime) - data);
           _streamTime.sink
@@ -122,6 +127,7 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
   @override
   void dispose() {
     super.dispose();
+    _streamSubscription?.cancel();
     _streamTime.close();
     _refreshController.dispose();
   }
@@ -257,7 +263,7 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
                             alignment: Alignment.centerRight,
                             padding: EdgeInsets.all(0),
                             onPressed: () {
-                              //todo
+                              Clipboard.setData(ClipboardData(text: '${_data.billNo}'));
                             },
                             icon: Icon(
                               Icons.content_copy,
@@ -293,140 +299,15 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
                           ),
                         ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5),
-                        child: Row(
-                          children: <Widget>[
-                            Text('姓名：',
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    color: BWColors.depOrdDesTxt)),
-                            Expanded(
-                                child: Text(
-                              '${_data.recipientName}',
-                              style: TextStyle(
-                                  fontSize: 12, color: BWColors.depOrdValueTxt),
-                            )),
-                            Container(
-                              width: 34,
-                              height: 15,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(2),
-                                border: Border.all(color: BWColors.depOrdColor),
-                              ),
-                              child: Text(
-                                '复制',
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    color: BWColors.depOrdColor,
-                                    height: 1),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Row(
-                          children: <Widget>[
-                            Text('金额：',
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    color: BWColors.depOrdDesTxt)),
-                            Expanded(
-                                child: Text('${_data.amount}元',
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        color: BWColors.depOrdValueTxt))),
-                            Container(
-                              width: 34,
-                              height: 15,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                border: Border.all(color: BWColors.depOrdColor),
-                                borderRadius: BorderRadius.circular(2),
-                              ),
-                              child: Text(
-                                '复制',
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    color: BWColors.depOrdColor,
-                                    height: 1),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      _buildItem('姓名：','${_data.recipientName}'),
+                      _buildItem('金额：','${_data.amount}元'),
                       Text(
                         '(转账金额务必于订单金额一致)',
                         style:
                             TextStyle(fontSize: 12, color: BWColors.depError),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Row(
-                          children: <Widget>[
-                            Text('地址：',
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    color: BWColors.depOrdDesTxt)),
-                            Expanded(
-                                child: Text('${_data.recipientAddress}',
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        color: BWColors.depOrdValueTxt))),
-                            Container(
-                              width: 34,
-                              height: 15,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(2),
-                                border: Border.all(color: BWColors.depOrdColor),
-                              ),
-                              child: Text(
-                                '复制',
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    color: BWColors.depOrdColor,
-                                    height: 1),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Row(
-                          children: <Widget>[
-                            Text('附言/备注：',
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    color: BWColors.depOrdDesTxt)),
-                            Expanded(
-                                child: Text('${_data.remark}',
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        color: BWColors.depOrdValueTxt))),
-                            Container(
-                              width: 34,
-                              height: 15,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(2),
-                                border: Border.all(color: BWColors.depOrdColor),
-                              ),
-                              child: Text(
-                                '复制',
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    color: BWColors.depOrdColor,
-                                    height: 1),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      _buildItem('地址：','${_data.recipientAddress}'),
+                      _buildItem('附言/备注：','${_data.remark}'),
                       Text(
                         '((请务必填写正确的附言/备注))',
                         style:
@@ -506,12 +387,75 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
               ),
             Padding(
               padding: const EdgeInsets.only(top: 6, bottom: 40),
-              child:
-                  InkWell(onTap: () => _cancelOrder(), child: Text('取消存款申请')),
+              child: InkWell(
+                  onTap: () => _showCancelDialog(), child: Text('取消存款申请')),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildItem(String key,String value) {
+    return Padding(
+                      padding: const EdgeInsets.only(top: 5),
+                      child: Row(
+                        children: <Widget>[
+                          Text(key,
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: BWColors.depOrdDesTxt)),
+                          Expanded(
+                              child: Text(
+                                value,
+                            style: TextStyle(
+                                fontSize: 12, color: BWColors.depOrdValueTxt),
+                          )),
+                          Container(
+                            width: 34,
+                            height: 15,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(2),
+                              border: Border.all(color: BWColors.depOrdColor),
+                            ),
+                            child: InkWell(
+                              onTap: ()=>Clipboard.setData(ClipboardData(text: value)),
+                              child: Text(
+                                '复制',
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: BWColors.depOrdColor,
+                                    height: 1),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+  }
+
+  _showCancelDialog() {
+    showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return BwDialog(
+          title: "是否取消本次申请",
+          textContent: "如果您已完成转账，请勿取消，我们将尽快为您处理！",
+          actions: [
+            BwDialogAction(
+              text: '我再想想',
+            ),
+            BwDialogAction(
+              text: '确定取消',
+              callback: () => {
+                Navigator.pop(context),
+                _cancelOrder(),
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -520,6 +464,8 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
     BaseEntity entity = await ApiDeposit.cancelOrder(_data.id);
     if (entity.code == 0) {
       Navigator.pop(context);
+    } else {
+      showToast(entity.msg);
     }
   }
 }

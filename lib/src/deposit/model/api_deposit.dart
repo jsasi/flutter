@@ -4,6 +4,7 @@ import 'package:bw_sponsor_preferential/src/deposit/model/deposit_pay_type_entit
 import 'package:bw_sponsor_preferential/src/deposit/model/deposit_unfinished_entity.dart';
 import 'package:biz_network_main/biz_network_main.dart';
 import 'package:bw_utils/bw_utils.dart';
+import 'package:flutter/cupertino.dart';
 
 class ApiDeposit {
   ///   存款校验是否开启支持多订单开关 状态
@@ -27,7 +28,6 @@ class ApiDeposit {
       _DEPOSIT_PAY_WAY,
       data: {}
     );
-    print('========getPayTypeList=======$response');
     return DepositPayTypeEntity.fromJson(response.data);
   }
   /// 存款校验是否开启支持多订单开关

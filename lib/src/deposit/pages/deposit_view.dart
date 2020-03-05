@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:bw_base/bw_base.dart';
 import 'package:bw_res/bw_res.dart';
 import 'package:bw_res/res/strings.dart';
 import 'package:bw_sponsor_preferential/bw_sponsor_preferential.dart';
@@ -8,6 +9,7 @@ import 'package:bw_sponsor_preferential/src/deposit/model/api_deposit.dart';
 import 'package:bw_sponsor_preferential/src/deposit/model/dep_dis_entity.dart';
 import 'package:bw_sponsor_preferential/src/deposit/model/deposit_pay_entity.dart';
 import 'package:bw_sponsor_preferential/src/deposit/model/deposit_pay_type_entity.dart';
+import 'package:bw_sponsor_preferential/src/deposit/pages/deposit_discount_dialog.dart';
 import 'package:bw_sponsor_preferential/src/deposit/pages/deposit_order_page.dart';
 import 'package:bw_sponsor_preferential/src/widgets/deposit_dis_tip_view.dart';
 import 'package:bw_sponsor_preferential/src/widgets/simple_imageview.dart';
@@ -34,7 +36,6 @@ class DepositView extends StatefulWidget {
 class _DepositViewState extends State<DepositView> {
   int selTypeIndex = 0;
   int selMoneyIndex = 0;
-  GlobalKey<DepositDisTipsViewState> _isShowDisKey = GlobalKey();
 
   //是否展示额外优惠提示
   bool isShowDiscountTip = false;
@@ -66,6 +67,8 @@ class _DepositViewState extends State<DepositView> {
       StreamController.broadcast();
   final StreamController<bool> _streamSubmitController =
       StreamController.broadcast();
+  final StreamController<bool> _streamShowTipsController =
+      StreamController.broadcast();
 
   @override
   void initState() {
@@ -93,6 +96,7 @@ class _DepositViewState extends State<DepositView> {
     _streamNameController.close();
     _streamMoneyController.close();
     _streamSubmitController.close();
+    _streamShowTipsController.close();
     _nameController.dispose();
     _moneyController.dispose();
     super.dispose();
@@ -100,6 +104,7 @@ class _DepositViewState extends State<DepositView> {
 
   @override
   Widget build(BuildContext context) {
+    print("=======waiceng ==$isShowDiscountTip==");
     return SingleChildScrollView(
       child: Container(
         color: Colors.white,
@@ -138,8 +143,7 @@ class _DepositViewState extends State<DepositView> {
                           isRequiredName =
                               widget.data[selTypeIndex].transfer == "1";
                           setIsShowDisTip(index);
-                          _isShowDisKey.currentState
-                              ?.setShowState(isShowDiscountTip);
+                          _streamShowTipsController.sink.add(isShowDiscountTip);
                           _setSubmitBtnState();
                         }),
                       },
@@ -184,17 +188,16 @@ class _DepositViewState extends State<DepositView> {
                       ),
                       itemBuilder: (context, index) {
                         return InkWell(
-                            onTap: () => {
-                                  selMoneyIndex = index,
-                                  isRequiredMoney =
-                                      selMoneyIndex == moneyList.length - 1,
-                                  _streamMoneyController.sink
-                                      .add(selMoneyIndex),
-                                  _setSubmitBtnState(),
-                                  isShowDiscountTip = false,
-                                  _isShowDisKey.currentState
-                                      ?.setShowState(isShowDiscountTip),
-                                },
+                            onTap: () {
+                              selMoneyIndex = index;
+                              isRequiredMoney =
+                                  selMoneyIndex == moneyList.length - 1;
+                              _streamMoneyController.sink.add(selMoneyIndex);
+                              _setSubmitBtnState();
+                              isShowDiscountTip = false;
+                              _streamShowTipsController.sink
+                                  .add(isShowDiscountTip);
+                            },
                             child: _buildMoneyItem(
                                 moneyList[index], selMoneyIndex == index));
                       },
@@ -265,12 +268,18 @@ class _DepositViewState extends State<DepositView> {
                   ],
                 );
               }),
-          DepositDisTipsView(
-            key: _isShowDisKey,
-            depositRate: widget.data[selTypeIndex].depositRate,
-            maxDailyDiscount: widget.data[selTypeIndex].maxDailyDiscount,
-            isShow: isShowDiscountTip,
-          ),
+          StreamBuilder<bool>(
+              stream: _streamShowTipsController.stream,
+              initialData: isShowDiscountTip,
+              builder: (context, snapshot) {
+                return snapshot.data
+                    ? DepositDisTipsView(
+                        widget.data[selTypeIndex].depositRate,
+                        widget.data[selTypeIndex].maxDailyDiscount,
+                        _showDisDialog,
+                      )
+                    : Container();
+              }),
           Container(
             height: 85,
             width: MediaQuery.of(context).size.width,
@@ -555,6 +564,8 @@ class _DepositViewState extends State<DepositView> {
     if (entity.code == 0) {
       Navigator.of(context).pushNamed(BwSpRoutes.depositOrder,
           arguments: {DepositOrderPage.KEY_DATA: entity.data});
+    } else {
+      showToast(entity.msg);
     }
   }
 
@@ -607,5 +618,17 @@ class _DepositViewState extends State<DepositView> {
       return false;
     }
     return true;
+  }
+
+  _showDisDialog() {
+    var type = widget.data[selTypeIndex].pay_type_id;
+    if (discountCache.containsKey(type)) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return DepositDiscountDialog(discountCache[type]);
+          });
+    }
+
   }
 }
