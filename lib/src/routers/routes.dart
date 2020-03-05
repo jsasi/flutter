@@ -16,23 +16,22 @@ import 'package:bw_sponsor_preferential/src/widgets/photo_gallery_page.dart';
 import 'package:flutter/material.dart';
 
 class Routes {
-  static String root = "/";
-  static String discount = "/discount";
-  static String discountDetails = "/discount-details";
-  static String sponsorDetails = "/sponsor-details";
-  static String supportCenter = "/support_center";
-  static String supportDetails = "/support-details";
-  static String sponsor = "/sponsor";
-  static String service = "/service";
-  static String feedback = "/feedback";
-  static String feedbackDetails = "/feedback-details";
-  static String feedbackList = "/feedback-list";
-  static String webPage = "/webpage";
-  static String customerService = "/customer-service";
-  static String photoGallery = "/photo_allery";
-  static String helpCenter = "/help_center";
-  static String depositOrder = "/deposit-order";
-  static String deposit = "/deposit";
+  static String discount = "/bw_sp_discount";
+  static String discountDetails = "/bw_sp_discount-details";
+  static String sponsorDetails = "/bw_sp_sponsor-details";
+  static String supportCenter = "/bw_sp_support_center";
+  static String supportDetails = "/bw_sp_support-details";
+  static String sponsor = "/bw_sp_sponsor";
+  static String service = "/bw_sp_service";
+  static String feedback = "/bw_sp_feedback";
+  static String feedbackDetails = "/bw_sp_feedback-details";
+  static String feedbackList = "/bw_sp_feedback-list";
+  static String webPage = "/bw_sp_webpage";
+  static String customerService = "/bw_sp_customer-service";
+  static String photoGallery = "/bw_sp_photo_allery";
+  static String helpCenter = "/bw_sp_help_center";
+  static String depositOrder = "/bw_sp_deposit-order";
+  static String deposit = "/bw_sp_deposit";
 }
 
 final _routes = {
