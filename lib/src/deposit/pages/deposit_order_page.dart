@@ -8,6 +8,8 @@ import 'package:bw_sponsor_preferential/src/deposit/model/api_deposit.dart';
 import 'package:bw_sponsor_preferential/src/deposit/model/deposit_pay_entity.dart';
 import 'package:bw_sponsor_preferential/src/deposit/model/deposit_unfinished_entity.dart';
 import 'package:bw_sponsor_preferential/src/widgets/dss_app_bar.dart';
+import 'package:bw_sponsor_preferential/src/widgets/load_footer.dart';
+import 'package:bw_sponsor_preferential/src/widgets/refresh_head.dart';
 import 'package:bw_sponsor_preferential/src/widgets/simple_imageview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -141,6 +143,8 @@ class _DepositOrderPageState extends State<DepositOrderPage> {
       enablePullDown: true,
       enablePullUp: false,
       onRefresh: () => _refresh(),
+      header: RefreshHead(),
+      footer: LoadFooter(),
       controller: _refreshController,
       child: SingleChildScrollView(
         child: Column(

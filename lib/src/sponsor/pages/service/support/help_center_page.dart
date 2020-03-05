@@ -9,6 +9,7 @@ import 'package:bw_sponsor_preferential/src/sponsor/pages/service/support/suppor
 import 'package:bw_sponsor_preferential/src/widgets/dss_app_bar.dart';
 import 'package:bw_sponsor_preferential/src/widgets/empty_view_.dart';
 import 'package:bw_sponsor_preferential/src/widgets/net_error_view.dart';
+import 'package:bw_sponsor_preferential/src/widgets/refresh_head.dart';
 import 'package:bw_sponsor_preferential/src/widgets/service_item.dart';
 import 'package:bw_sponsor_preferential/src/widgets/support_footer_view.dart';
 import 'package:flutter/material.dart';
@@ -82,6 +83,7 @@ class _HelpCenterListPageState extends State<HelpCenterPage> {
     return SmartRefresher(
         enablePullDown: true,
         enablePullUp: false,
+        header: RefreshHead(),
         onRefresh: () => _viewModel.refresh(),
         controller: _refreshController,
         child: _buideList(_viewModel.results));

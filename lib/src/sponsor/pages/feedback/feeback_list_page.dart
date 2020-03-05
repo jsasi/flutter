@@ -6,7 +6,9 @@ import 'package:bw_sponsor_preferential/src/sponsor/pages/feedback/feedback_deta
 import 'package:bw_sponsor_preferential/src/sponsor/pages/feedback/feedback_list_model.dart';
 import 'package:bw_sponsor_preferential/src/widgets/dss_app_bar.dart';
 import 'package:bw_sponsor_preferential/src/widgets/feedback_item.dart';
+import 'package:bw_sponsor_preferential/src/widgets/load_footer.dart';
 import 'package:bw_sponsor_preferential/src/widgets/net_error_view.dart';
+import 'package:bw_sponsor_preferential/src/widgets/refresh_head.dart';
 import 'package:bw_utils/bw_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -89,6 +91,8 @@ class _FeedbackListPageState extends State<FeedbackListPage> {
       child: SmartRefresher(
           enablePullDown: true,
           enablePullUp: true,
+          header: RefreshHead(),
+          footer: LoadFooter(),
           onRefresh: () => viewModel.refresh(),
           onLoading: () => viewModel.loadMore(),
           controller: _refreshController,

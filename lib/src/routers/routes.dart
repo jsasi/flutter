@@ -34,6 +34,7 @@ class BwSpRoutes {
   static String depositOrder = "/bw_sp_deposit-order";
   static String deposit = "/bw_sp_deposit";
 
+  /// 路由表
   static final routes = {
     /// 优惠列表
     BwSpRoutes.discount: (context) => DiscountPage(),
@@ -92,6 +93,7 @@ class BwSpRoutes {
   };
 
 
+  ///动态路由
   static final Function onGenerateRoute = (RouteSettings settings) {
     final String name = settings.name;
     final Function pageContentBuilder = routes[name];

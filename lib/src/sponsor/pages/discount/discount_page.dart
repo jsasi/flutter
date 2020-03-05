@@ -6,7 +6,9 @@ import 'package:bw_sponsor_preferential/src/sponsor/model/discount_entity.dart';
 import 'package:bw_sponsor_preferential/src/sponsor/pages/discount_details/discount_details_page.dart';
 import 'package:bw_sponsor_preferential/src/widgets/discount_item.dart';
 import 'package:bw_sponsor_preferential/src/widgets/dss_app_bar.dart';
+import 'package:bw_sponsor_preferential/src/widgets/load_footer.dart';
 import 'package:bw_sponsor_preferential/src/widgets/net_error_view.dart';
+import 'package:bw_sponsor_preferential/src/widgets/refresh_head.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -83,6 +85,8 @@ class _DiscountPageState extends State<DiscountPage> {
         enablePullUp: true,
         onRefresh: () => viewModel.refresh(),
         onLoading: () => viewModel.loadMore(),
+        header: RefreshHead(),
+        footer: LoadFooter(),
         controller: _refreshController,
         child: _buideList(viewModel.results));
   }

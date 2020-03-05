@@ -9,7 +9,9 @@ import 'package:bw_sponsor_preferential/src/sponsor/model/sponsor_entity.dart';
 import 'package:bw_sponsor_preferential/src/sponsor/pages/sponsor/sponsor_details_page.dart';
 import 'package:bw_sponsor_preferential/src/widgets/dss_app_bar.dart';
 import 'package:bw_sponsor_preferential/src/widgets/empty_view_.dart';
+import 'package:bw_sponsor_preferential/src/widgets/load_footer.dart';
 import 'package:bw_sponsor_preferential/src/widgets/net_error_view.dart';
+import 'package:bw_sponsor_preferential/src/widgets/refresh_head.dart';
 import 'package:bw_sponsor_preferential/src/widgets/sponsor_item.dart';
 import 'package:bw_utils/bw_utils.dart';
 import 'package:flutter/material.dart';
@@ -90,6 +92,8 @@ class _SponsorPageState extends State<SponsorPage> {
       return SmartRefresher(
           enablePullDown: true,
           enablePullUp: true,
+          header: RefreshHead(),
+          footer: LoadFooter(),
           onRefresh: () => viewModel.refresh(),
           onLoading: () => viewModel.loadMore(),
           controller: _refreshController,
