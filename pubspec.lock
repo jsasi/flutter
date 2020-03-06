@@ -36,15 +36,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.0"
-  biz_login:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: "feature_v0.1"
-      resolved-ref: "858b2af03303e96222abb99d94d9f1d79f85c146"
-      url: "http://47.52.134.206/bw-flutter/biz_login.git"
-    source: git
-    version: "0.0.1"
   biz_network_main:
     dependency: "direct main"
     description:
@@ -95,14 +86,14 @@ packages:
       name: build_runner
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.7.4"
+    version: "1.8.0"
   build_runner_core:
     dependency: transitive
     description:
       name: build_runner_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.4.0"
+    version: "4.5.1"
   built_collection:
     dependency: transitive
     description:
@@ -122,7 +113,7 @@ packages:
     description:
       path: "."
       ref: "feature_v0.1"
-      resolved-ref: "928de4f74cb0a2dcb9700de2b770465f9cc36ad9"
+      resolved-ref: b12f54b702a612d184ee507e0c9df77ec863005f
       url: "http://47.52.134.206/bw-flutter/bw_base.git"
     source: git
     version: "0.0.1"
@@ -131,7 +122,7 @@ packages:
     description:
       path: "packages/bw_res"
       ref: "feature_v0.1"
-      resolved-ref: "5bfa0c40b1e1f9712bd0d000e4d620b030eddbf1"
+      resolved-ref: "9371b442cbc8e6b9306a584b67d8fc96fb8178b8"
       url: "http://47.52.134.206/bw-flutter/bw_resources.git"
     source: git
     version: "0.0.1"
@@ -201,7 +192,7 @@ packages:
     source: hosted
     version: "0.16.1"
   cupertino_icons:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: cupertino_icons
       url: "https://pub.dartlang.org"
@@ -752,27 +743,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.8"
-  video_player:
-    dependency: transitive
-    description:
-      name: video_player
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.10.8+1"
-  video_player_platform_interface:
-    dependency: transitive
-    description:
-      name: video_player_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.5"
-  video_player_web:
-    dependency: transitive
-    description:
-      name: video_player_web
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.2+1"
   watcher:
     dependency: transitive
     description:

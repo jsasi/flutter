@@ -1,4 +1,3 @@
-import 'package:biz_login/biz_login.dart';
 import 'package:bw_base/bw_base.dart';
 import 'package:bw_res/bw_res.dart';
 import 'package:bw_sponsor_preferential/bw_sponsor_preferential.dart';
@@ -116,7 +115,7 @@ class _FeedbackDetailsPageState extends State<FeedbackDetailsPage> {
                         width: 28,
                         height: 28,
                         child: SimpleImageView.displayIcon(
-                            LoginUtil.getUserEntity()?.avatar ?? ""))),
+                            SharedPreferencesBiz.getUserEntity()?.avatar ?? ""))),
                 Padding(
                   padding: EdgeInsets.only(left: 7),
                   child: Text(bwManager.mainUserName),

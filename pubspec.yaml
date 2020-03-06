@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  cupertino_icons: ^0.1.3
   provider: ^4.0.4
   pull_to_refresh: ^1.5.7
   json_annotation: ^3.0.1
@@ -24,7 +24,6 @@ dependencies:
   oktoast: ^2.3.1+1
   permission_handler: '^4.3.0'
 
-
   bw_utils:
     git:
       url: http://47.52.134.206/bw-flutter/bw_utils.git
@@ -33,26 +32,19 @@ dependencies:
     git:
       url: http://47.52.134.206/bw-flutter/biz_network_main.git
       ref: feature_v0.1
-
   bw_res:
     git:
       url: http://47.52.134.206/bw-flutter/bw_resources.git
       ref: feature_v0.1
       path: "packages/bw_res"
-
   bw_base:
     git:
       url: http://47.52.134.206/bw-flutter/bw_base.git
-      ref: feature_v0.1
-  biz_login:
-    git:
-      url: http://47.52.134.206/bw-flutter/biz_login.git
       ref: feature_v0.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
   build_runner: ^1.7.4
   json_serializable: ^3.2.5
 
