@@ -1,5 +1,6 @@
 import 'package:bw_sponsor_preferential/src/common/page_status.dart';
 import 'package:bw_sponsor_preferential/src/deposit/model/api_deposit.dart';
+import 'package:bw_sponsor_preferential/src/deposit/model/deposit_notice_entity.dart';
 import 'package:bw_sponsor_preferential/src/deposit/model/deposit_pay_entity.dart';
 import 'package:bw_sponsor_preferential/src/deposit/model/deposit_pay_type_entity.dart';
 import 'package:bw_sponsor_preferential/src/deposit/model/deposit_unfinished_entity.dart';
@@ -14,6 +15,9 @@ class DepositModel extends ChangeNotifier {
   PayBean _payBean;
   PayBean get payBean => _payBean; //支付方式
   List<TypeEntryBean> _typeList = List();
+  List<NoticeEntry> _noticeLIst = List();
+
+  List<NoticeEntry> get noticeLIst => _noticeLIst;
 
   List<TypeEntryBean> get typeList => _typeList;
 
@@ -30,6 +34,10 @@ class DepositModel extends ChangeNotifier {
   //支付方式列表获取
   Future getPayTypeList() async {
     var entity = await ApiDeposit.getPayTypeList();
+    var notice = await ApiDeposit.getNoticeList();
+    if(notice.code==0&&notice.data.isNotEmpty){
+      _noticeLIst= notice.data;
+    }
     if (entity.code == 0 && entity.data?.typeList?.isNotEmpty == true) {
       _typeList = entity.data.typeList;
       _screenStatus = ScreenStatus.LoadSuccess;

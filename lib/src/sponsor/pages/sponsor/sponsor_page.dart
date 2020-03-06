@@ -55,7 +55,7 @@ class _SponsorPageState extends State<SponsorPage> {
               return NetErrorView(callBack: () => viewModel.init());
             case ScreenStatus.Loading:
               return Center(
-                child: CircularProgressIndicator(),
+                child: BwLoading(),
               );
             case ScreenStatus.RefreshComplete:
               _refreshController.refreshCompleted(resetFooterState: true);

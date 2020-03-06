@@ -69,7 +69,7 @@ class _FeedbackDetailsPageState extends State<FeedbackDetailsPage> {
       return NetErrorView();
     } else if (_bean == null) {
       return Center(
-        child: CircularProgressIndicator(),
+        child: BwLoading(),
       );
     } else {
       return _buildBody();

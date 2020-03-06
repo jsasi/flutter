@@ -1,3 +1,4 @@
+import 'package:bw_base/bw_base.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -10,7 +11,7 @@ class RefreshHead extends StatelessWidget{
         if (mode == RefreshStatus.idle) {
           body = Text("下拉刷新");
         } else if (mode == RefreshStatus.refreshing) {
-          body = CircularProgressIndicator();
+          body = BwLoading();
         } else if (mode == RefreshStatus.failed) {
           body = Text("下拉刷新失败");
         } else if (mode == RefreshStatus.canRefresh) {

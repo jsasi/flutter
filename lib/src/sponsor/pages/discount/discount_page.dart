@@ -1,3 +1,4 @@
+import 'package:bw_base/bw_base.dart';
 import 'package:bw_res/bw_res.dart';
 import 'package:bw_sponsor_preferential/bw_sponsor_preferential.dart';
 import 'package:bw_sponsor_preferential/src/common/page_status.dart';
@@ -46,7 +47,7 @@ class _DiscountPageState extends State<DiscountPage> {
               return NetErrorView(callBack: () => viewModel.init());
             case ScreenStatus.Loading:
               return Center(
-                child: CircularProgressIndicator(),
+                child: BwLoading(),
               );
             case ScreenStatus.RefreshComplete:
               _refreshController.refreshCompleted(resetFooterState: true);

@@ -92,7 +92,7 @@ class __BodyWidgetState extends State<_BodyWidget> {
             return NetErrorView(callBack: () => viewModel.init());
           case ScreenStatus.Loading:
             return Center(
-              child: CircularProgressIndicator(),
+              child: BwLoading(),
             );
           case ScreenStatus.RefreshComplete:
             _refreshController.refreshCompleted(resetFooterState: true);

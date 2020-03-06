@@ -5,10 +5,12 @@ import 'package:bw_res/res/strings.dart';
 import 'package:bw_sponsor_preferential/bw_sponsor_preferential.dart';
 import 'package:bw_sponsor_preferential/src/deposit/model/api_deposit.dart';
 import 'package:bw_sponsor_preferential/src/deposit/model/dep_dis_entity.dart';
+import 'package:bw_sponsor_preferential/src/deposit/model/deposit_notice_entity.dart';
 import 'package:bw_sponsor_preferential/src/deposit/model/deposit_pay_entity.dart';
 import 'package:bw_sponsor_preferential/src/deposit/model/deposit_pay_type_entity.dart';
 import 'package:bw_sponsor_preferential/src/deposit/pages/deposit_discount_dialog.dart';
 import 'package:bw_sponsor_preferential/src/widgets/deposit_dis_tip_view.dart';
+import 'package:bw_sponsor_preferential/src/widgets/desposit_marqueen.dart';
 import 'package:bw_sponsor_preferential/src/widgets/simple_imageview.dart';
 import 'package:bw_sponsor_preferential/src/widgets/support_footer_view.dart';
 import 'package:bw_utils/bw_utils.dart';
@@ -20,9 +22,10 @@ import 'package:url_launcher/url_launcher.dart';
 
 /// 存款
 class DepositView extends StatefulWidget {
-  DepositView(this.data, {Key key}) : super(key: key);
+  DepositView(this.data, this.noticeList, {Key key}) : super(key: key);
 
   final List<TypeEntryBean> data;
+  final List<NoticeEntry> noticeList;
 
   @override
   _DepositViewState createState() {
@@ -101,12 +104,13 @@ class _DepositViewState extends State<DepositView> {
 
   @override
   Widget build(BuildContext context) {
-    print("=======waiceng ==$isShowDiscountTip==");
     return SingleChildScrollView(
       child: Container(
         color: Colors.white,
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
             Widget>[
+              if(widget.noticeList.isNotEmpty)
+                DepositMarqueen(height: 35,data: widget.noticeList),
           Padding(
             padding: EdgeInsets.only(left: 14, top: 10, bottom: 10),
             child: Text(

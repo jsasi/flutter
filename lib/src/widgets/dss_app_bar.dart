@@ -30,45 +30,57 @@ class DssAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      backgroundColor: Colors.white,
-      centerTitle: true,
-      leading: hideLeftArrow
-          ? null
-          : IconButton(
-              icon: Icon(
-                CupertinoIcons.back,
-                color: BWColors.dssTitleLeftArrow,
-                size: 16,
+    return SafeArea(
+      child: Container(
+        height: 45,
+        padding: EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+        child: Stack(
+          children: <Widget>[
+            if (!hideLeftArrow)
+              IconButton(
+                  highlightColor: Colors.transparent,
+                  splashColor: Colors.transparent,
+                  icon: Icon(
+                    CupertinoIcons.back,
+                    color: BWColors.dssTitleLeftArrow,
+                    size: 16,
+                  ),
+                  onPressed: () => Navigator.of(context).pop()),
+            Align(
+              alignment: Alignment.center,
+              child: Text(
+                title,
+                style: TextStyle(
+                  fontSize: 18,
+                  color: BWColors.disTitle,
+                ),
+                maxLines: 1,
               ),
-              onPressed: () => Navigator.of(context).pop()),
-      title: Text(
-        title,
-        style: TextStyle(fontSize: 18, color: BWColors.disTitle),
-      ),
-      actions: <Widget>[
-        if (rightText != null)
-          InkWell(
-            onTap: callBack,
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.only(right: 14),
-                child: Text(
-                  rightText,
-                  style: TextStyle(fontSize: 14, color: BWColors.disTitle),
+            ),
+            if (rightText != null)
+              Align(
+                alignment: Alignment.centerRight,
+                child: InkWell(
+                  onTap: callBack,
+                  child: Text(
+                    rightText,
+                    style:
+                        TextStyle(fontSize: 14, color: BWColors.disTitle),
+                  ),
                 ),
               ),
-            ),
-          ),
-        if (rightImg != null)
-          InkWell(
-            onTap: callBack,
-            child: Padding(
-              padding: EdgeInsets.only(right: 14),
-              child: SimpleImageView.assetImage(rightImg,width: 16, height: 16),
-            ),
-          )
-      ],
+            if (rightImg != null)
+              Align(
+                alignment: Alignment.centerRight,
+                child: InkWell(
+                  onTap: callBack,
+                  child: SimpleImageView.assetImage(rightImg,
+                      width: 16, height: 16),
+                ),
+              )
+          ],
+        ),
+      ),
     );
   }
 

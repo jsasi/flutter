@@ -1,3 +1,4 @@
+import 'package:bw_base/bw_base.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -11,7 +12,7 @@ class LoadFooter extends StatelessWidget{
           body =  Text("上拉加载更多");
         }
         else if(mode==LoadStatus.loading){
-          body =  CircularProgressIndicator();
+          body =  BwLoading();
         }
         else if(mode == LoadStatus.failed){
           body = Text("加载更多失败");

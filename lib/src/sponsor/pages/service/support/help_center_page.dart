@@ -1,3 +1,4 @@
+import 'package:bw_base/bw_base.dart';
 import 'package:bw_res/res/bw_colors.dart';
 import 'package:bw_res/res/res.dart';
 import 'package:bw_res/res/strings.dart';
@@ -58,7 +59,7 @@ class _HelpCenterListPageState extends State<HelpCenterPage> {
                 return NetErrorView(callBack: () => _viewModel.init());
               case ScreenStatus.Loading:
                 return Center(
-                  child: CircularProgressIndicator(),
+                  child: BwLoading(),
                 );
               case ScreenStatus.RefreshComplete:
                 _refreshController.refreshCompleted(resetFooterState: true);

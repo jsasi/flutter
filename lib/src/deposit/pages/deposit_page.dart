@@ -76,7 +76,7 @@ class _DepositPageState extends State<DepositPage> {
                 });
                 return Container();
               } else {
-                return DepositView(vm.typeList);
+                return DepositView(vm.typeList,vm.noticeLIst);
               }
               break;
             case ScreenStatus.Error:
